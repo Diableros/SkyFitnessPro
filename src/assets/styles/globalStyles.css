@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Stratos';
+  src: url('../fonts/Stratos-Regular.woff2') format('woff2'),
+    local('ArialNarrow');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+body {
+  color: #000;
+  font-family: 'Stratos';
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
