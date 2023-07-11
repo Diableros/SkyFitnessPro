@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client'
 
 import App from './App'
 
-import './assets/styles/globalStyles.css'
+import './assets/fonts/fonts.scss'
+
+import Providers from './providers'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <Providers>
+      <App />
+    </Providers>
   </React.StrictMode>
 )
