@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 
 import DraftNavigate from './components/DraftNavigate'
-import ProfilePlate from './components/ProfilePlate/ProfilePlate'
+import ProfilePlate from '@/components/ProfilePlate'
 
 import * as S from './MainLayout.style'
 

@@ -7,7 +7,7 @@ import { ButtonSize, ButtonTheme } from './enums'
 type ButtonProps = {
   size: ButtonSize
   buttontheme: ButtonTheme
-  fontsize: keyof FontSizeType['fontSize']
+  fontSize: keyof FontSizeType['fontSize']
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -19,7 +19,7 @@ export const Button = styled.button<ButtonProps>`
   min-width: ${({ size }) => buttonSize[size].minWidth};
 
   font-family: inherit;
-  font-size: ${({ theme, fontsize }) => theme.fontSize[fontsize]};
+  font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
   color: ${({ buttontheme }) => buttonPalette[buttontheme].textColor};
 
   background-color: ${({ buttontheme }) => buttonPalette[buttontheme].regular};

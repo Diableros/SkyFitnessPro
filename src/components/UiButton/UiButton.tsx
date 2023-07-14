@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { FontSizeType } from '@/theme/themeTypes'
 import { ButtonSize, ButtonTheme } from './enums'
 
@@ -25,7 +23,7 @@ const UiButton = ({
       onClick={onClick}
       buttontheme={buttonTheme}
       size={size}
-      fontsize={fontSize}
+      fontSize={fontSize}
     >
       {title}
     </S.Button>
