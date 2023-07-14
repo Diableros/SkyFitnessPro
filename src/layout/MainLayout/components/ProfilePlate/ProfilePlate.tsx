@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import * as S from './ProfilePlate.style'
 
 const ProfilePlate = () => {

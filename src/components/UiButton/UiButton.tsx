@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { FontSizeType } from '@/theme/themeTypes'
 import { ButtonSize, ButtonTheme } from './enums'
 
