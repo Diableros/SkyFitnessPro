@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lintFix": "eslint ./src/**/*.ts --fix && eslint ./src/**/*.tsx --fix",
     "format": "prettier --write ./src/",
-    "precommit": "npm run format && npm run lintFix",
+    "precommit": "pnpm format && pnpm lintFix",
     "prepare": "husky install"
   },
   "dependencies": {

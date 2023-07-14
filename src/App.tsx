@@ -1,12 +1,9 @@
-import UiButton from './components/UiButton/UiButton'
+import * as React from 'react'
+
+import Home from './pages/Home'
 
 const App = () => {
-  return (
-    <>
-      <div>Hello from React!</div>
-      <UiButton />
-    </>
-  )
+  return <Home />
 }
 
 export default App
