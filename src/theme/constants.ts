@@ -5,7 +5,7 @@ export const theme: ThemeType = {
     black: '#000',
     white: '#fff',
 
-    puprpleDark: '#140D40',
+    purpleDark: '#140D40',
     purpleNormal: '#271A58',
     purpleMiddle: '#2D1F79',
     purpleLight: '#3B29A1',
@@ -29,6 +29,7 @@ export const theme: ThemeType = {
     coral: '#FF8071',
   },
   fontSize: {
+    xs: '1rem',
     s: '1.25rem',
     m: '1.5rem',
     l: '2rem',

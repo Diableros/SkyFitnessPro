@@ -1,14 +1,35 @@
 import * as React from 'react'
 
+import { FontSizeType } from '@/theme/themeTypes'
+import { ButtonSize, ButtonTheme } from './enums'
+
 import * as S from './UiButton.style'
 
 type PropsType = {
   title: string
   onClick: () => void
+  size?: ButtonSize
+  buttonTheme?: ButtonTheme
+  fontSize?: keyof FontSizeType['fontSize']
 }
 
-const UiButton = ({ title, onClick }: PropsType) => {
-  return <S.Button onClick={onClick}>{title}</S.Button>
+const UiButton = ({
+  title,
+  onClick,
+  size = ButtonSize.L,
+  buttonTheme = ButtonTheme.PurpleBright,
+  fontSize = 's',
+}: PropsType) => {
+  return (
+    <S.Button
+      onClick={onClick}
+      buttontheme={buttonTheme}
+      size={size}
+      fontsize={fontSize}
+    >
+      {title}
+    </S.Button>
+  )
 }
 
 export default UiButton
