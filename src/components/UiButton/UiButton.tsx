@@ -23,7 +23,7 @@ const UiButton = ({
       onClick={onClick}
       buttontheme={buttonTheme}
       size={size}
-      fontsize={fontSize}
+      fontSize={fontSize}
     >
       {title}
     </S.Button>
