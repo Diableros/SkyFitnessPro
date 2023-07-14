@@ -1,17 +1,36 @@
 import { styled } from 'styled-components'
 
-export const Button = styled.button`
-  height: 3rem;
-  width: 10rem;
+import { FontSizeType } from '@/theme/themeTypes'
+import { buttonPalette, buttonSize } from './constants'
+import { ButtonSize, ButtonTheme } from './enums'
 
-  background-color: ${({ theme }) => theme.colors.saladNormal};
+type ButtonProps = {
+  size: ButtonSize
+  buttontheme: ButtonTheme
+  fontsize: keyof FontSizeType['fontSize']
+}
+
+export const Button = styled.button<ButtonProps>`
+  outline: none;
+  border: none;
+  border-radius: 5rem;
+
+  padding: ${({ size }) => buttonSize[size].padding};
+  min-width: ${({ size }) => buttonSize[size].minWidth};
+
   font-family: inherit;
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: ${({ theme, fontsize }) => theme.fontSize[fontsize]};
+  color: ${({ buttontheme }) => buttonPalette[buttontheme].textColor};
+
+  background-color: ${({ buttontheme }) => buttonPalette[buttontheme].regular};
+
+  &:hover {
+    background-color: ${({ buttontheme }) => buttonPalette[buttontheme].hover};
+  }
+
+  &:active {
+    background-color: ${({ buttontheme }) => buttonPalette[buttontheme].active};
+  }
 
   cursor: pointer;
-
-  outline: none;
-
-  border: none;
-  border-radius: 1.5rem;
 `

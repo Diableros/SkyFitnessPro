@@ -3,7 +3,7 @@ type ColorType = {
     black: string
     white: string
 
-    puprpleDark: string
+    purpleDark: string
     purpleNormal: string
     purpleMiddle: string
     purpleLight: string
@@ -28,8 +28,9 @@ type ColorType = {
   }
 }
 
-type FontSizeType = {
+export type FontSizeType = {
   fontSize: {
+    xs: string
     s: string
     m: string
     l: string
