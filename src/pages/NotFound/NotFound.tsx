@@ -1,5 +1,14 @@
+import UiLoader from '@/components/UiLoader'
+import { LoaderSize } from '@/components/UiLoader/enums'
+
+import * as S from './NotFound.style'
+
 const NotFound = () => {
-  return <div>Text from NotFound component</div>
+  return (
+    <S.PageWrapper>
+      <UiLoader />
+    </S.PageWrapper>
+  )
 }
 
 export default NotFound
