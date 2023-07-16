@@ -1,17 +1,33 @@
-import api from './api'
+import UiButton from './components/UiButton/UiButton'
+
+import useCourses from './hooks/useCourses'
+
 import Home from './pages/Home'
 
 const App = () => {
-  // api
-  //   .createUser({ name: 'Ivan', _id: '', password: 'qwerty' })
-  //   .then((res) => console.log(res))
-  //   .catch((e) => console.warn(e))
-
-  api.getData().then((data) => console.log(data))
-  setTimeout(() => api.loginUser('user123@gmail.com', 'qwerty123'), 2000)
-  // setTimeout(() => api.logoutUser(), 10000)
-
-  return <Home />
+  const { data, isLoading } = useCourses()
+  return (
+    <>
+      <Home />
+      {isLoading && !data ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          {data
+            ? Object.keys(data).map((courseId) => (
+                <UiButton
+                  key={courseId}
+                  title={courseId}
+                  onClick={() => {
+                    console.log('click')
+                  }}
+                />
+              ))
+            : 'No data'}
+        </>
+      )}
+    </>
+  )
 }
 
 export default App
