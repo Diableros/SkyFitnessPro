@@ -5,3 +5,13 @@ export type Endpoint = {
   param?: string
   auth?: boolean
 }
+
+type Course = {
+  _id: string
+  description: string
+  directions: string[]
+  fitting: string[]
+  workouts: string[]
+}
+
+export type CourseResponse = Record<string, Course>

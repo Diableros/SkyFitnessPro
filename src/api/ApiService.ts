@@ -1,4 +1,4 @@
-import { Endpoint } from './types'
+import { CourseResponse, Endpoint } from './types'
 import { EndpointPath } from './enums'
 
 class ApiService {
@@ -68,7 +68,7 @@ class ApiService {
   }
 
   public getCourses = () => {
-    return this.dbRequest<object[], string>(
+    return this.dbRequest<CourseResponse, Error>(
       {
         endpointPath: EndpointPath.Courses,
       },
