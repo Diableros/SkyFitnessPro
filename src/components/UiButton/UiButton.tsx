@@ -5,10 +5,11 @@ import * as S from './UiButton.style'
 
 type PropsType = {
   title: string
-  onClick: () => void
+  onClick?: () => void
   size?: ButtonSize
   buttonTheme?: ButtonTheme
   fontSize?: keyof FontSizeType['fontSize']
+  outlined?: boolean
 }
 
 const UiButton = ({
@@ -17,6 +18,7 @@ const UiButton = ({
   size = ButtonSize.L,
   buttonTheme = ButtonTheme.PurpleBright,
   fontSize = 's',
+  outlined = false,
 }: PropsType) => {
   return (
     <S.Button
@@ -24,6 +26,7 @@ const UiButton = ({
       buttontheme={buttonTheme}
       size={size}
       fontSize={fontSize}
+      outlined={outlined}
     >
       {title}
     </S.Button>

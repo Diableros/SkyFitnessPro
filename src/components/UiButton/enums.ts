@@ -8,6 +8,7 @@ export enum ButtonTheme {
   Purple = 'purple',
   PurpleBright = 'purpleBright',
   Salad = 'salad',
+  White = 'white',
 }
 
 export enum ButtonState {

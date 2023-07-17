@@ -8,6 +8,7 @@ type ButtonProps = {
   size: ButtonSize
   buttontheme: ButtonTheme
   fontSize: keyof FontSizeType['fontSize']
+  outlined: boolean
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -31,6 +32,9 @@ export const Button = styled.button<ButtonProps>`
   &:active {
     background-color: ${({ buttontheme }) => buttonPalette[buttontheme].active};
   }
+
+  ${({ outlined, theme }) =>
+    outlined ? `border: 1px solid ${theme.colors.gray};` : ''}
 
   cursor: pointer;
 `
