@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { FontSizeType } from '@/theme/themeTypes'
 import { ButtonSize, ButtonTheme } from './enums'
 
@@ -5,7 +7,7 @@ import * as S from './UiButton.style'
 
 type PropsType = {
   title: string
-  onClick: () => void
+  onClick: (event: React.MouseEvent) => void
   size?: ButtonSize
   buttonTheme?: ButtonTheme
   fontSize?: keyof FontSizeType['fontSize']

@@ -1,11 +1,22 @@
+import UiCourseCard from '@/components/UiCourseCard/UiCourseCard'
 import UiImage from '@/components/UiImage'
+
+import * as S from './Home.style'
+
+import { mockData } from './mockData'
 
 const Home = () => {
   return (
-    <>
-      <div>Text from Home component</div>
-      <UiImage name="cardBodyFlex" width="360px" height="480px" />
-    </>
+    <S.PageWrapper>
+      {mockData
+        ? mockData.map((course) => (
+            <>
+              <UiCourseCard key={course._id} course={course} />
+              <UiCourseCard key={course._id} course={course} isHomePage />
+            </>
+          ))
+        : null}
+    </S.PageWrapper>
   )
 }
 
