@@ -23,6 +23,8 @@ export type ColorType = {
     progressOrange: string
     progressPurple: string
 
+    modalShadow: string
+
     mint: string
     coral: string
   }
