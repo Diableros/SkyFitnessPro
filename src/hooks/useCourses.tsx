@@ -15,7 +15,7 @@ const useCourses = () => {
     data && !(data instanceof Error)
       ? Object.keys(data)
           .map((key) => data[key])
-          .map((course) => course)
+          .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
       : data
 
   return {
