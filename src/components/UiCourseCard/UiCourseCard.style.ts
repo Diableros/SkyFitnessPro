@@ -1,8 +1,10 @@
 import { styled } from 'styled-components'
 
+import { cardSize } from './constants'
+import { CardSize } from './enums'
+
 type CourseCard = {
-  cardWidth: string
-  cardHeight: string
+  size: CardSize
 }
 
 export const CourseCard = styled.div<CourseCard>`
@@ -10,8 +12,8 @@ export const CourseCard = styled.div<CourseCard>`
 
   border-radius: 30px;
   border: 1px solid black;
-  width: ${({ cardWidth }) => cardWidth};
-  height: ${({ cardHeight }) => cardHeight};
+  width: ${({ size }) => cardSize[size].width};
+  height: ${({ size }) => cardSize[size].height};
 
   background-color: ${({ theme }) => theme.colors.white};
 
