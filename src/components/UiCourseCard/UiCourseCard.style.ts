@@ -5,6 +5,7 @@ import { CardSize } from './enums'
 
 type CourseCard = {
   size: CardSize
+  isHomePage?: boolean
 }
 
 export const CourseCard = styled.div<CourseCard>`
@@ -14,6 +15,7 @@ export const CourseCard = styled.div<CourseCard>`
   border: 1px solid black;
   width: ${({ size }) => cardSize[size].width};
   height: ${({ size }) => cardSize[size].height};
+  cursor: ${({ isHomePage }) => isHomePage ? 'pointer' : 'default'};
 
   background-color: ${({ theme }) => theme.colors.white};
 
