@@ -15,7 +15,7 @@ export const CourseCard = styled.div<CourseCard>`
   border: 1px solid black;
   width: ${({ size }) => cardSize[size].width};
   height: ${({ size }) => cardSize[size].height};
-  cursor: ${({ isHomePage }) => (!isHomePage ? '' : 'pointer')};
+  cursor: ${({ isHomePage }) => !isHomePage ? 'default' : 'pointer'};
 
   background-color: ${({ theme }) => theme.colors.white};
 

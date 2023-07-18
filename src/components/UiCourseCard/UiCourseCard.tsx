@@ -41,7 +41,7 @@ const UiCourseCard = ({
 
   return (
     <>
-      <S.CourseCard onClick={handleCardClick} size={size}>
+      <S.CourseCard isHomePage={isHomePage} onClick={handleCardClick} size={size}>
         <S.CourseName>{nameRU}</S.CourseName>
         <UiImage name={'cardYoga'} />
         {!isHomePage ? (
