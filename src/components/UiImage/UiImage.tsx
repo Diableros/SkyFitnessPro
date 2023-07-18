@@ -10,11 +10,12 @@ type PropsType = {
   color?: keyof ColorType['colors']
 }
 
-const UiImage = ({ 
+const UiImage = ({
   name,
-  width = '100%', 
-  height = '100%', 
-  color }: PropsType) => {
+  width = '100%',
+  height = '100%',
+  color,
+}: PropsType) => {
   const Svg = svg[name]
 
   return (
