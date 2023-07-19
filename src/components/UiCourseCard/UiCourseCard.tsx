@@ -15,12 +15,14 @@ type PropsType = {
   course: Course
   isHomePage?: boolean
   size?: CardSize
+  isCoursePage?: boolean
 }
 
 const UiCourseCard = ({
   course: { nameRU, nameEN, order },
   isHomePage,
   size = CardSize.Normal,
+  isCoursePage,
 }: PropsType) => {
   const navigate = useNavigate()
 
@@ -42,8 +44,10 @@ const UiCourseCard = ({
   return (
     <>
       <S.CourseCard isHomePage={isHomePage} onClick={handleCardClick} size={size}>
-        <S.CourseName>{nameRU}</S.CourseName>
-        <UiImage name={'cardYoga'} />
+        <S.CourseName isCoursePage={isCoursePage} size={size}>{nameRU}</S.CourseName>
+        {isCoursePage ? 
+          <UiImage name={'bannerStretching'} />
+         : <UiImage name={'cardYoga'} />}
         {!isHomePage ? (
           <UiButton
             title="Перейти"

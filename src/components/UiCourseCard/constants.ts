@@ -7,6 +7,6 @@ export const cardSize = {
   },
   [CardSize.Large]: {
     width: '1160px',
-    height: '480px',
+    height: '310px',
   },
 }
