@@ -12,10 +12,10 @@ export const CourseCard = styled.div<CourseCard>`
   position: relative;
 
   border-radius: 30px;
-  border: 1px solid black;
+
   width: ${({ size }) => cardSize[size].width};
   height: ${({ size }) => cardSize[size].height};
-  cursor: ${({ isHomePage }) => isHomePage ? 'pointer' : 'default'};
+  cursor: ${({ isHomePage }) => (isHomePage ? 'pointer' : 'default')};
 
   background-color: ${({ theme }) => theme.colors.white};
 
