@@ -7,7 +7,7 @@ import * as S from './UiButton.style'
 
 type PropsType = {
   title: string
-  onClick: (event: React.MouseEvent) => void
+  onClick?: (event: React.MouseEvent) => void
   size?: ButtonSize
   buttonTheme?: ButtonTheme
   fontSize?: keyof FontSizeType['fontSize']
