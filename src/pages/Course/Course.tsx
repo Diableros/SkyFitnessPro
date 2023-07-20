@@ -17,51 +17,49 @@ const Course = () => {
 
   return (
     <S.PageWrapper>
-      <S.BlocksWrapper>
-        <UiCourseCard
-          key={courseExample._id}
-          size={CardView.Banner}
-          course={courseExample}
-          $pageType={PageType.Course}
+      <UiCourseCard
+        key={courseExample._id}
+        size={CardView.Banner}
+        course={courseExample}
+        $pageType={PageType.Course}
+      />
+      <S.PrescriptionHeader>Подойдет для вас, если:</S.PrescriptionHeader>
+      <S.PrescriptionBlocks>
+        {courseExample.fitting.map((item, index) => {
+          return (
+            <S.Prescription key={index}>
+              <S.PrescriptionBlocksItemIndex>
+                {index + 1}
+              </S.PrescriptionBlocksItemIndex>
+              <S.PrescriptionBlocksItem key={index}>
+                {item}
+              </S.PrescriptionBlocksItem>
+            </S.Prescription>
+          )
+        })}
+      </S.PrescriptionBlocks>
+      <S.DirectionHeader>Направления:</S.DirectionHeader>
+      <S.DirectionBlocks>
+        {courseExample.directions.map((item, index) => {
+          return <li key={index}>{item}</li>
+        })}
+      </S.DirectionBlocks>
+      <S.EffectDescription>{courseExample.description}</S.EffectDescription>
+      <S.RequestBanner>
+        <UiImage width="1160px" height="300px" name="handPhone" />
+        <S.RequestBannerText>
+          Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с
+          выбором направления и тренера, с которым тренировки принесут здоровье
+          и радость!
+        </S.RequestBannerText>
+        <UiButton
+          onClick={handleButtonClick}
+          title="Записаться на тренировку"
+          buttonTheme={ButtonTheme.PurpleBright}
+          fontSize="s"
+          size={ButtonSize.L}
         />
-        <S.PrescriptionHeader>Подойдет для вас, если:</S.PrescriptionHeader>
-        <S.PrescriptionBlocks>
-          {courseExample.fitting.map((item, index) => {
-            return (
-              <S.Prescription key={index}>
-                <S.PrescriptionBlocksItemIndex>
-                  {index + 1}
-                </S.PrescriptionBlocksItemIndex>
-                <S.PrescriptionBlocksItem key={index}>
-                  {item}
-                </S.PrescriptionBlocksItem>
-              </S.Prescription>
-            )
-          })}
-        </S.PrescriptionBlocks>
-        <S.DirectionHeader>Направления:</S.DirectionHeader>
-        <S.DirectionBlocks>
-          {courseExample.directions.map((item, index) => {
-            return <li key={index}>{item}</li>
-          })}
-        </S.DirectionBlocks>
-        <S.EffectDescription>{courseExample.description}</S.EffectDescription>
-        <S.RequestBanner>
-          <UiImage width="1160px" height="300px" name="handPhone" />
-          <S.RequestBannerText>
-            Оставьте заявку на пробное занятие, мы свяжемся с вами, поможем с
-            выбором направления и тренера, с которым тренировки принесут
-            здоровье и радость!
-          </S.RequestBannerText>
-          <UiButton
-            onClick={handleButtonClick}
-            title="Записаться на тренировку"
-            buttonTheme={ButtonTheme.PurpleBright}
-            fontSize="s"
-            size={ButtonSize.L}
-          />
-        </S.RequestBanner>
-      </S.BlocksWrapper>
+      </S.RequestBanner>
     </S.PageWrapper>
   )
 }
