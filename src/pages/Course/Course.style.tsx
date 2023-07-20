@@ -1,11 +1,5 @@
 import { styled } from 'styled-components'
 
-import { FontSizeType } from '@/theme/themeTypes'
-
-type HeaderProps = {
-  fontSize: keyof FontSizeType['fontSize']
-}
-
 export const PageWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -19,22 +13,18 @@ export const PageWrapper = styled.div`
 export const BlocksWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1440px;
-  height: 1623px;
-  padding-top: 140px;
-  padding-left: 140px;
-  padding-right: 140px;
-  padding-bottom: 95px;
+  width: fit-content;
+  padding: 140px 140px 95px 140px;
 `
-export const PrescriptionHeader = styled.div<HeaderProps>`
+export const PrescriptionHeader = styled.div`
   font-family: inherit;
-  font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
+  font-size: ${({ theme }) => theme.fontSize.l};
   margin-top: 75px;
   margin-bottom: 40px;
 `
 export const PrescriptionBlocks = styled.div`
   display: flex;
-  width: 1160px;
+  width: fit-content;
   gap: 87px;
 `
 export const Prescription = styled.div`
@@ -46,56 +36,52 @@ export const PrescriptionBlocksItem = styled.li`
   width: 244px;
 `
 export const PrescriptionBlocksItemIndex = styled.div`
-  border-radius: 1202.287px;
-  background: #C7E957;
+  border-radius: 1203px;
+  background: ${({ theme }) => theme.colors.saladMiddle};
   display: flex;
   width: 67px;
   height: 67px;
-  padding: 10.687px;
+  padding: 11px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 13.359px;
+  gap: 14px;
 `
-export const DirectionHeader = styled.div<HeaderProps>`
+export const DirectionHeader = styled.div`
   font-family: inherit;
-  font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
+  font-size: ${({ theme }) => theme.fontSize.l};
   margin-top: 107px;
   margin-bottom: 22px;
 `
 export const DirectionBlocks = styled.div`
   column-count: 2;
-  column-gap: 168px;
+  
 `
-export const Effect = styled.div`
+export const EffectDescription = styled.div`
   margin-top: 75px;
   width: 1160px;
 `
-export const Request = styled.div`
+export const RequestBanner = styled.div`
   margin-top: 75px;
   margin-bottom: 95px;
   width: 1160px;
 
   & > div > svg {
     position: absolute;
-    width: 1160px;
-    height: 300px;
     flex-shrink: 0;
     margin-top: 300px;
   }
-  
+
   & > button {
     position: absolute;
     margin-left: 52px;
     margin-top: 200px;
   }
 `
-export const RequestText = styled.span`
+export const RequestBannerText = styled.span`
   position: absolute;
   width: 823px;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 400;
+  font-size: ${({ theme }) => theme.fontSize.l};
   line-height: 40px;
   margin-top: 46px;
   margin-left: 52px;
