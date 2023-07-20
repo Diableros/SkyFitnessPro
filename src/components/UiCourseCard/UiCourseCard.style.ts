@@ -14,7 +14,8 @@ export const CourseCard = styled.div<CourseProps>`
   border-radius: 30px;
   width: ${({ size }) => cardView[size].width};
   height: ${({ size }) => cardView[size].height};
-  cursor: ${({ $pageType }) => ($pageType === PageType.Home ? 'pointer' : 'default')};
+  cursor: ${({ $pageType }) =>
+    $pageType === PageType.Home ? 'pointer' : 'default'};
 
   background-color: ${({ theme }) => theme.colors.white};
 
@@ -29,5 +30,8 @@ export const CardTitle = styled.span<CourseProps>`
   position: absolute;
   top: 35px;
   left: 30px;
-  font-size: ${({ $pageType, theme }) => ($pageType === PageType.Course ? theme.fontSize.xxl : theme.fontSize.l)};
+
+  font-size: ${({ $pageType, theme }) =>
+    $pageType === PageType.Course ? theme.fontSize.xxl : theme.fontSize.l};
+  line-height: normal;
 `

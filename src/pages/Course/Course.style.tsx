@@ -36,46 +36,41 @@ export const PrescriptionBlocksItem = styled.li`
   width: 244px;
 `
 export const PrescriptionBlocksItemIndex = styled.div`
-  border-radius: 1203px;
-  background: ${({ theme }) => theme.colors.saladMiddle};
+  border-radius: 34px;
+  background: ${({ theme }) => theme.colors.saladNormal};
   display: flex;
-  width: 67px;
-  height: 67px;
-  padding: 11px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 14px;
+
+  width: 67px;
+  height: 67px;
+
+  font-size: ${({theme}) => theme.fontSize.l};
 `
 export const DirectionHeader = styled.div`
   font-family: inherit;
   font-size: ${({ theme }) => theme.fontSize.l};
-  margin-top: 107px;
+  margin-top: 75px;
   margin-bottom: 22px;
 `
 export const DirectionBlocks = styled.div`
   column-count: 2;
-  
 `
 export const EffectDescription = styled.div`
   margin-top: 75px;
   width: 1160px;
 `
 export const RequestBanner = styled.div`
-  margin-top: 75px;
-  margin-bottom: 95px;
-  width: 1160px;
+  position: relative;
 
-  & > div > svg {
-    position: absolute;
-    flex-shrink: 0;
-    margin-top: 300px;
-  }
+  margin-top: 75px;
 
   & > button {
     position: absolute;
-    margin-left: 52px;
-    margin-top: 200px;
+
+    left: 3.25rem;
+    bottom: 3rem;
   }
 `
 export const RequestBannerText = styled.span`
@@ -83,6 +78,6 @@ export const RequestBannerText = styled.span`
   width: 823px;
   font-size: ${({ theme }) => theme.fontSize.l};
   line-height: 40px;
-  margin-top: 46px;
-  margin-left: 52px;
+  top: 46px;
+  left: 52px;
 `
