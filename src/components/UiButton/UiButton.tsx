@@ -25,10 +25,10 @@ const UiButton = ({
   return (
     <S.Button
       onClick={onClick}
-      buttontheme={buttonTheme}
+      $buttontheme={buttonTheme}
       size={size}
       fontSize={fontSize}
-      outlined={outlined}
+      $outlined={outlined}
     >
       {title}
     </S.Button>
