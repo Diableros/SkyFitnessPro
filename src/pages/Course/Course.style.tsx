@@ -2,20 +2,14 @@ import { styled } from 'styled-components'
 
 export const PageWrapper = styled.div`
   height: 100%;
-  width: 100%;
+  width: 1160px;
 
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  align-items: center;
-  justify-content: center;
+  flex-flow: column nowrap;
+
+  padding: 140px 0;
 `
-export const BlocksWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  padding: 140px 140px 95px 140px;
-`
+
 export const PrescriptionHeader = styled.div`
   font-family: inherit;
   font-size: ${({ theme }) => theme.fontSize.l};
@@ -46,7 +40,7 @@ export const PrescriptionBlocksItemIndex = styled.div`
   width: 67px;
   height: 67px;
 
-  font-size: ${({theme}) => theme.fontSize.l};
+  font-size: ${({ theme }) => theme.fontSize.l};
 `
 export const DirectionHeader = styled.div`
   font-family: inherit;
