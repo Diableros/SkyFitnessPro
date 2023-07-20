@@ -20,6 +20,12 @@ export const buttonPalette = {
     [ButtonState.Active]: theme.colors.saladLight,
     [ButtonState.TextColor]: theme.colors.black,
   },
+  [ButtonTheme.White]: {
+    [ButtonState.Regular]: theme.colors.white,
+    [ButtonState.Hover]: theme.colors.grayLight,
+    [ButtonState.Active]: theme.colors.grayNormal,
+    [ButtonState.TextColor]: theme.colors.black,
+  },
 }
 
 export const buttonSize = {

@@ -1,3 +1,7 @@
+export type AuthRequest = {
+  email: string
+  password: string
+}
 import { EndpointPath } from './enums'
 
 export type Endpoint = {
