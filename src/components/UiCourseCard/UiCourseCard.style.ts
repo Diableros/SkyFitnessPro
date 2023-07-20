@@ -1,21 +1,21 @@
 import { styled } from 'styled-components'
 
-import { cardSize } from './constants'
-import { CardSize } from './enums'
+import { cardView } from './constants'
+import { CardView, PageType } from './enums'
 
-type CourseCard = {
-  size: CardSize
-  isHomePage?: boolean
+type CourseProps = {
+  size: CardView
+  $pageType?: PageType
 }
 
-export const CourseCard = styled.div<CourseCard>`
+export const CourseCard = styled.div<CourseProps>`
   position: relative;
 
   border-radius: 30px;
-  border: 1px solid black;
-  width: ${({ size }) => cardSize[size].width};
-  height: ${({ size }) => cardSize[size].height};
-  cursor: ${({ isHomePage }) => isHomePage ? 'pointer' : 'default'};
+  width: ${({ size }) => cardView[size].width};
+  height: ${({ size }) => cardView[size].height};
+  cursor: ${({ $pageType }) =>
+    $pageType === PageType.Home ? 'pointer' : 'default'};
 
   background-color: ${({ theme }) => theme.colors.white};
 
@@ -26,9 +26,12 @@ export const CourseCard = styled.div<CourseCard>`
   }
 `
 
-export const CourseName = styled.span`
+export const CardTitle = styled.span<CourseProps>`
   position: absolute;
-  top: 30px;
+  top: 35px;
   left: 30px;
-  font-size: ${({ theme }) => theme.fontSize.l};
+
+  font-size: ${({ $pageType, theme }) =>
+    $pageType === PageType.Course ? theme.fontSize.xxl : theme.fontSize.l};
+  line-height: normal;
 `

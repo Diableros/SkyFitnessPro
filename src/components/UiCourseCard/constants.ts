@@ -1,12 +1,12 @@
-import { CardSize } from './enums'
+import { CardView } from './enums'
 
-export const cardSize = {
-  [CardSize.Normal]: {
+export const cardView = {
+  [CardView.Card]: {
     width: '360px',
     height: '480px',
   },
-  [CardSize.Large]: {
+  [CardView.Banner]: {
     width: '1160px',
-    height: '480px',
+    height: '310px',
   },
 }

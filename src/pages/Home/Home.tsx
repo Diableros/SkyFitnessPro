@@ -1,3 +1,4 @@
+import { PageType } from '@/components/UiCourseCard/enums'
 import UiCourseCard from '@/components/UiCourseCard/UiCourseCard'
 import UiImage from '@/components/UiImage'
 
@@ -24,7 +25,7 @@ const Home = ({ fontSize = 'xxl' }: PropsType) => {
         <S.CardsContainer>
           {mockData
             ? mockData.map((course) => (
-                <UiCourseCard key={course._id} course={course} isHomePage />
+                <UiCourseCard key={course._id} course={course} pageType = {PageType.Home}/>
               ))
             : null}
         </S.CardsContainer>
