@@ -19,16 +19,3 @@ export const GroupWrapper = styled.div`
   flex-flow: column nowrap;
   gap: 1.25rem;
 `
-
-export const Input = styled.input`
-  font-size: ${({ theme }) => theme.fontSize.s};
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.gray};
-  }
-
-  line-height: 3rem;
-
-  outline: none;
-  border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
-`

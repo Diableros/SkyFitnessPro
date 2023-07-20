@@ -1,10 +1,6 @@
 import { FieldError, RegisterOptions, UseFormRegister } from 'react-hook-form'
 
-export enum FieldsList {
-  Email = 'email',
-  Password = 'password',
-  PasswordConfirm = 'passwordConfirm',
-}
+import { FieldsList } from './enums'
 
 export type AuthFields = {
   email: string

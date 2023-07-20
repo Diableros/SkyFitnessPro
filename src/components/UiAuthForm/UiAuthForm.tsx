@@ -1,21 +1,27 @@
 import * as React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
+import FormInput from './components/FormInput'
 import { ButtonSize, ButtonTheme } from '../UiButton/enums'
 import UiButton from '../UiButton/UiButton'
 import UiImage from '../UiImage'
 
 import { AuthRequest } from '@/api/types'
 
-import { ButtonTitle } from './constants'
+import formFields from './constants'
 import { AuthFields } from './types'
+import { ButtonTitle, FieldsList } from './enums'
 
 import * as S from './UiAuthForm.style'
 
 const UiAuthForm = () => {
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
 
-  const { handleSubmit } = useForm<AuthFields>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<AuthFields>({
     mode: 'onTouched',
   })
 
@@ -32,18 +38,35 @@ const UiAuthForm = () => {
       <UiImage name="logoTypography" width="220px" height="35px" />
 
       <S.GroupWrapper>
-        <S.Input placeholder="e-mail" name="email" />
-        <S.Input placeholder="Пароль" name="password" />
+        <FormInput
+          register={register}
+          inputError={errors[FieldsList.Email]}
+          {...formFields[FieldsList.Email]}
+        />
+        <FormInput
+          register={register}
+          inputError={errors[FieldsList.Password]}
+          {...formFields[FieldsList.Password]}
+        />
         {isSignUp ? (
-          <S.Input placeholder="Повторите пароль" name="repeat-password" />
+          <FormInput
+            register={register}
+            inputError={errors[FieldsList.PasswordConfirm]}
+            {...formFields[FieldsList.PasswordConfirm]}
+          />
         ) : null}
       </S.GroupWrapper>
 
       <S.GroupWrapper>
         {!isSignUp ? (
-          <UiButton size={ButtonSize.L} title={ButtonTitle.LoginTitle} />
+          <UiButton
+            buttonType="submit"
+            size={ButtonSize.L}
+            title={ButtonTitle.LoginTitle}
+          />
         ) : null}
         <UiButton
+          buttonType={isSignUp ? 'submit' : 'button'}
           size={ButtonSize.L}
           title={ButtonTitle.SignUpTitle}
           buttonTheme={isSignUp ? ButtonTheme.PurpleBright : ButtonTheme.White}

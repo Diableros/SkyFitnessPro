@@ -1,4 +1,5 @@
 import React from 'react'
+import { type } from 'os'
 
 import { FontSizeType } from '@/theme/themeTypes'
 import { ButtonSize, ButtonTheme } from './enums'
@@ -7,6 +8,7 @@ import * as S from './UiButton.style'
 
 type PropsType = {
   title: string
+  buttonType?: 'button' | 'submit'
   onClick?: (event: React.MouseEvent) => void
   size?: ButtonSize
   buttonTheme?: ButtonTheme
@@ -16,6 +18,7 @@ type PropsType = {
 
 const UiButton = ({
   title,
+  buttonType = 'button',
   onClick,
   size = ButtonSize.L,
   buttonTheme = ButtonTheme.PurpleBright,
@@ -24,6 +27,7 @@ const UiButton = ({
 }: PropsType) => {
   return (
     <S.Button
+      type={buttonType}
       onClick={onClick}
       $buttontheme={buttonTheme}
       size={size}
