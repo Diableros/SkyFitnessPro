@@ -7,3 +7,12 @@ export const Layout = styled.div`
   flex-flow: column nowrap;
   align-items: center;
 `
+
+export const LogoWrapper = styled.div`
+  position: fixed;
+  width: 1160px;
+  margin: 2rem auto 0;
+  & > div {
+    justify-content: flex-start;
+  }
+`
