@@ -1,11 +1,11 @@
-import UiAuthForm from '@/components/UiAuthForm'
+import AuthForm from './components/AuthForm'
 
 import * as S from './Auth.style'
 
 const Auth = () => {
   return (
     <S.PageWrapper>
-      <UiAuthForm />
+      <AuthForm />
     </S.PageWrapper>
   )
 }

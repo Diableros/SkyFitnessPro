@@ -11,7 +11,8 @@ import { ReactComponent as cardStretching } from '@/assets/images/cardStretching
 import { ReactComponent as cardYoga } from '@/assets/images/cardYoga.svg'
 import { ReactComponent as cloud } from '@/assets/images/cloud.svg'
 import { ReactComponent as handPhone } from '@/assets/images/handPhone.svg'
-import { ReactComponent as logoTypography } from '@/assets/images/logoTypography.svg'
+import { ReactComponent as logoBlack } from '@/assets/images/logoBlack.svg'
+import { ReactComponent as logoWhite } from '@/assets/images/logoWhite.svg'
 import { ReactComponent as okHand } from '@/assets/images/okHand.svg'
 
 const svg = {
@@ -29,7 +30,8 @@ const svg = {
   cardYoga,
   cloud,
   handPhone,
-  logoTypography,
+  logoBlack,
+  logoWhite,
   okHand,
 }
 
