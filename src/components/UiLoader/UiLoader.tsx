@@ -1,9 +1,9 @@
-import * as React from 'react'
-
 import UiImage from '../UiImage'
 
 import { ColorType } from '@/theme/themeTypes'
 import { LoaderSize } from './enums'
+
+import * as S from './UiLoader.style'
 
 type PropsType = {
   size?: LoaderSize
@@ -11,7 +11,11 @@ type PropsType = {
 }
 
 const UiLoader = ({ size = LoaderSize.L, color = 'white' }: PropsType) => {
-  return <UiImage name="loader" width={size} height={size} color={color} />
+  return (
+    <S.LoaderWrapper>
+      <UiImage name="loader" width={size} height={size} color={color} />
+    </S.LoaderWrapper>
+  )
 }
 
 export default UiLoader

@@ -17,6 +17,6 @@ export type InputObjectType = {
   registerOptions: RegisterOptions
 }
 
-export type FieldsType = {
+export type Fields = {
   [key in FieldsList]: InputObjectType
 }

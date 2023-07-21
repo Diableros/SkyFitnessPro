@@ -10,14 +10,14 @@ export type Endpoint = {
   auth?: boolean
 }
 
-type Course = {
+export type Course = {
   _id: string
-  order: number
-  nameRU: string
-  nameEN: string
   description: string
   directions: string[]
   fitting: string[]
+  nameEN: string
+  nameRU: string
+  order: number
   workouts: string[]
 }
 

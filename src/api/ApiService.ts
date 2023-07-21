@@ -1,3 +1,4 @@
+import { API_REQUEST_DELAY } from './constants'
 import { CourseResponse, Endpoint } from './types'
 import { EndpointPath } from './enums'
 
@@ -55,7 +56,7 @@ class ApiService {
       const timer = setTimeout(() => {
         resolve(fetch(fullRequestURL, mergedConfig))
         clearTimeout(timer)
-      }, 1000)
+      }, API_REQUEST_DELAY)
     })
 
     if (!dbResponse.ok) {

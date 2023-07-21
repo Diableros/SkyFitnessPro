@@ -21,7 +21,7 @@ const Course = () => {
         key={courseExample._id}
         size={CardView.Banner}
         course={courseExample}
-        $pageType={PageType.Course}
+        pageType={PageType.Course}
       />
       <S.PrescriptionHeader>Подойдет для вас, если:</S.PrescriptionHeader>
       <S.PrescriptionBlocks>
