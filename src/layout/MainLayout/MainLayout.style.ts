@@ -9,7 +9,7 @@ export const Layout = styled.div`
 `
 
 export const LogoWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   width: 1160px;
   margin: 2rem auto 0;
   & > div {

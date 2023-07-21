@@ -10,7 +10,6 @@ import { RouterPath } from '@/router/routerPath'
 
 const MainLayout = () => {
   const { pathname } = useLocation()
-  console.log(pathname)
 
   const isLogoBlack =
     pathname.includes(RouterPath.Course) ||
