@@ -6,7 +6,8 @@ import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
-import { AuthRequest } from '@/api/types'
+import api from '@/api/ApiService'
+import { Credentials } from '@/api/types'
 
 import formFields from './constants'
 import { AuthFields } from './types'
@@ -25,11 +26,11 @@ const UiAuthForm = () => {
     mode: 'onTouched',
   })
 
-  const onSubmit: SubmitHandler<AuthRequest> = ({ email, password }) => {
+  const onSubmit: SubmitHandler<Credentials> = (credentials) => {
     if (isSignUp) {
-      console.log(`user sign up with email: ${email}, pass: ${password}`)
+      api.signUp(credentials)
     } else {
-      console.log(`user login up with email: ${email}, pass: ${password}`)
+      api.login(credentials)
     }
   }
 
