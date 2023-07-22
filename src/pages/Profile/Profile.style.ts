@@ -42,7 +42,8 @@ export const ProfileCourses = styled.div`
   flex-wrap: wrap;
   gap: 40px;
   padding-top: 60px;
-  >div {
-    box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.10), 10px -10px 16px 0px rgba(0, 0, 0, 0.10);
+  > div {
+    box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.1),
+      10px -10px 16px 0px rgba(0, 0, 0, 0.1);
   }
 `
