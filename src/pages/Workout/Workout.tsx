@@ -1,5 +1,10 @@
+import WorkoutSelect from "@/components/WorkoutSelect"
+import { mockData } from "../Home/mockData"
+
+const exampleData = mockData[1]
+
 const Workout = () => {
-  return <div>Text from Workout component</div>
+  return <WorkoutSelect course={exampleData} />
 }
 
 export default Workout

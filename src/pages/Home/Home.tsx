@@ -25,7 +25,7 @@ const Home = ({ fontSize = 'xxl' }: PropsType) => {
         <S.CardsContainer>
           {mockData
             ? mockData.map((course) => (
-                <UiCourseCard key={course._id} course={course} pageType = {PageType.Home}/>
+                <UiCourseCard key={course._id} course={course} $pageType = {PageType.Home}/>
               ))
             : null}
         </S.CardsContainer>
