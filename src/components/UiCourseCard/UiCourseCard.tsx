@@ -6,6 +6,7 @@ import UiImage from '../UiImage'
 import svg from '../UiImage/constants'
 
 import { CardView, PageType } from './enums'
+import { LinkPath } from '@/router/enums'
 
 import * as S from './UiCourseCard.style'
 
@@ -14,50 +15,40 @@ import { Course } from '@/pages/Home/mockData'
 type PropsType = {
   course: Course
   size?: CardView
-  $pageType?: PageType
+  pageType?: PageType
 }
 
 const UiCourseCard = ({
   course: { nameRU, nameEN, order },
   size = CardView.Card,
-  $pageType,
+  pageType,
 }: PropsType) => {
   const navigate = useNavigate()
 
   const handleCardClick = () => {
-    if ($pageType === PageType.Home) {
-      console.log('click on card')
-      navigate(`/courses/${order}`)
+    if (pageType === PageType.Home) {
+      navigate(`${LinkPath.Course}/${order}`)
     }
   }
 
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation()
     console.log('click on button')
-    navigate(`/courses/${order}`)
+    navigate(`${LinkPath.Course}/${order}`)
   }
 
-  const imageName = `card${nameEN}` as keyof typeof svg
-
-  let image;
-  if ($pageType === PageType.Course) {
-    image = <UiImage name={'bannerStretching'} />
-  } else {
-    image = <UiImage name={'cardYoga'} />
-  }
+  const svgName = `${
+    pageType === PageType.Course ? 'banner' : 'card'
+  }${nameEN}` as keyof typeof svg
 
   return (
     <>
-      <S.CourseCard
-         $pageType={$pageType}
-        onClick={handleCardClick}
-        size={size}
-      >
-        <S.CardTitle $pageType={$pageType} size={size}>
+      <S.CourseCard $pageType={pageType} onClick={handleCardClick} size={size}>
+        <S.CardTitle $pageType={pageType} size={size}>
           {nameRU}
         </S.CardTitle>
-        {image}
-        {$pageType === PageType.Profile ? (
+        {<UiImage name={svgName} />}
+        {pageType === PageType.Profile ? (
           <UiButton
             title="Перейти"
             onClick={handleButtonClick}

@@ -1,6 +1,6 @@
 import { passwordsCompare } from './utils'
 
-import { FieldsType } from './types'
+import { Fields } from './types'
 import {
   FieldErrorText,
   FieldInputLength,
@@ -28,7 +28,7 @@ const passwordRequirements = {
   pattern: PASSWORD_REG_EXP,
 }
 
-const formFields: FieldsType = {
+const formFields: Fields = {
   email: {
     type: 'email',
     name: FieldsList.Email,

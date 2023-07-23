@@ -1,31 +1,47 @@
+import * as React from 'react'
+import { useParams } from 'react-router-dom'
+
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiButton from '@/components/UiButton/UiButton'
 import UiCourseCard from '@/components/UiCourseCard'
 import { CardView, PageType } from '@/components/UiCourseCard/enums'
 import UiImage from '@/components/UiImage'
-import { mockData } from '../Home/mockData'
+import UiLoader from '@/components/UiLoader'
+
+import { Course } from '@/api/types'
+import useCourses from '@/hooks/useCourses'
 
 import * as S from './Course.style'
 
-const courseExample = mockData[1]
+const CoursePage = () => {
+  const [currentCourse, setCurrentCourse] = React.useState<Course | null>(null)
+  const { courseOrder } = useParams()
+  const { data, isLoading } = useCourses()
 
-const Course = () => {
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation()
-    console.log('click on button')
+    console.log('click on sign up for a workout button')
   }
 
-  return (
+  React.useEffect(() => {
+    if (data && !(data instanceof Error)) {
+      setCurrentCourse(
+        data.filter((course) => course.order === Number(courseOrder))[0]
+      )
+    }
+  }, [isLoading])
+
+  const pageContent = currentCourse ? (
     <S.PageWrapper>
       <UiCourseCard
-        key={courseExample._id}
+        key={currentCourse._id}
         size={CardView.Banner}
-        course={courseExample}
-        $pageType={PageType.Course}
+        course={currentCourse}
+        pageType={PageType.Course}
       />
       <S.PrescriptionHeader>Подойдет для вас, если:</S.PrescriptionHeader>
       <S.PrescriptionBlocks>
-        {courseExample.fitting.map((item, index) => {
+        {currentCourse.fitting.map((item, index) => {
           return (
             <S.Prescription key={index}>
               <S.PrescriptionBlocksItemIndex>
@@ -38,13 +54,15 @@ const Course = () => {
           )
         })}
       </S.PrescriptionBlocks>
+
       <S.DirectionHeader>Направления:</S.DirectionHeader>
       <S.DirectionBlocks>
-        {courseExample.directions.map((item, index) => {
+        {currentCourse.directions.map((item, index) => {
           return <li key={index}>{item}</li>
         })}
       </S.DirectionBlocks>
-      <S.EffectDescription>{courseExample.description}</S.EffectDescription>
+
+      <S.EffectDescription>{currentCourse.description}</S.EffectDescription>
       <S.RequestBanner>
         <UiImage width="1160px" height="300px" name="handPhone" />
         <S.RequestBannerText>
@@ -61,7 +79,11 @@ const Course = () => {
         />
       </S.RequestBanner>
     </S.PageWrapper>
+  ) : (
+    <div>Курс не найден</div>
   )
+
+  return !isLoading && data ? pageContent : <UiLoader color="purpleDark" />
 }
 
-export default Course
+export default CoursePage

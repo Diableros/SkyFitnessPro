@@ -22,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
     align-items: center;
   }
 `

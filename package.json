@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lintFix": "eslint ./src/**/*.ts && eslint ./src/**/*.tsx",
+    "lintFix": "eslint ./src/**/*.ts --fix && eslint ./src/**/*.tsx --fix",
     "format": "prettier --write ./src/",
     "precommit": "pnpm format && pnpm lintFix",
     "prepare": "husky install"

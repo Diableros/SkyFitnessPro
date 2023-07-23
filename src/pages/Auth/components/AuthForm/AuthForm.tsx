@@ -2,17 +2,18 @@ import * as React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import FormInput from './components/FormInput'
-import { ButtonSize, ButtonTheme } from '../UiButton/enums'
-import UiButton from '../UiButton/UiButton'
-import UiImage from '../UiImage'
+import UiButton from '@/components/UiButton'
+import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
+import UiImage from '@/components/UiImage'
 
-import { AuthRequest } from '@/api/types'
+import api from '@/api/ApiService'
+import { Credentials } from '@/api/types'
 
 import formFields from './constants'
 import { AuthFields } from './types'
 import { ButtonTitle, FieldsList } from './enums'
 
-import * as S from './UiAuthForm.style'
+import * as S from './AuthForm.style'
 
 const UiAuthForm = () => {
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
@@ -25,17 +26,17 @@ const UiAuthForm = () => {
     mode: 'onTouched',
   })
 
-  const onSubmit: SubmitHandler<AuthRequest> = ({ email, password }) => {
+  const onSubmit: SubmitHandler<Credentials> = (credentials) => {
     if (isSignUp) {
-      console.log(`user sign up with email: ${email}, pass: ${password}`)
+      api.signUp(credentials)
     } else {
-      console.log(`user login up with email: ${email}, pass: ${password}`)
+      api.login(credentials)
     }
   }
 
   return (
     <S.AuthForm onSubmit={handleSubmit(onSubmit)}>
-      <UiImage name="logoTypography" width="220px" height="35px" />
+      <UiImage name="logoBlack" width="220px" height="35px" />
 
       <S.GroupWrapper>
         <FormInput
