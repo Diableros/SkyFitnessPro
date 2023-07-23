@@ -7,8 +7,7 @@ const useCourses = () => {
   const { data, isLoading } = useQuery({
     queryKey: [QueryKey.Courses],
     queryFn: () => api.getCourses(),
-    staleTime: 3600,
-    refetchInterval: 0,
+    staleTime: 60 * 60 * 1000,
   })
 
   const convertData =

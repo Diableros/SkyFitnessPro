@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { ButtonSize, ButtonTheme } from '../UiButton/enums'
 import UiButton from '../UiButton/UiButton'
@@ -6,7 +6,7 @@ import UiImage from '../UiImage'
 import svg from '../UiImage/constants'
 
 import { CardView, PageType } from './enums'
-import { LinkPath, RouterPath } from '@/router/enums'
+import { LinkPath } from '@/router/enums'
 
 import * as S from './UiCourseCard.style'
 
@@ -27,7 +27,6 @@ const UiCourseCard = ({
 
   const handleCardClick = () => {
     if (pageType === PageType.Home) {
-      console.log('click on card')
       navigate(`${LinkPath.Course}/${order}`)
     }
   }
@@ -38,14 +37,9 @@ const UiCourseCard = ({
     navigate(`${LinkPath.Course}/${order}`)
   }
 
-  // const imageName = `card${nameEN}` as keyof typeof svg
-
-  let image
-  if (pageType === PageType.Course) {
-    image = <UiImage name={'bannerStretching'} />
-  } else {
-    image = <UiImage name={'cardYoga'} />
-  }
+  const svgName = `${
+    pageType === PageType.Course ? 'banner' : 'card'
+  }${nameEN}` as keyof typeof svg
 
   return (
     <>
@@ -53,7 +47,7 @@ const UiCourseCard = ({
         <S.CardTitle $pageType={pageType} size={size}>
           {nameRU}
         </S.CardTitle>
-        {image}
+        {<UiImage name={svgName} />}
         {pageType === PageType.Profile ? (
           <UiButton
             title="Перейти"

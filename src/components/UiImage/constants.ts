@@ -2,6 +2,9 @@ import { ReactComponent as arrowUp } from '@/assets/icons/arrowUp.svg'
 import { ReactComponent as checkMark } from '@/assets/icons/checkMark.svg'
 import { ReactComponent as loader } from '@/assets/icons/loader.svg'
 import { ReactComponent as logo } from '@/assets/icons/logo.svg'
+import { ReactComponent as bannerBodyFlex } from '@/assets/images/bannerBodyFlex.svg'
+import { ReactComponent as bannerDanceFitness } from '@/assets/images/bannerDanceFitness.svg'
+import { ReactComponent as bannerStepAirobic } from '@/assets/images/bannerStepAirobic.svg'
 import { ReactComponent as bannerStretching } from '@/assets/images/bannerStretching.svg'
 import { ReactComponent as bannerYoga } from '@/assets/images/bannerYoga.svg'
 import { ReactComponent as cardBodyFlex } from '@/assets/images/cardBodyFlex.svg'
@@ -21,6 +24,9 @@ const svg = {
   loader,
   logo,
 
+  bannerStepAirobic,
+  bannerDanceFitness,
+  bannerBodyFlex,
   bannerStretching,
   bannerYoga,
   cardBodyFlex,

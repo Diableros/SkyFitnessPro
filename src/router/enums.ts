@@ -1,6 +1,6 @@
 export const enum RouterPath {
   Home = '/',
-  Course = '/course/:id',
+  Course = '/course/:courseOrder',
   Auth = '/auth',
   Profile = '/profile',
   Workout = '/workout',

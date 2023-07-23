@@ -4,7 +4,7 @@ import DraftNavigate from './components/DraftNavigate'
 import ProfilePlate from '@/components/ProfilePlate'
 import UiImage from '@/components/UiImage'
 
-import { RouterPath } from '@/router/enums'
+import { LinkPath, RouterPath } from '@/router/enums'
 
 import * as S from './MainLayout.style'
 
@@ -12,7 +12,7 @@ const MainLayout = () => {
   const { pathname } = useLocation()
 
   const isLogoBlack =
-    pathname.includes(RouterPath.Course) ||
+    pathname.includes(LinkPath.Course) ||
     pathname.includes(RouterPath.Profile) ||
     pathname.includes(RouterPath.Workout)
 

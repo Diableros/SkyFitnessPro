@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import { RouterPath } from './enums'
+
 import MainLayout from '@/layout/MainLayout'
 import Auth from '@/pages/Auth'
 import Course from '@/pages/Course'
