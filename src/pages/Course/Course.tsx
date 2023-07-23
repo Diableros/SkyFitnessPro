@@ -29,7 +29,7 @@ const CoursePage = () => {
         data.filter((course) => course.order === Number(courseOrder))[0]
       )
     }
-  }, [courseOrder])
+  }, [isLoading])
 
   const pageContent = currentCourse ? (
     <S.PageWrapper>
