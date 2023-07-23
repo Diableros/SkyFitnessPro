@@ -14,16 +14,19 @@ const userCourses = mockData.filter((course) => coursesId.includes(course._id))
 const Profile = () => {
   const handleClick = () => {
     // TODO открытие модалок смены логина/пароля
-      alert('открылась модалка')
+    alert('открылась модалка')
   }
   return (
     <S.PageWrapper>
       <S.ProfileDataBlock>
+
         <S.ProfileHeader>Мой профиль</S.ProfileHeader>
+        
         <S.ProfileData>
           <S.ProfileDataItem>Логин: {login}</S.ProfileDataItem>
           <S.ProfileDataItem>Пароль: {password}</S.ProfileDataItem>
         </S.ProfileData>
+
         <S.ProfileChangeBtns>
           <UiButton
             title="Редактировать логин"
@@ -32,6 +35,7 @@ const Profile = () => {
             size={ButtonSize.L}
             onClick={handleClick}
           ></UiButton>
+
           <UiButton
             title="Редактировать пароль"
             buttonTheme={ButtonTheme.PurpleBright}
@@ -40,8 +44,11 @@ const Profile = () => {
             onClick={handleClick}
           ></UiButton>
         </S.ProfileChangeBtns>
+
       </S.ProfileDataBlock>
+
       <S.ProfileHeader>Мои курсы</S.ProfileHeader>
+
       <S.ProfileCourses>
         {userCourses.length > 0 &&
           userCourses.map((course) => (
