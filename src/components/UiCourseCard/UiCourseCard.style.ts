@@ -14,9 +14,7 @@ export const CourseCard = styled.div<CourseProps>`
   border-radius: 30px;
   width: ${({ size }) => cardView[size].width};
   height: ${({ size }) => cardView[size].height};
-  cursor: ${({ $pageType }) =>
-    $pageType === PageType.Home ? 'pointer' : 'default'};
-
+  ${({ $pageType }) => $pageType === PageType.Home ? 'cursor: pointer;' : null}
   background-color: ${({ theme }) => theme.colors.white};
 
   & > button {

@@ -1,5 +1,5 @@
 const Workout = () => {
-  return <div>Text from Workout component</div>
+  return <div>Workout Page</div>
 }
 
 export default Workout
