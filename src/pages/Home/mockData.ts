@@ -23,7 +23,7 @@ export const mockData: Course[] = [
     nameEN: 'StepAerobic',
     nameRU: 'Степ-аэробика',
     order: 4,
-    workouts: ['e9ghsb', 'a1rqtt', 'mstcbg', 't3cpno'],
+    workouts: ['Урок 1. Основы', 'Урок 2. Основные движения', 'Урок 3. Новые движения', 'Урок 4. Продвинутые движения'],
   },
   {
     _id: 'ab1c3f',
@@ -45,7 +45,7 @@ export const mockData: Course[] = [
     nameEN: 'Yoga',
     nameRU: 'Йога',
     order: 1,
-    workouts: ['3yvozj', 'hfgxlo', 'kcx5ai', 'kt6ah4', 'mrhuag'],
+    workouts: ['Утренняя практика / Йога на каждый день / 1 день', 'Красота и здоровье / Йога на каждый день / 2 день', 'Асаны стоя / Йога на каждый день / 3 день', 'Растягиваем мышцы бедра / Йога на каждый день / 4 день', 'Гибкость спины / Йога на каждый день / 5 день'],
   },
   {
     _id: 'kfpq8e',
@@ -60,7 +60,7 @@ export const mockData: Course[] = [
     nameEN: 'Stretching',
     nameRU: 'Стретчинг',
     order: 2,
-    workouts: ['9mefwq', '9yolz2', 'pi5vtr'],
+    workouts: ['Основы стретчинга', 'Разогрев мышц', 'Разогрев мышц 2.0'],
   },
   {
     _id: 'q02a6i',
@@ -75,7 +75,7 @@ export const mockData: Course[] = [
     nameEN: 'BodyFlex',
     nameRU: 'Бодифлекс',
     order: 5,
-    workouts: ['xlpkqy', '17oz5f', 'pyvaec'],
+    workouts: ['Техника дыхания', 'Тренировка мышц бедер', 'Тренировка мышц ягодиц'],
   },
   {
     _id: 'ypox9r',
@@ -90,6 +90,6 @@ export const mockData: Course[] = [
     nameEN: 'DanceFitness',
     nameRU: 'Танцевальный фитнес',
     order: 3,
-    workouts: ['gh7bd5', 'hwsut5', 'n18r8v', 'dq9rzo', 'rr70ie'],
+    workouts: ['Урок 1. Основы', 'Урок 2. Основные движения', 'Урок 3. Новые движения', 'Урок 4. Продвинутые движения', 'Урок 5. Мастер-класс'],
   },
 ]
