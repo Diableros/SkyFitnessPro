@@ -4,9 +4,9 @@ import DraftNavigate from './components/DraftNavigate'
 import ProfilePlate from '@/components/ProfilePlate'
 import UiImage from '@/components/UiImage'
 
-import * as S from './MainLayout.style'
+import { RouterPath } from '@/router/enums'
 
-import { RouterPath } from '@/router/routerPath'
+import * as S from './MainLayout.style'
 
 const MainLayout = () => {
   const { pathname } = useLocation()

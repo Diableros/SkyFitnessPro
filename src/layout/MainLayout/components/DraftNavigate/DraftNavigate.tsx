@@ -5,7 +5,7 @@ import UiButton from '@/components/UiButton/UiButton'
 
 import * as S from './DraftNavigate.style'
 
-import { RouterPath } from '@/router/routerPath'
+import { RouterPath } from '@/router/enums'
 
 const DraftNavigate = () => {
   const navigate = useNavigate()

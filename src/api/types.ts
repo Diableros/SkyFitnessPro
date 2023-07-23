@@ -1,5 +1,3 @@
-import exp from 'constants'
-
 import { EndpointPath } from './enums'
 
 export type Credentials = {

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { ButtonSize, ButtonTheme } from '../UiButton/enums'
 import UiButton from '../UiButton/UiButton'
@@ -6,6 +6,7 @@ import UiImage from '../UiImage'
 import svg from '../UiImage/constants'
 
 import { CardView, PageType } from './enums'
+import { LinkPath, RouterPath } from '@/router/enums'
 
 import * as S from './UiCourseCard.style'
 
@@ -27,17 +28,17 @@ const UiCourseCard = ({
   const handleCardClick = () => {
     if (pageType === PageType.Home) {
       console.log('click on card')
-      navigate(`/courses/${order}`)
+      navigate(`${LinkPath.Course}/${order}`)
     }
   }
 
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation()
     console.log('click on button')
-    navigate(`/courses/${order}`)
+    navigate(`${LinkPath.Course}/${order}`)
   }
 
-  const imageName = `card${nameEN}` as keyof typeof svg
+  // const imageName = `card${nameEN}` as keyof typeof svg
 
   let image
   if (pageType === PageType.Course) {

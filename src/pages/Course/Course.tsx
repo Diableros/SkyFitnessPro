@@ -12,7 +12,7 @@ const courseExample = mockData[1]
 const Course = () => {
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation()
-    console.log('click on button')
+    console.log('click on sign up for a workout button')
   }
 
   return (
@@ -38,12 +38,14 @@ const Course = () => {
           )
         })}
       </S.PrescriptionBlocks>
+
       <S.DirectionHeader>Направления:</S.DirectionHeader>
       <S.DirectionBlocks>
         {courseExample.directions.map((item, index) => {
           return <li key={index}>{item}</li>
         })}
       </S.DirectionBlocks>
+
       <S.EffectDescription>{courseExample.description}</S.EffectDescription>
       <S.RequestBanner>
         <UiImage width="1160px" height="300px" name="handPhone" />
