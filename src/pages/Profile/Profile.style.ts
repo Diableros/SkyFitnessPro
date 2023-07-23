@@ -2,20 +2,18 @@ import { styled } from 'styled-components'
 
 export const PageWrapper = styled.div`
   min-height: 100vh;
-  width: 100%;
-  max-width: 1440px;
-  padding: 140px;
+  width: 1160px;
+  padding: 140px 0;
 `
 export const ProfileDataBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin-bottom: 75px;
 `
 
 export const ProfileHeader = styled.div`
-  font-family: inherit;
   font-size: ${({ theme }) => theme.fontSize.xl};
-  margin-top: 75px;
 `
 
 export const ProfileData = styled.div`
@@ -25,7 +23,6 @@ export const ProfileData = styled.div`
 `
 
 export const ProfileDataItem = styled.p`
-  font-family: inherit;
   font-size: ${({ theme }) => theme.fontSize.s};
 `
 
@@ -43,7 +40,7 @@ export const ProfileCourses = styled.div`
   gap: 40px;
   padding-top: 60px;
   > div {
-    box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 0.1),
-      10px -10px 16px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: -10px 10px 15px 0px rgba(0, 0, 0, 10%),
+      10px -10px 16px 0px rgba(0, 0, 0, 10%);
   }
 `

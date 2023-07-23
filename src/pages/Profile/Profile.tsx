@@ -19,9 +19,8 @@ const Profile = () => {
   return (
     <S.PageWrapper>
       <S.ProfileDataBlock>
-
         <S.ProfileHeader>Мой профиль</S.ProfileHeader>
-        
+
         <S.ProfileData>
           <S.ProfileDataItem>Логин: {login}</S.ProfileDataItem>
           <S.ProfileDataItem>Пароль: {password}</S.ProfileDataItem>
@@ -44,20 +43,20 @@ const Profile = () => {
             onClick={handleClick}
           ></UiButton>
         </S.ProfileChangeBtns>
-
       </S.ProfileDataBlock>
 
       <S.ProfileHeader>Мои курсы</S.ProfileHeader>
 
       <S.ProfileCourses>
-        {userCourses.length > 0 &&
-          userCourses.map((course) => (
-            <UiCourseCard
-              key={course._id}
-              course={course}
-              $pageType={PageType.Profile}
-            />
-          ))}
+        {userCourses.length > 0
+          ? userCourses.map((course) => (
+              <UiCourseCard
+                key={course._id}
+                course={course}
+                $pageType={PageType.Profile}
+              />
+            ))
+          : null}
       </S.ProfileCourses>
     </S.PageWrapper>
   )
