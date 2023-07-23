@@ -6,21 +6,23 @@ import { Course } from '@/pages/Home/mockData'
 
 type PropsType = {
   course: Course
+  isFinished: boolean
 }
 
-const WorkoutSelect = ({ course: { workouts } }: PropsType) => {
+const WorkoutSelect = ({ course: { workouts }, isFinished }: PropsType) => {
+  
   return (
-    <S.ComponentWrapper>
-      <S.ComponentHeader>Выберите тренировку</S.ComponentHeader>
+    <S.SelectWrapper>
+      <S.SelectHeader>Выберите тренировку</S.SelectHeader>
       {workouts.map((name, index) => {
         return (
-          <S.ComponentBox key={index}>
+          <S.SelectBox $isFinished={isFinished} key={index}>
             {name}
-            <UiImage name="checkMark" width="27px" height="25px" />
-          </S.ComponentBox>
+            {isFinished ? <UiImage name="checkMark" width="27px" height="25px" /> : null}
+          </S.SelectBox>
         )
       })}
-    </S.ComponentWrapper>
+    </S.SelectWrapper>
   )
 }
 

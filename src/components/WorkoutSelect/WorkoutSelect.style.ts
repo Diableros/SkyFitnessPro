@@ -1,36 +1,44 @@
 import { styled } from 'styled-components'
 
-export const ComponentWrapper = styled.div`
-  width: 444px;
-  height: 626px;
+type WorkoutSelectProps = {
+  $isFinished?: boolean
+}
+
+export const SelectWrapper = styled.div`
   border-radius: 12px;
-  background: #fff;
+  background: ${({ theme }) => theme.colors.white};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
+  padding: 36px 53px 58px;
 `
-export const ComponentHeader = styled.span`
-  font-family: inherit;
+export const SelectHeader = styled.span`
   font-size: ${({ theme }) => theme.fontSize.l};
   margin-bottom: 40px;
 `
-export const ComponentBox = styled.div`
+export const SelectBox = styled.div<WorkoutSelectProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 23px;
   width: 278px;
   border-radius: 26px;
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 1px solid ${({ $isFinished, theme }) =>
+  !$isFinished ? theme.colors.black : theme.colors.mint};
   font-size: ${({ theme }) => theme.fontSize.xs};
-  font-family: inherit;
   text-align: center;
-  margin-bottom: 12px;
-  padding: 11px 27px 11px 27px;
+  padding: 11px 27px 17px 27px;
+  ${({ $isFinished }) =>
+  $isFinished ? 'padding-right: 40px' : null};
+  position: relative;
+  color: ${({ $isFinished, theme }) =>
+  !$isFinished ? theme.colors.black : theme.colors.mint};
+  
   & > div {
     position: absolute;
-    margin-bottom: 38px;
-    margin-left: 239px;
+    top: 8px;
+    right: 5px;
   }
 `
