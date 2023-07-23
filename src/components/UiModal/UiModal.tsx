@@ -2,12 +2,33 @@ import React from 'react'
 
 import * as S from './UiModal.style'
 
-type PropsType = {
-  children: React.ReactNode
+type ChildProps = {
+  onClose: () => void
 }
 
-const UiModal = ({ children }: PropsType) => {
-  return <S.ModalScreen>{children}</S.ModalScreen>
+type PropsType = {
+  children: React.ReactElement<ChildProps>
+  isShow?: boolean
+}
+
+const UiModal = ({ children, isShow = true }: PropsType) => {
+  const [isShowModal, toggleIsShowModal] = React.useReducer(
+    (state: boolean) => !state,
+    isShow
+  )
+
+  const Content = children.type
+
+  const handleCloseModal = () => {
+    console.log('Call onClose func')
+    toggleIsShowModal()
+  }
+
+  return isShowModal ? (
+    <S.ModalScreen>
+      <Content onClose={handleCloseModal} />
+    </S.ModalScreen>
+  ) : null
 }
 
 export default UiModal

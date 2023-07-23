@@ -5,4 +5,5 @@ export enum RouterPath {
   Profile = '/profile',
   Workout = '/workout',
   NotFound = '*',
+  Sandbox = '/sandbox'
 }

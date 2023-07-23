@@ -25,7 +25,7 @@ export const theme: ThemeType = {
     progressOrange: '#FF6D00',
     progressPurple: '#9A48F1',
 
-    modalShadow:'rgba(0, 0, 0, 10%)',
+    modalShadow:'rgba(0, 0, 0, 50%)',
 
     mint: '#06B16E',
     coral: '#FF8071',
