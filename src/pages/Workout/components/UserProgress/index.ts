@@ -1,3 +1,3 @@
-import UserProgress from "./UserProgress";
+import UserProgress from './UserProgress'
 
 export default UserProgress

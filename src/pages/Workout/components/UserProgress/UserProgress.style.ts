@@ -20,6 +20,24 @@ export const ProgressStats = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
+  > div:nth-child(1n) > div:last-child {
+    border: 2px solid ${({ theme }) => theme.colors.progressBlue};
+  }
+  > div:nth-child(2n) > div:last-child {
+    border: 2px solid ${({ theme }) => theme.colors.progressOrange};
+  }
+  > div:nth-child(3n) > div:last-child {
+    border: 2px solid ${({ theme }) => theme.colors.progressPurple};
+  }
+  > div:nth-child(1n) > div:last-child > div {
+    background-color: ${({ theme }) => theme.colors.progressBlue};
+  }
+  > div:nth-child(2n) > div:last-child > div {
+    background-color: ${({ theme }) => theme.colors.progressOrange};
+  }
+  > div:nth-child(3n) > div:last-child > div{
+    background-color: ${({ theme }) => theme.colors.progressPurple};
+  }
 `
 
 export const ProgressStatsItem = styled.div`
@@ -37,11 +55,8 @@ export const ProgressBar = styled.div`
   width: 280px;
   height: 40px;
   border-radius: 22px;
-  border: 2px solid ${({ theme }) => theme.colors.progressBlue};
   overflow: hidden;
-  > div {
-    background-color: ${({ theme }) => theme.colors.progressBlue};
-  }
+
 `
 
 export const Progress = styled.div<ProgressProps>`
