@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import FormInput from './components/FormInput'
 import UiButton from '@/components/UiButton'
@@ -12,11 +13,14 @@ import { Credentials } from '@/api/types'
 import formFields from './constants'
 import { AuthFields } from './types'
 import { ButtonTitle, FieldsList } from './enums'
+import { RouterPath } from '@/router/enums'
 
 import * as S from './AuthForm.style'
 
 const UiAuthForm = () => {
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
+
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -27,11 +31,20 @@ const UiAuthForm = () => {
   })
 
   const onSubmit: SubmitHandler<Credentials> = (credentials) => {
-    if (isSignUp) {
-      api.signUp(credentials)
-    } else {
-      api.login(credentials)
+    const handleResult = async () => {
+      if (isSignUp) {
+       return await api.signUp(credentials)
+      } else {
+       return await api.login(credentials)
+      }
     }
+
+    handleResult().then((result) => {
+      if(result) {
+        // TODO добавить флаг логина в стэйт приложения
+        navigate(RouterPath.Home)
+      }
+    })
   }
 
   return (
