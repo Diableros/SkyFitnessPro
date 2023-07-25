@@ -35,7 +35,7 @@ export const ProgressStats = styled.div`
   > div:nth-child(2n) > div:last-child > div {
     background-color: ${({ theme }) => theme.colors.progressOrange};
   }
-  > div:nth-child(3n) > div:last-child > div{
+  > div:nth-child(3n) > div:last-child > div {
     background-color: ${({ theme }) => theme.colors.progressPurple};
   }
 `
@@ -56,7 +56,6 @@ export const ProgressBar = styled.div`
   height: 40px;
   border-radius: 22px;
   overflow: hidden;
-
 `
 
 export const Progress = styled.div<ProgressProps>`

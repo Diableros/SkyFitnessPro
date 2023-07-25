@@ -1,4 +1,5 @@
 export const workoutData = {
+  courseId: 'ab1c3f',
   _id: 'hfgxlo',
   exercises: [
     { name: 'Наклон вперед (10 повторений)', quantity: 10 },

@@ -2,11 +2,15 @@ import UserProgress from './components/UserProgress'
 import VideoPlayer from './components/VideoPlayer'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
+import { mockData } from '../Home/mockData'
 
 import * as S from './Workout.styles'
 
 import { userProgress, workoutData } from './mockData'
-const { exercises, name, video } = workoutData
+const { courseId, exercises, name, video } = workoutData
+
+const course = mockData.find((course) => course._id === courseId)
+
 const Workout = () => {
   const handleButtonClick = () => {
     console.log('click to wride down the progress')
@@ -14,7 +18,7 @@ const Workout = () => {
 
   return (
     <S.PageWrapper>
-      <S.PageHaeder>{'Йога'}</S.PageHaeder>
+      <S.PageHaeder>{course?.nameRU}</S.PageHaeder>
       <VideoPlayer title={name} src={video} />
 
       <S.ProgressBlock>
