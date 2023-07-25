@@ -1,5 +1,7 @@
+import UiProgress from "@/components/UiProgress"
+
 const Workout = () => {
-  return <div>Workout Page</div>
+  return <UiProgress />
 }
 
 export default Workout
