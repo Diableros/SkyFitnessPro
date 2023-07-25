@@ -1,4 +1,8 @@
-import { API_REQUEST_DELAY, USER_INITIAL_STATE } from './constants'
+import {
+  API_REQUEST_DELAY,
+  USER_INITIAL_DATA,
+  USER_INITIAL_PROGRESS,
+} from './constants'
 import {
   AuthErrorResponse,
   CourseResponse,
@@ -6,22 +10,23 @@ import {
   Endpoint,
   LoginResponse,
   SignUpResponse,
-  UserState,
+  UserAccount,
+  UserData,
 } from './types'
 import { EndpointPath } from './enums'
 
 class ApiService {
-  private static instance?: ApiService
+  private static instance: ApiService
   private googleIdentApiUrl?: string
   private dbUrl?: string
   private dbApiKey?: string
-  public user: UserState
+  public user: UserData
 
   private constructor() {
     this.dbUrl = import.meta.env.VITE_FIREBASE_URL
     this.dbApiKey = import.meta.env.VITE_FIREBASE_API_KEY
     this.googleIdentApiUrl = import.meta.env.VITE_GOOGLE_IDENTITY_API_URL
-    this.user = USER_INITIAL_STATE
+    this.user = USER_INITIAL_DATA
 
     if (!this.dbUrl || !this.dbApiKey || !this.googleIdentApiUrl)
       throw new Error(
@@ -75,6 +80,20 @@ class ApiService {
     return successResponse as T
   }
 
+  private addDbUser = async (localId: UserData['localId']) => {
+    return await this.dbRequest<UserAccount, Error>(
+      {
+        endpointPath: EndpointPath.User,
+        param: localId,
+        auth: true,
+      },
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ ...USER_INITIAL_PROGRESS, _id: localId }),
+      }
+    )
+  }
+
   private authRequest = async <T = unknown, U = AuthErrorResponse>(
     endpointPath: EndpointPath,
     credentials: Credentials
@@ -104,40 +123,57 @@ class ApiService {
     return successResponse as T
   }
 
-  public login = async (credentials: Credentials) => {
+  public login = async (credentials: Credentials): Promise<boolean> => {
     const loginResponse = await this.authRequest<LoginResponse>(
       EndpointPath.Login,
       credentials
     )
 
     if ('kind' in loginResponse) {
-      const { idToken: refreshToken, email, displayName: name } = loginResponse
+      const {
+        idToken: refreshToken,
+        email,
+        displayName: name,
+        localId,
+      } = loginResponse
 
-      this.user = { refreshToken, email, name, isLogged: true }
+      this.user = { refreshToken, email, name, localId }
 
-      console.log('User state was successfully setted: ', this.user)
+      console.log(`User ${localId} was logged`)
+      return true
     } else {
       console.warn(loginResponse.error.message)
+      return false
     }
   }
 
-  public signUp = async ({ email, password }: Credentials) => {
+  public signUp = async ({
+    email,
+    password,
+  }: Credentials): Promise<boolean> => {
     const signUpResponse = await this.authRequest<SignUpResponse>(
       EndpointPath.SignUp,
       { email, password }
     )
 
     if ('kind' in signUpResponse) {
-      const { idToken: refreshToken, email } = signUpResponse
+      console.log('User registered')
 
-      this.user = { refreshToken, email, isLogged: true }
+      const { idToken: refreshToken, email, localId } = signUpResponse
+      this.user = { refreshToken, email }
 
-      console.log(
-        'User registered! User state was successfully setted: ',
-        this.user
-      )
+      return await this.addDbUser(localId).then((response) => {
+        if ('_id' in response) {
+          console.log(`User ${response._id} successfully added in DB`)
+          return true
+        } else {
+          console.warn(response.message)
+          return false
+        }
+      })
     } else {
       console.warn(signUpResponse.error.message)
+      return false
     }
   }
 

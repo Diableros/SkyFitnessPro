@@ -51,9 +51,16 @@ export type Course = {
 
 export type CourseResponse = Record<string, Course>
 
-export type UserState = {
-  isLogged?: boolean
+export type UserData = {
   refreshToken?: string
   email?: string
   name?: string
+  localId?: string
+}
+
+export type CourseProgress = Record<string, number[]>
+
+export type UserAccount = {
+  _id: string
+  courses: Record<string, CourseProgress>
 }
