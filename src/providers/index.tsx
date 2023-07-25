@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import AppThemeProvider from './AppThemeProvider'
+import ReactQueryProvider from './ReactQueryProvider'
 import AppRouterProvider from './RouterProvider'
 
 type PropsType = {
@@ -9,9 +10,11 @@ type PropsType = {
 
 const Providers = ({ children }: PropsType) => {
   return (
-    <AppThemeProvider>
-      <AppRouterProvider>{children}</AppRouterProvider>
-    </AppThemeProvider>
+    <ReactQueryProvider>
+      <AppThemeProvider>
+        <AppRouterProvider>{children}</AppRouterProvider>
+      </AppThemeProvider>
+    </ReactQueryProvider>
   )
 }
 

@@ -1,72 +1,52 @@
 import { styled } from 'styled-components'
 
-import { FontSizeType } from '@/theme/themeTypes'
-
-type HeaderProps = {
-  fontSize: keyof FontSizeType['fontSize']
-}
-
 export const PageWrapper = styled.div`
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
+  flex-grow: 1;
+
+  padding-top: 6.25rem;
 
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  flex-flow: column nowrap;
   align-items: center;
-  justify-content: center;
 
   background-color: ${({ theme }) => theme.colors.purpleNormal};
 `
-export const GeneralWrapper = styled.div`
-  gap: 52px;
+export const ContentWrapper = styled.div`
+  position: relative;
+  width: 1160px;
+  height: 100%;
+
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
+  flex-grow: 1;
 `
 export const CardsContainer = styled.div`
-  height: 1004px;
-  width: 1160px;
+  flex-grow: 1;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.purpleNormal};
-`
-export const HeaderWrapper = styled.div`
-  width: 1160px;
 
-  display: flex;
-  width: 1160px;
-  gap: 17px;
-
-  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-content: start;
+  gap: 2rem;
 `
-export const Header = styled.span<HeaderProps>`
-  width: 900px;
-  color: #f4f4ff;
-  font-family: inherit;
-  font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
-  font-style: normal;
-  font-weight: 400;
-  line-height: 54px;
-  letter-spacing: -1.169px;
+export const Header = styled.span`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSize.xxl};
+  line-height: 0.9;
+
+  margin-bottom: 3.25rem;
 `
 export const PreHeader = styled.span`
-  color: var(--monochrome-white-20, #fff);
+  color: ${({ theme }) => theme.colors.white50};
   font-family: inherit;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 115%; /* 23px */
-  letter-spacing: -0.05px;
+  margin-bottom: 1rem;
 `
 export const CloudWrapper = styled.div`
-  width: 250px;
-  height: 190px;
   position: absolute;
-  margin-left: 949px;
-  margin-top: 5px;
+  right: -60px;
+  top: 0px;
 `

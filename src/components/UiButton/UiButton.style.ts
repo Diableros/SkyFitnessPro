@@ -6,8 +6,9 @@ import { ButtonSize, ButtonTheme } from './enums'
 
 type ButtonProps = {
   size: ButtonSize
-  buttontheme: ButtonTheme
+  $buttontheme: ButtonTheme
   fontSize: keyof FontSizeType['fontSize']
+  $outlined: boolean
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -20,17 +21,23 @@ export const Button = styled.button<ButtonProps>`
 
   font-family: inherit;
   font-size: ${({ theme, fontSize }) => theme.fontSize[fontSize]};
-  color: ${({ buttontheme }) => buttonPalette[buttontheme].textColor};
+  color: ${({ $buttontheme }) => buttonPalette[$buttontheme].textColor};
 
-  background-color: ${({ buttontheme }) => buttonPalette[buttontheme].regular};
+  background-color: ${({ $buttontheme }) =>
+    buttonPalette[$buttontheme].regular};
 
   &:hover {
-    background-color: ${({ buttontheme }) => buttonPalette[buttontheme].hover};
+    background-color: ${({ $buttontheme }) =>
+      buttonPalette[$buttontheme].hover};
   }
 
   &:active {
-    background-color: ${({ buttontheme }) => buttonPalette[buttontheme].active};
+    background-color: ${({ $buttontheme }) =>
+      buttonPalette[$buttontheme].active};
   }
+
+  ${({ $outlined, theme }) =>
+    $outlined ? `border: 1px solid ${theme.colors.gray};` : ''}
 
   cursor: pointer;
 `

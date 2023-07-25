@@ -2,6 +2,7 @@ export type ColorType = {
   colors: {
     black: string
     white: string
+    white50: string
 
     purpleDark: string
     purpleNormal: string

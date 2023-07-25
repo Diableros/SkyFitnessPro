@@ -1,5 +1,13 @@
+import AuthForm from './components/AuthForm'
+
+import * as S from './Auth.style'
+
 const Auth = () => {
-  return <div>Text from Auth component</div>
+  return (
+    <S.PageWrapper>
+      <AuthForm />
+    </S.PageWrapper>
+  )
 }
 
 export default Auth

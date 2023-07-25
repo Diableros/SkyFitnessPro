@@ -1,37 +1,44 @@
+import { PageType } from '@/components/UiCourseCard/enums'
 import UiCourseCard from '@/components/UiCourseCard/UiCourseCard'
 import UiImage from '@/components/UiImage'
+import UiLoader from '@/components/UiLoader'
 
-import { FontSizeType } from '@/theme/themeTypes'
+import { Course } from '@/api/types'
+import useCourses from '@/hooks/useCourses'
 
 import * as S from './Home.style'
 
-import { mockData } from './mockData'
+const Home = () => {
+  const { data, isLoading } = useCourses()
 
-type PropsType = {
-  fontSize?: keyof FontSizeType['fontSize']
-}
-
-const Home = ({ fontSize = 'xxl' }: PropsType) => {
   return (
     <S.PageWrapper>
-      <S.GeneralWrapper>
-        <S.HeaderWrapper>
-          <S.PreHeader>Онлайн-тренировки для занятий дома</S.PreHeader>
-          <S.Header fontSize={fontSize}>
-            Начните заниматься спортом и улучшите качество жизни
-          </S.Header>
-        </S.HeaderWrapper>
-        <S.CardsContainer>
-          {mockData
-            ? mockData.map((course) => (
-                <UiCourseCard key={course._id} course={course} isHomePage />
-              ))
-            : null}
-        </S.CardsContainer>
+      <S.ContentWrapper>
+
+        <S.PreHeader>Онлайн-тренировки для занятий дома</S.PreHeader>
+        
+        <S.Header>
+          Начните заниматься спортом и улучшите качество жизни
+        </S.Header>
+
+        {!(data instanceof Error) && !isLoading && data ? (
+          <S.CardsContainer>
+            {data.map((course: Course) => (
+              <UiCourseCard
+                key={course._id}
+                course={course}
+                pageType={PageType.Home}
+              />
+            ))}
+          </S.CardsContainer>
+        ) : (
+          <UiLoader color="white" />
+        )}
+
         <S.CloudWrapper>
-          <UiImage name={'cloud'} />
+          <UiImage name={'cloud'} width='250px'/>
         </S.CloudWrapper>
-      </S.GeneralWrapper>
+      </S.ContentWrapper>
     </S.PageWrapper>
   )
 }

@@ -4,6 +4,7 @@ export const theme: ThemeType = {
   colors: {
     black: '#000',
     white: '#fff',
+    white50: 'rgba(255, 255, 255, 50%)',
 
     purpleDark: '#140D40',
     purpleNormal: '#271A58',

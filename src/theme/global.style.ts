@@ -19,10 +19,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
     align-items: center;
   }
 `
