@@ -1,7 +1,7 @@
-import UiProgress from "@/components/UiProgress"
+import UiProgressForm from '@/components/UiProgress'
 
 const Workout = () => {
-  return <UiProgress />
+  return <UiProgressForm />
 }
 
 export default Workout

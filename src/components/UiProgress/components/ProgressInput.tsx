@@ -1,19 +1,15 @@
-import { Path,UseFormRegister } from 'react-hook-form'
-
 import * as S from './ProgressInput.style'
 
-export type ProgressInputType = {
-  value: string 
-}
-
-type ProgressInputPropsType = {
+type ProgressInputType = {
   placeholder: string
-  register: UseFormRegister<ProgressInputType>
-  name: Path<ProgressInputType>
+  value: string
+  type: string
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  name: string
 }
 
-const ProgressInput = ({ placeholder, register, name }: ProgressInputPropsType) => {
-  return <S.ProgressInput placeholder={placeholder} {...register(name)} />
+const ProgressInput = ({ name, onChange, type, placeholder, value, ...rest }: ProgressInputType) => {
+  return <S.ProgressInput name={name} onChange={onChange} type={type} value={value} placeholder={placeholder} {...rest} />
 }
 
 export default ProgressInput

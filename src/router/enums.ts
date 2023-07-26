@@ -8,5 +8,5 @@ export const enum RouterPath {
 }
 
 export const enum LinkPath {
-  Course = '/course'
+  Course = '/course',
 }
