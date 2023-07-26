@@ -53,7 +53,7 @@ const Profile = () => {
               <UiCourseCard
                 key={course._id}
                 course={course}
-                $pageType={PageType.Profile}
+                pageType={PageType.Profile}
               />
             ))
           : null}
