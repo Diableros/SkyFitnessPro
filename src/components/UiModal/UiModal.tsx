@@ -1,5 +1,7 @@
 import React from 'react'
 
+import UiImage from '../UiImage'
+
 import * as S from './UiModal.style'
 
 type ChildProps = {
@@ -26,7 +28,12 @@ const UiModal = ({ children, isShow = true }: PropsType) => {
 
   return isShowModal ? (
     <S.ModalScreen>
-      <Content onClose={handleCloseModal} />
+      <S.ModalContentBox>
+        <S.ImageWrapper onClick={handleCloseModal}>
+        <UiImage name="cross" width='20px' height='20px'/>
+        </S.ImageWrapper>
+        <Content onClose={handleCloseModal} />
+      </S.ModalContentBox>
     </S.ModalScreen>
   ) : null
 }
