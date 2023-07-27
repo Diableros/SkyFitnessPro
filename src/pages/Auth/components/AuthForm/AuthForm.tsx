@@ -9,6 +9,7 @@ import UiImage from '@/components/UiImage'
 
 import api from '@/api/ApiService'
 import { Credentials } from '@/api/types'
+import { Action, useUserContext } from '@/context'
 
 import formFields from './constants'
 import { AuthFields } from './types'
@@ -19,6 +20,8 @@ import * as S from './AuthForm.style'
 
 const UiAuthForm = () => {
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
+
+  const { dispatch } = useUserContext()
 
   const navigate = useNavigate()
 
@@ -41,7 +44,10 @@ const UiAuthForm = () => {
 
     handleResult().then((result) => {
       if (result) {
-        // TODO добавить флаг логина в стэйт приложения
+        dispatch({
+          type: Action.Login,
+          payload: true,
+        })
         navigate(RouterPath.Home)
       }
     })
