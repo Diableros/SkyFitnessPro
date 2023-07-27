@@ -1,5 +1,7 @@
+import UiPasswordChangeForm from "@/components/UiPasswordChangeForm"
+
 const Workout = () => {
-  return <div>Workout Page</div>
+  return <UiPasswordChangeForm />
 }
 
 export default Workout
