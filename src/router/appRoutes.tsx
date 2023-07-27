@@ -14,8 +14,6 @@ export const routes = (
   children: React.ReactNode,
   access = false
 ): RouteObject[] => {
-  console.log(access)
-
   return [
     {
       path: RouterPath.Home,

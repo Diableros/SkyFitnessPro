@@ -44,7 +44,6 @@ const UiAuthForm = () => {
 
     handleResult().then((result) => {
       if (result) {
-        // TODO добавить флаг логина в стэйт приложения
         dispatch({
           type: Action.Login,
           payload: true,

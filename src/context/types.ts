@@ -4,7 +4,6 @@ export type UserState = {
   logged: boolean
 }
 
-export type UserContext = {
-  state: UserState
+export type UserContext = UserState & {
   dispatch: React.Dispatch<UserAction>
 }

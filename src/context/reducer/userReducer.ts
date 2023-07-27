@@ -6,13 +6,9 @@ export const userReducer: UserReducer = (state, action) => {
     case Action.Login:
       return {
         ...state,
-        logged: true,
+        logged: action.payload,
       }
-    case Action.Logout:
-      return {
-        ...state,
-        logged: false,
-      }
+
     default:
       return state
   }

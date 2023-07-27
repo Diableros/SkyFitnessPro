@@ -13,7 +13,9 @@ export const UserContextProvider = ({
   )
 
   return (
-    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+    <Context.Provider value={{ ...state, dispatch }}>
+      {children}
+    </Context.Provider>
   )
 }
 

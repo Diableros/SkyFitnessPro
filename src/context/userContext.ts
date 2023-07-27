@@ -4,7 +4,7 @@ import { INIT_USER_STATE } from './constants'
 import { UserContext } from './types'
 
 export const Context = React.createContext<UserContext>({
-  state: INIT_USER_STATE,
+  ...INIT_USER_STATE,
   dispatch: () => {
     return null
   },
