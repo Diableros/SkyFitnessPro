@@ -1,11 +1,14 @@
-import { UserAction } from './enums'
+import { UserState } from '../types'
+import { Action } from './enums'
 
-export type UserActionType =
+export type UserAction =
   | {
-      type: UserAction.Login
+      type: Action.Login
       payload: boolean
     }
   | {
-      type: UserAction.Logout
+      type: Action.Logout
       payload: boolean
     }
+
+export type UserReducer = (state: UserState, action: UserAction) => UserState

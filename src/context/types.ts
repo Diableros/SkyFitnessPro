@@ -1,9 +1,10 @@
-import { UserActionType } from './reducer/types'
+import { UserAction } from './reducer/types'
 
 export type UserState = {
   logged: boolean
 }
 
-export type UserContextType = {
-  dispatch: React.Dispatch<UserActionType>
+export type UserContext = {
+  state: UserState
+  dispatch: React.Dispatch<UserAction>
 }

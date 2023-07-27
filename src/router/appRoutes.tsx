@@ -12,8 +12,10 @@ import Workout from '@/pages/Workout'
 
 export const routes = (
   children: React.ReactNode,
-  access = true
+  access = false
 ): RouteObject[] => {
+  console.log(access)
+
   return [
     {
       path: RouterPath.Home,
