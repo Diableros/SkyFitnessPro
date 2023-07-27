@@ -14,9 +14,8 @@ const Home = () => {
   return (
     <S.PageWrapper>
       <S.ContentWrapper>
-
         <S.PreHeader>Онлайн-тренировки для занятий дома</S.PreHeader>
-        
+
         <S.Header>
           Начните заниматься спортом и улучшите качество жизни
         </S.Header>
@@ -36,7 +35,7 @@ const Home = () => {
         )}
 
         <S.CloudWrapper>
-          <UiImage name={'cloud'} width='250px'/>
+          <UiImage name={'cloud'} width="250px" />
         </S.CloudWrapper>
       </S.ContentWrapper>
     </S.PageWrapper>
