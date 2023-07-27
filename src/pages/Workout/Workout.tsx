@@ -1,4 +1,4 @@
-import UiProgressForm from './components/UiProgress'
+import UiProgressForm from './components/ProgressForm'
 
 const Workout = () => {
   return <UiProgressForm />

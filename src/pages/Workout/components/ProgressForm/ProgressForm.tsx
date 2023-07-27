@@ -5,7 +5,7 @@ import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
-import * as S from './UiProgressForm.style'
+import * as S from './ProgressForm.style'
 
 import { mockData } from '@/pages/Home/mockData'
 
