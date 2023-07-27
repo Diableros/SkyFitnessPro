@@ -6,7 +6,7 @@ export const enum EndpointPath {
   Login = '/accounts:signInWithPassword?key=',
   SignUp = '/accounts:signUp?key=',
 
-  User = '/users/:id.json'
+  User = '/users/:id.json',
 }
 
 export const enum QueryKey {

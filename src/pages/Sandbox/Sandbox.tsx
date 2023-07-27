@@ -1,6 +1,4 @@
-import * as React from 'react'
-
-import ExampleModalContent from './components/ExampleModalContent'
+import UiProgressForm from '../Workout/components/ProgressForm/ProgressForm'
 import UiModal from '@/components/UiModal'
 
 const Sandbox = () => {
@@ -8,7 +6,7 @@ const Sandbox = () => {
     <>
       <div>Text from Sandbox component</div>
       <UiModal>
-        <ExampleModalContent />
+        <UiProgressForm />
       </UiModal>
     </>
   )

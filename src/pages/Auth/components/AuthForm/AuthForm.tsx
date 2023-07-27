@@ -33,14 +33,14 @@ const UiAuthForm = () => {
   const onSubmit: SubmitHandler<Credentials> = (credentials) => {
     const handleResult = async () => {
       if (isSignUp) {
-       return await api.signUp(credentials)
+        return await api.signUp(credentials)
       } else {
-       return await api.login(credentials)
+        return await api.login(credentials)
       }
     }
 
     handleResult().then((result) => {
-      if(result) {
+      if (result) {
         // TODO добавить флаг логина в стэйт приложения
         navigate(RouterPath.Home)
       }

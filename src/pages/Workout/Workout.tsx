@@ -1,5 +1,7 @@
+import UiProgressForm from './components/ProgressForm'
+
 const Workout = () => {
-  return <div>Workout Page</div>
+  return <UiProgressForm />
 }
 
 export default Workout
