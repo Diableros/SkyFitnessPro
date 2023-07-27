@@ -13,13 +13,15 @@ export const ModalScreen = styled.div`
   justify-content: center;
 `
 export const ModalContentBox = styled.div`
-position:relative;
-
+  position: relative;
+  & * div {
+    cursor: pointer;
+  }
 `
 
 export const ImageWrapper = styled.div`
-position:absolute;
-top:0;
-right:0;
-padding:10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
 `
