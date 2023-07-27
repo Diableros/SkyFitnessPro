@@ -21,8 +21,15 @@
     "simple-import-sort",
     "unicorn"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "react/react-in-jsx-scope": 0,
+
+    "@typescript-eslint/no-empty-interface": 0,
 
     "simple-import-sort/imports": [
       "error",

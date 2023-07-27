@@ -22,13 +22,19 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@/*":["*"]
+      "@/*": ["./src/*"]
     },
 
     "noImplicitAny": true
   },
-  "include": ["src"],
+  "include": [
+    "src/**/*.ts",
+    "src/*.d.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "./src/**/*"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
