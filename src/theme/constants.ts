@@ -21,6 +21,7 @@ export const theme: ThemeType = {
     grayDark: '#696969',
     grayNormal: '#D0CECE',
     grayLight: '#F4F5F6',
+    grayExtraLight: '#FAFAFA',
 
     progressBlue: '#565EEF',
     progressOrange: '#FF6D00',
