@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '../UiButton'
@@ -14,16 +14,27 @@ const UiProgressForm = () => {
 
   const example = mockData[2].exercises[0].workoutTWO
 
-  const [inputValue, setInputValue] = useState('')
+  // const [inputValues, setInputValues] = useState({})
 
-  const handleSendSuccess = () => {
-    setIsFilled(true)
+  // const handleSendSuccess = () => {
+  //   setIsFilled(true)
+  // }
+
+  // const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target
+  //   setInputValues((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }))
+  // }
+
+  //TODO закончить логику с картинкой; правильно типизировать value в инпуте/в случае с useReduser - стейт и экшн
+
+  const initialValue = {
+    value: '',
   }
 
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setInputValue(value);
-  };
+  const arr: string[] = []
 
   return (
     <S.ProgressWrapper>
@@ -31,12 +42,37 @@ const UiProgressForm = () => {
         <>
           <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
           {example.map((item, index) => {
+            const reducer = (
+              state: any,
+              action: { type: any; payload: any }
+            ) => {
+              switch (action.type) {
+                case `${index}`:
+                  return { ...state, value: action.payload }
+                default:
+                  throw new Error(`Unknown action type: ${action.type}`)
+              }
+            }
+
+            const [state, dispatch] = useReducer(reducer, initialValue)
+            arr.push(state)
+
             return (
               <>
-                <S.ProgressLabelText key={index-1}>
+                <S.ProgressLabelText key={index - 1}>
                   Сколько повторений вы сделали из упражнения: {item}?
                 </S.ProgressLabelText>
-                <ProgressInput name={`input-${index}`} type='number' key={index + 1} placeholder={'Введите значение'} value={inputValue} onChange={inputHandler} />
+                <ProgressInput
+                  name={`${index}`}
+                  type="number"
+                  key={index + 1}
+                  placeholder={'Введите значение'}
+                  value={state.index}
+                  onChange={(event) =>
+                    dispatch({ type: `${index}`, payload: event.target.value })
+                  }
+                  max="3"
+                />
               </>
             )
           })}
@@ -47,7 +83,8 @@ const UiProgressForm = () => {
             buttonTheme={ButtonTheme.PurpleBright}
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
-             console.log(inputValue)
+              console.log(arr)
+
             }}
           />
         </>
