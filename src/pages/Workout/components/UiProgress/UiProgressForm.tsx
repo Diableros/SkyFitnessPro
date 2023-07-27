@@ -1,9 +1,9 @@
 import { useReducer, useState } from 'react'
 
 import ProgressInput from './components/ProgressInput'
-import UiButton from '../UiButton'
-import { ButtonSize, ButtonTheme } from '../UiButton/enums'
-import UiImage from '../UiImage'
+import UiButton from '@/components/UiButton'
+import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
+import UiImage from '@/components/UiImage'
 
 import * as S from './UiProgressForm.style'
 
@@ -84,7 +84,6 @@ const UiProgressForm = () => {
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
               console.log(arr)
-
             }}
           />
         </>
