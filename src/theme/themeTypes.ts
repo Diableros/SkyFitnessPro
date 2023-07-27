@@ -19,10 +19,13 @@ export type ColorType = {
     grayDark: string
     grayNormal: string
     grayLight: string
+    grayExtraLight: string
 
     progressBlue: string
     progressOrange: string
     progressPurple: string
+
+    modalShadow: string
 
     mint: string
     coral: string

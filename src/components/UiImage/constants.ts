@@ -1,5 +1,6 @@
 import { ReactComponent as arrowUp } from '@/assets/icons/arrowUp.svg'
 import { ReactComponent as checkMark } from '@/assets/icons/checkMark.svg'
+import { ReactComponent as cross } from '@/assets/icons/cross.svg'
 import { ReactComponent as loader } from '@/assets/icons/loader.svg'
 import { ReactComponent as logo } from '@/assets/icons/logo.svg'
 import { ReactComponent as bannerBodyFlex } from '@/assets/images/bannerBodyFlex.svg'
@@ -23,6 +24,7 @@ const svg = {
   checkMark,
   loader,
   logo,
+  cross,
 
   bannerStepAirobic,
   bannerDanceFitness,

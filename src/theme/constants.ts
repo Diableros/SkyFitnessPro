@@ -21,10 +21,13 @@ export const theme: ThemeType = {
     grayDark: '#696969',
     grayNormal: '#D0CECE',
     grayLight: '#F4F5F6',
+    grayExtraLight: '#FAFAFA',
 
     progressBlue: '#565EEF',
     progressOrange: '#FF6D00',
     progressPurple: '#9A48F1',
+
+    modalShadow:'rgba(0, 0, 0, 50%)',
 
     mint: '#06B16E',
     coral: '#FF8071',

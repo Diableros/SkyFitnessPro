@@ -7,6 +7,7 @@ import Auth from '@/pages/Auth'
 import Course from '@/pages/Course'
 import NotFound from '@/pages/NotFound'
 import Profile from '@/pages/Profile/Profile'
+import Sandbox from '@/pages/Sandbox/Sandbox'
 import Workout from '@/pages/Workout'
 
 export const routes = (
@@ -37,6 +38,10 @@ export const routes = (
         {
           path: RouterPath.Workout,
           element: access ? <Workout /> : <Navigate to={RouterPath.Home} />,
+        },
+        {
+          path: RouterPath.Sandbox,
+          element: <Sandbox />,
         },
         {
           path: RouterPath.NotFound,
