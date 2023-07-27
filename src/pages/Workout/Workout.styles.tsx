@@ -6,7 +6,7 @@ export const PageWrapper = styled.div`
   padding: 140px 0;
 `
 
-export const PageHaeder = styled.div`
+export const PageHeader = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xl};
   margin-bottom: 30px;
 `

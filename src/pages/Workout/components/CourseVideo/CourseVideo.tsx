@@ -1,29 +1,24 @@
-import * as S from './VideoPlayer.style'
+import * as S from './CourseVideo.style'
 
 type PropsType = {
   title: string
   src: string
-  width?: string
-  height?: string
+
 }
 
-const VideoPlayer = ({
+const CourseVideo = ({
   title,
-  src,
-  width = '1160px',
-  height = '640px',
+  src
 }: PropsType) => {
   return (
     <S.VideoBlock>
       <S.VideoTitle>{title}</S.VideoTitle>
-      <iframe
+      <S.Video
         src={src}
-        width={width}
-        height={height}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       />
     </S.VideoBlock>
   )
 }
 
-export default VideoPlayer
+export default CourseVideo

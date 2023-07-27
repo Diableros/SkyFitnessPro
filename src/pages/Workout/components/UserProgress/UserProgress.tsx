@@ -1,23 +1,25 @@
+import { calcProgress } from './utils'
+
 import * as S from './UserProgress.style'
 
-type PropTypes = {
+type PropsType = {
   exercises: { name: string; done: number; quantity: number }[]
 }
 
-const UserProgress = ({ exercises }: PropTypes) => {
+const UserProgress = ({ exercises }: PropsType) => {
   return (
     <S.ProgressBlock>
       <S.ProgressTitle>Мой прогресс по тренировке:</S.ProgressTitle>
 
-      <S.ProgressStats>
-        {exercises.map(({ name, done, quantity }, i) => {
+      <S.ProgressStats >
+        {exercises.map(({ name, done, quantity }, index) => {
           return (
-            <S.ProgressStatsItem key={i}>
+            <S.ProgressStatsItem $colorIndex={index} key={index}>
               <S.ProgressName>{name}</S.ProgressName>
 
               <S.ProgressBar>
-                <S.Progress percentage={(done / quantity) * 100 + '%'}>
-                  {(done / quantity) * 100 + '%'}
+                <S.Progress $percentage={calcProgress(done, quantity)}>
+                  <span>{calcProgress(done, quantity)} %</span>
                 </S.Progress>
               </S.ProgressBar>
             </S.ProgressStatsItem>

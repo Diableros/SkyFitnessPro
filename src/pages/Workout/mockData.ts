@@ -11,7 +11,7 @@ export const workoutData = {
 }
 
 export const userProgress = [
-  { name: 'Наклон вперед (10 повторений)', done: 4, quantity: 10 },
+  { name: 'Наклон вперед (10 повторений)', done: 1, quantity: 10 },
   { name: 'Наклон назад (10 повторений)', done: 9, quantity: 10 },
   {
     name: 'Поднятие ног, согнутых в коленях (5 повторений)',

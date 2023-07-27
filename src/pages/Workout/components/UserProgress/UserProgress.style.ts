@@ -1,7 +1,16 @@
 import { styled } from 'styled-components'
 
+import { ColorType } from '@/theme/themeTypes'
+
 type ProgressProps = {
-  percentage: string
+  $percentage?: number
+  $colorIndex?: number
+}
+
+const getProgressColor = (index: number) => {
+  const colors = ['progressOrange', 'progressBlue', 'progressPurple']
+  const order = index + 1
+  return order % 2 === 0 ? colors[0] : order % 3 === 0 ? colors[1] : colors[2]
 }
 
 export const ProgressBlock = styled.div`
@@ -20,29 +29,24 @@ export const ProgressStats = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
-  > div:nth-child(1n) > div:last-child {
-    border: 2px solid ${({ theme }) => theme.colors.progressBlue};
-  }
-  > div:nth-child(2n) > div:last-child {
-    border: 2px solid ${({ theme }) => theme.colors.progressOrange};
-  }
-  > div:nth-child(3n) > div:last-child {
-    border: 2px solid ${({ theme }) => theme.colors.progressPurple};
-  }
-  > div:nth-child(1n) > div:last-child > div {
-    background-color: ${({ theme }) => theme.colors.progressBlue};
-  }
-  > div:nth-child(2n) > div:last-child > div {
-    background-color: ${({ theme }) => theme.colors.progressOrange};
-  }
-  > div:nth-child(3n) > div:last-child > div {
-    background-color: ${({ theme }) => theme.colors.progressPurple};
-  }
 `
 
-export const ProgressStatsItem = styled.div`
+export const ProgressStatsItem = styled.div<ProgressProps>`
   display: flex;
   align-items: center;
+  > div:last-child {
+    border: 2px solid
+      ${({ theme, $colorIndex = 0 }) => {
+        const color = getProgressColor($colorIndex) as keyof ColorType['colors']
+        return theme.colors[color]
+      }};
+    > div {
+      background: ${({ theme, $colorIndex = 0 }) => {
+        const color = getProgressColor($colorIndex) as keyof ColorType['colors']
+        return theme.colors[color]
+      }};
+    }
+  }
 `
 
 export const ProgressName = styled.div`
@@ -59,8 +63,16 @@ export const ProgressBar = styled.div`
 `
 
 export const Progress = styled.div<ProgressProps>`
-  color: ${({ theme }) => theme.colors.white};
-  text-align: center;
-  width: ${({ percentage }) => percentage};
+  color: ${({ theme, $colorIndex = 0, $percentage = 0 }) => {
+    const color = getProgressColor($colorIndex) as keyof ColorType['colors']
+    return $percentage < 15 ? theme.colors[color] : theme.colors.white
+  }};
+  width: ${({ $percentage }) => $percentage + '%'};
   height: 100%;
+  position: relative;
+  > span {
+    position: absolute;
+    right: ${({ $percentage = 0 }) => {
+      return $percentage < 15 ? '-4rem' : '1rem'
+    }}
 `

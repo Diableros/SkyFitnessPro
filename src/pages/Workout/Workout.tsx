@@ -1,5 +1,5 @@
+import CourseVideo from './components/CourseVideo'
 import UserProgress from './components/UserProgress'
-import VideoPlayer from './components/VideoPlayer'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import { mockData } from '../Home/mockData'
@@ -18,8 +18,8 @@ const Workout = () => {
 
   return (
     <S.PageWrapper>
-      <S.PageHaeder>{course?.nameRU}</S.PageHaeder>
-      <VideoPlayer title={name} src={video} />
+      <S.PageHeader>{course?.nameRU}</S.PageHeader>
+      <CourseVideo title={name} src={video} />
 
       <S.ProgressBlock>
         <S.Workouts>
