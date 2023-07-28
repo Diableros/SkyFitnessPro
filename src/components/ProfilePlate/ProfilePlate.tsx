@@ -5,7 +5,6 @@ import UiButton from '../UiButton'
 import { ButtonSize, ButtonTheme } from '../UiButton/enums'
 import UiImage from '../UiImage'
 
-import { theme } from '@/theme/constants'
 import { RouterPath } from '@/router/enums'
 
 import * as S from './ProfilePlate.style'
@@ -22,6 +21,8 @@ const ProfilePlate = ({ isLogged, isHomePage }: PropsType) => {
     navigate(`${RouterPath.Auth}`)
   }
   const handleButtonLogoutClick = () => {
+    console.log(isHomePage)
+
     console.log('Пользователь вышел из профиля')
   }
 
@@ -31,30 +32,26 @@ const ProfilePlate = ({ isLogged, isHomePage }: PropsType) => {
         <S.UserPlateBox>
           <S.UseerPlate>
             <S.Avatar />
-            <S.UserName page={isHomePage}>User</S.UserName>
-            <S.DropDownButoon
-              page={isHomePage}
-              onClick={() => setVisible(!visible)}
-            >
+            <S.UserName page={isHomePage}>Аылвлыволыволыво</S.UserName>
+            <S.DropDownButoon onClick={() => setVisible(!visible)}>
               <UiImage
                 name="dropdown_button"
                 width="17px"
                 height="20px"
-                // color={isHomePage ? theme.colors.white : theme.colors.black}
+                color={isHomePage ? 'white' : 'black'}
               />
             </S.DropDownButoon>
           </S.UseerPlate>
-          {visible && (
-            <S.dropdownMenu>
-              <UiButton
-                onClick={handleButtonLogoutClick}
-                title="Выйти"
-                buttonTheme={ButtonTheme.Purple}
-                fontSize="s"
-                size={ButtonSize.S}
-              />
-            </S.dropdownMenu>
-          )}
+          <S.DropDownWraper active={visible}>
+            {visible && (
+              <S.LogOut
+                onClick={() => handleButtonLogoutClick}
+                page={isHomePage}
+              >
+                Выйти
+              </S.LogOut>
+            )}
+          </S.DropDownWraper>
         </S.UserPlateBox>
       ) : (
         <UiButton
