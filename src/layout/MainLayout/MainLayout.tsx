@@ -21,7 +21,7 @@ const MainLayout = () => {
       <S.LogoWrapper>
         <UiImage name={isLogoBlack ? 'logoBlack' : 'logoWhite'} width="220px" />
       </S.LogoWrapper>
-      <ProfilePlate />
+      <ProfilePlate isLogged={true} isHomePage={pathname === RouterPath.Home}/>
       <Outlet />
       <DraftNavigate />
     </S.Layout>
