@@ -7,18 +7,18 @@ import UiImage from '@/components/UiImage'
 
 import * as S from './ProgressForm.style'
 
-import { mockData } from '@/pages/Home/mockData'
+import { mockData } from './mockData'
 
 const UiProgressForm = () => {
   const [filled, setIsFilled] = useState(false)
 
-  const example = mockData[2].exercises[0].workoutTWO
+  const example = mockData[2].workoutTWO
 
   // const [inputValues, setInputValues] = useState({})
 
-  // const handleSendSuccess = () => {
-  //   setIsFilled(true)
-  // }
+  const handleSendSuccess = () => {
+    setIsFilled(true)
+  }
 
   // const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const { name, value } = e.target
@@ -83,6 +83,7 @@ const UiProgressForm = () => {
             buttonTheme={ButtonTheme.PurpleBright}
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
+              handleSendSuccess()
               console.log(arr)
             }}
           />
