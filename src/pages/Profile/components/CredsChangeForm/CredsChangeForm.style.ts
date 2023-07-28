@@ -1,6 +1,12 @@
 import { styled } from 'styled-components'
 
-export const PasswordFormWrapper = styled.div`
+import { InputType } from './enums'
+
+type InputProps = {
+  $inputType?: InputType
+}
+
+export const CredsFormWrapper = styled.div<InputProps>`
   border-radius: 12px;
   background: ${({ theme }) => theme.colors.white};
   display: flex;
@@ -15,11 +21,11 @@ export const PasswordFormWrapper = styled.div`
     left: 73px;
   }
 `
-export const PasswordFormHeader = styled.span`
+export const CredsFormHeader = styled.span<InputProps>`
   font-size: ${({ theme }) => theme.fontSize.m};
   margin-bottom: 20px;
 `
-export const PasswordFormError = styled.div`
+export const CredsFormError = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
@@ -28,6 +34,6 @@ export const PasswordFormError = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: 400;
   position: absolute;
-  top: 300px;
+  top: 90px;
   left: 5px;
 `
