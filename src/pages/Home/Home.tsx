@@ -1,20 +1,24 @@
+import * as React from 'react'
+
 import { PageType } from '@/components/UiCourseCard/enums'
 import UiCourseCard from '@/components/UiCourseCard/UiCourseCard'
 import UiImage from '@/components/UiImage'
 import UiLoader from '@/components/UiLoader'
 
+import ApiService from '@/api/ApiService'
 import { Course } from '@/api/types'
-import useCourses from '@/hooks/useCourses'
-import useWortkouts from '@/hooks/useWorkouts'
+import useCourses from '@/api/hooks/useCourses'
 
 import * as S from './Home.style'
 
 const Home = () => {
   const { data, isLoading } = useCourses()
 
-  const { data: workoutsData } = useWortkouts()
-
-  console.log(workoutsData)
+  React.useEffect(() => {
+    ApiService.loginUser('diablero@gmail.com', 'NewName').then(() =>
+      ApiService.updateUserName('New6666Name')
+    )
+  }, [])
 
   return (
     <S.PageWrapper>

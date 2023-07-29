@@ -1,20 +1,29 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import {
+  Auth,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  updatePassword,
+  updateProfile,
+} from 'firebase/auth'
+import {
   child,
   DatabaseReference,
   get,
   getDatabase,
   ref,
-  remove,
-  set,
   update,
 } from 'firebase/database'
 
+import { USER_INITIAL_PROGRESS } from './constants'
 import { ChildKey } from './enums'
 
 class ApiService {
   private static instance: ApiService
   private db: DatabaseReference
+  private auth: Auth
 
   private constructor() {
     const databaseURL = import.meta.env.VITE_FIREBASE_URL
@@ -34,6 +43,7 @@ class ApiService {
 
     const app = initializeApp(firebaseConfig)
     this.db = ref(getDatabase(app))
+    this.auth = getAuth(app)
 
     if (!this.db) throw new Error(`Firestore was not connected`)
   }
@@ -46,7 +56,81 @@ class ApiService {
     return ApiService.instance
   }
 
-  getChild = async <T>(childKey: ChildKey) => {
+  createUser = async (email: string, password: string) => {
+    return createUserWithEmailAndPassword(this.auth, email, password)
+      .then(({ user }) => {
+        console.log('User registered successfully')
+        return user
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
+  }
+
+  loginUser = async (email: string, password: string) => {
+    return signInWithEmailAndPassword(this.auth, email, password)
+      .then(({ user }) => {
+        console.log('User logged in successfully')
+        return user
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
+  }
+
+  logoutUser = async () => {
+    return signOut(this.auth)
+      .then(() => {
+        console.log('User logged out successfully')
+        return true
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
+  }
+
+  updateUserName = async (name: string) => {
+    if (this.auth.currentUser) {
+      return updateProfile(this.auth.currentUser, { displayName: name })
+        .then(() => {
+          console.log('Username updated successfully')
+          true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.log('User is not logged')
+  }
+
+  updateUserPassword = async (newPassword: string) => {
+    if (this.auth.currentUser) {
+      return updatePassword(this.auth.currentUser, newPassword)
+        .then(() => {
+          console.log('Password updated successfully')
+          true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.log('User is not logged')
+  }
+
+  createUserProgress = async (userId: string) => {
+    return update(child(this.db, 'users'), {
+      [userId]: { ...USER_INITIAL_PROGRESS, _id: userId },
+    })
+      .then(() => {
+        console.log('User progress created successfully')
+        return true
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
+  }
+
+  getDbChild = async <T>(childKey: ChildKey) => {
     return await get(child(this.db, childKey))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -65,26 +149,6 @@ class ApiService {
         throw new Error(error)
       })
   }
-
-  // createUser(userData) {
-  //   return set(child(dbRef, 'user'), userData)
-  //     .then(() => {
-  //       console.log('User created successfully')
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }
-
-  // updateUser(userData) {
-  //   return update(child(dbRef, 'user'), userData)
-  //     .then(() => {
-  //       console.log('User updated successfully')
-  //     })
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }
 }
 
 export default ApiService.getInstance()

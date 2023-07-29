@@ -9,7 +9,7 @@ import UiImage from '@/components/UiImage'
 import UiLoader from '@/components/UiLoader'
 
 import { Course } from '@/api/types'
-import useCourses from '@/hooks/useCourses'
+import useCourses from '@/api/hooks/useCourses'
 
 import * as S from './Course.style'
 
