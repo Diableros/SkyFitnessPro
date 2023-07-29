@@ -8,7 +8,7 @@ type ProfileProps = {
 export const Plate = styled.div`
   position: absolute;
   top: 2rem;
-  right: 3rem;
+  right: 5rem;
 
   width: 12rem;
   height: 3rem;
@@ -30,7 +30,7 @@ export const Avatar = styled.div`
 
 export const UserName = styled.span<ProfileProps>`
   min-width: 4rem;
-  max-width: 7rem;
+  max-width: 10rem;
   cursor: default;
   white-space: nowrap;
   overflow: hidden;
@@ -46,6 +46,7 @@ export const DropDownButoon = styled.div<ProfileProps>`
 `
 
 export const UseerPlate = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -72,7 +73,7 @@ export const dropdownMenu = styled.div`
 export const DropDownWraper = styled.div<ProfileProps>`
   position: absolute;
   top: 45px;
-  left: 75px;
+  left: 115px;
   overflow: hidden;
   transition: height 0.4s ease-in-out;
   height: ${({ active }) => (active ? '3rem' : '0rem')};
