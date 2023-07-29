@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom'
 
 import DraftNavigate from './components/DraftNavigate'
-import ProfilePlate from '@/components/ProfilePlate'
 import UiImage from '@/components/UiImage'
+import ProfilePlate from '@/layout/MainLayout/components/ProfilePlate'
 
 import { LinkPath, RouterPath } from '@/router/enums'
 
@@ -21,7 +21,7 @@ const MainLayout = () => {
       <S.LogoWrapper>
         <UiImage name={isLogoBlack ? 'logoBlack' : 'logoWhite'} width="220px" />
       </S.LogoWrapper>
-      <ProfilePlate />
+      <ProfilePlate  visible={pathname !== RouterPath.Auth} />
       <Outlet />
       <DraftNavigate />
     </S.Layout>
