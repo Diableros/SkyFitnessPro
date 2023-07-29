@@ -7,7 +7,7 @@ type PropsType = {
   type: string
 }
 
-const CredsInputForm = ({
+const CredsInput = ({
   name,
   placeholder,
   onChange,
@@ -24,4 +24,4 @@ const CredsInputForm = ({
   )
 }
 
-export default CredsInputForm
+export default CredsInput

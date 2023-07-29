@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import CredsInputForm from './components/InputForm'
+import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
 
@@ -9,36 +9,30 @@ import { InputErrorText, InputName, InputType } from './enums'
 import * as S from './CredsChangeForm.style'
 
 type PropsType = {
-  inputType?: InputType
+  formType?: InputType
 }
 
-const CredsChangeForm = ({ inputType }: PropsType) => {
-  const [newLogin, setNewLogin] = useState('')
-  const [error, setError] = useState('')
-  const [newPassword, setNewPassword] = useState(() => {
-    return {
-      password: '',
-      passwordRepeat: '',
-    }
-  })
+const CredsChangeForm = ({ formType }: PropsType) => {
+  const [newLogin, setNewLogin] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
+  const [password, setPassword] = useState<string>('')
+  const [newPassword, setNewPassword] = useState<string>('')
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.persist()
-
     if (e.target.value.length < 8) {
       setError(InputErrorText.ShortPassword)
     } else if (e.target.value.length > 20) {
       setError(InputErrorText.LongPassword)
     } else {
-      setError('')
+      setError(null)
     }
-
-    setNewPassword((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value,
-      }
-    })
+    if (e.target.name === InputName.Password) {
+      setPassword(e.target.value)
+    } else if (e.target.name === InputName.ConfirmPassword) {
+      setNewPassword(e.target.value)
+    } else {
+      setError('Ошибка формы')
+    }
   }
 
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,25 +41,25 @@ const CredsChangeForm = ({ inputType }: PropsType) => {
     } else if (e.target.value.length > 10) {
       setError(InputErrorText.LongLogin)
     } else {
-      setError('')
+      setError(null)
     }
     setNewLogin(e.target.value)
   }
 
-  const handleDataSend = (e: React.MouseEvent<Element, MouseEvent>) => {
+  const handleDataSend = (e: React.FormEvent) => {
     // отправка данных на сервер
     //if 200 => замена компонента на сообщение "Новый парооль сохранен"
 
-    e.stopPropagation
+    e.stopPropagation()
 
-    if (inputType === InputType.Password) {
-      if (newPassword.password !== newPassword.passwordRepeat) {
+    if (formType === InputType.Password) {
+      if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
         console.log('отмена отпраки данных')
       } else {
-        setError('')
-        console.log(newPassword)
-      } 
+        setError(null)
+        console.log(`old pass => ${password}, new pass => ${newPassword}`)
+      }
     } else if (newLogin.length > 10) {
       console.log('отмена отпраки данных')
     } else {
@@ -75,41 +69,42 @@ const CredsChangeForm = ({ inputType }: PropsType) => {
 
   //TODO допилисть логику отправки данных на сервер
 
-  const title = (inputType === InputType.Password ? 'Новый пароль:' : 'Новый логин:')
+  const title =
+    formType === InputType.Password ? 'Новый пароль:' : 'Новый логин:'
 
   return (
-    <S.CredsFormWrapper $inputType={inputType}>
+    <S.CredsFormWrapper $formType={formType}>
       <UiImage width="220px" height="35px" name="logoBlack" />
       <S.CredsFormHeader>{title}</S.CredsFormHeader>
-      {inputType === InputType.Password ? (
+      {formType === InputType.Password ? (
         <>
-          <CredsInputForm
+          <CredsInput
             placeholder="Пароль"
-            onChange={(e) => handlePasswordChange(e)}
+            onChange={handlePasswordChange}
             name={InputName.Password}
             type="password"
           />
-          <CredsInputForm
+          <CredsInput
             placeholder="Повторите пароль"
-            onChange={(e) => handlePasswordChange(e)}
-            name={InputName.PasswordRepeat}
+            onChange={handlePasswordChange}
+            name={InputName.ConfirmPassword}
             type="password"
           />
         </>
       ) : (
-        <CredsInputForm
+        <CredsInput
           placeholder="Логин"
-          onChange={(e) => handleLoginChange(e)}
+          onChange={handleLoginChange}
           name={InputName.Login}
           type="text"
         />
       )}
 
-      {error && <S.CredsFormError>{error}</S.CredsFormError>}
+      {error ? <S.CredsFormError>{error}</S.CredsFormError> : null}
       <UiButton
         buttonType="submit"
         title={'Отправить'}
-        onClick={(e) => handleDataSend(e)}
+        onClick={handleDataSend}
       />
     </S.CredsFormWrapper>
   )

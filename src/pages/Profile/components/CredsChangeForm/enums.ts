@@ -1,7 +1,7 @@
 
 export enum InputName {
     Password = 'password',
-    PasswordRepeat = 'passwordRepeat',
+    ConfirmPassword = 'confirmPassword',
     Login = 'login',
 }
 

@@ -3,7 +3,7 @@ import { styled } from 'styled-components'
 import { InputType } from './enums'
 
 type InputProps = {
-  $inputType?: InputType
+  $formType?: InputType
 }
 
 export const CredsFormWrapper = styled.div<InputProps>`
