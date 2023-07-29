@@ -1,6 +1,7 @@
 import { ReactComponent as arrowUp } from '@/assets/icons/arrowUp.svg'
 import { ReactComponent as checkMark } from '@/assets/icons/checkMark.svg'
 import { ReactComponent as cross } from '@/assets/icons/cross.svg'
+import { ReactComponent as dropdown_button } from '@/assets/icons/dropdown_button.svg'
 import { ReactComponent as loader } from '@/assets/icons/loader.svg'
 import { ReactComponent as logo } from '@/assets/icons/logo.svg'
 import { ReactComponent as bannerBodyFlex } from '@/assets/images/bannerBodyFlex.svg'
@@ -25,6 +26,7 @@ const svg = {
   loader,
   logo,
   cross,
+  dropdown_button,
 
   bannerStepAirobic,
   bannerDanceFitness,
