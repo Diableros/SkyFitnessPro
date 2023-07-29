@@ -8,17 +8,31 @@ import UiLoader from '@/components/UiLoader'
 import ApiService from '@/api/ApiService'
 import { Course } from '@/api/types'
 import useCourses from '@/api/hooks/useCourses'
+import useWorkouts from '@/api/hooks/useWorkouts'
 
 import * as S from './Home.style'
 
 const Home = () => {
   const { data, isLoading } = useCourses()
+  const {
+    data: workData,
+    isLoading: workIsLoading,
+    error: workError,
+    isError: workIsError,
+  } = useWorkouts()
 
   React.useEffect(() => {
-    ApiService.loginUser('diablero@gmail.com', 'NewName').then(() =>
-      ApiService.updateUserName('New6666Name')
-    )
-  }, [])
+    ApiService.createUser('diablero555@gmail.com', 'NewName')
+    // .then(() => {
+    //   ApiService.updateUserProgress('q02a6i', '17oz5f', [6, 6, 6])
+    // })
+    // console.group()
+    // console.log(`workData =>`, workData)
+    // console.log(`workIsLoading =>`, workIsLoading)
+    // console.log(`workIsError =>`, workIsError)
+    // console.log(`workError =>`, workError)
+    // console.groupEnd()
+  }, [workData, workIsLoading, workIsError, workError])
 
   return (
     <S.PageWrapper>

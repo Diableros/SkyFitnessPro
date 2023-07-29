@@ -9,12 +9,9 @@ export const USER_INITIAL_DATA: UserData = {
 }
 
 export const USER_INITIAL_PROGRESS: UserAccount = {
-  _id: '',
-  courses: {
-    q02a6i: {
-      '17oz5f': [0, 0, 0],
-      pyvaec: [0, 0, 0],
-      xlpkqy: [0, 0, 0],
-    },
+  q02a6i: {
+    '17oz5f': [0, 0, 0],
+    pyvaec: [0, 0, 0],
+    xlpkqy: [0, 0, 0],
   },
 }

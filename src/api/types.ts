@@ -72,7 +72,4 @@ export type UserData = {
 
 export type CourseProgress = Record<string, number[]>
 
-export type UserAccount = {
-  _id: string
-  courses: Record<string, CourseProgress>
-}
+export type UserAccount = Record<string, CourseProgress>

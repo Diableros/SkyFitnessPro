@@ -60,6 +60,7 @@ class ApiService {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then(({ user }) => {
         console.log('User registered successfully')
+        this.createUserProgress()
         return user
       })
       .catch((error) => {
@@ -114,20 +115,54 @@ class ApiService {
           throw new Error(error)
         })
     }
-    console.log('User is not logged')
+    console.log('Not set currentUser')
   }
 
-  createUserProgress = async (userId: string) => {
-    return update(child(this.db, 'users'), {
-      [userId]: { ...USER_INITIAL_PROGRESS, _id: userId },
-    })
-      .then(() => {
-        console.log('User progress created successfully')
-        return true
+  createUserProgress = async () => {
+    if (this.auth.currentUser) {
+      const { uid } = this.auth.currentUser
+
+      return update(child(this.db, 'users'), {
+        [uid]: { ...USER_INITIAL_PROGRESS, _id: uid },
       })
-      .catch((error) => {
-        throw new Error(error)
+        .then(() => {
+          console.log('User progress created successfully')
+          return true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.log('Not set currentUser')
+  }
+
+  updateUserProgress = async (
+    courseId: string,
+    workoutId: string,
+    exerciseProgressArray: number[]
+  ) => {
+    if (this.auth.currentUser) {
+      const { uid } = this.auth.currentUser
+
+      const updatedExercisePath = [
+        ChildKey.Users,
+        uid,
+        ChildKey.Courses,
+        courseId,
+      ].join('/')
+
+      return update(child(this.db, updatedExercisePath), {
+        [workoutId]: exerciseProgressArray,
       })
+        .then(() => {
+          console.log('User progress updated successfully')
+          return true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.warn('updateUserProgress filed. Not set currentUser')
   }
 
   getDbChild = async <T>(childKey: ChildKey) => {
