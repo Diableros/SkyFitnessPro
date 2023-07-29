@@ -5,11 +5,16 @@ import UiLoader from '@/components/UiLoader'
 
 import { Course } from '@/api/types'
 import useCourses from '@/hooks/useCourses'
+import useWortkouts from '@/hooks/useWorkouts'
 
 import * as S from './Home.style'
 
 const Home = () => {
   const { data, isLoading } = useCourses()
+
+  const { data: workoutsData } = useWortkouts()
+
+  console.log(workoutsData)
 
   return (
     <S.PageWrapper>

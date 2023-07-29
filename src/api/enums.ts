@@ -13,3 +13,9 @@ export const enum QueryKey {
   Courses = 'courses',
   Login = 'login',
 }
+
+export const enum ChildKey {
+  Courses = 'courses',
+  Users = 'users',
+  Workouts = 'workouts',
+}

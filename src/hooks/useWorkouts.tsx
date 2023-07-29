@@ -2,12 +2,12 @@ import { useQuery } from '@tanstack/react-query'
 
 import api from '@/api/ApiService'
 import { ChildKey, QueryKey } from '@/api/enums'
-import { Course } from '@/api/types'
+import { Workout } from '@/api/types'
 
-const useCourses = () => {
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: [ChildKey.Courses],
-    queryFn: () => api.getChild<Course[]>(ChildKey.Courses),
+const useWorkouts = () => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: [ChildKey.Workouts],
+    queryFn: () => api.getChild<Workout[]>(ChildKey.Workouts),
     staleTime: 60 * 60 * 1000,
   })
   // console.log(`data =>`, data)
@@ -20,4 +20,4 @@ const useCourses = () => {
   }
 }
 
-export default useCourses
+export default useWorkouts
