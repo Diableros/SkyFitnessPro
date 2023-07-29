@@ -46,6 +46,8 @@ class ApiService {
     { endpointPath, param, auth = false }: Endpoint,
     config: RequestInit
   ): Promise<T | U> => {
+
+    // TODO  заюзать URLSearchParams
     const authParam = auth ? `?auth=${this.user.refreshToken}` : ''
 
     const fullRequestURL = `${this.dbUrl}${
