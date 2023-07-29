@@ -1,8 +1,8 @@
 import { styled } from 'styled-components'
 
 type ProfileProps = {
-  page?: boolean
-  active?: boolean
+  $page?: boolean
+  $active?: boolean
 }
 
 export const Plate = styled.div`
@@ -38,8 +38,8 @@ export const UserName = styled.span<ProfileProps>`
   margin-left: 15px;
   margin-right: 12px;
   font-size: ${({ theme }) => theme.fontSize.m};
-  color: ${({ page, theme }) =>
-    page ? theme.colors.white : theme.colors.black};
+  color: ${({ $page, theme }) =>
+    $page ? theme.colors.white : theme.colors.black};
 `
 export const DropDownButoon = styled.div<ProfileProps>`
   cursor: pointer;
@@ -76,11 +76,11 @@ export const DropDownWraper = styled.div<ProfileProps>`
   left: 115px;
   overflow: hidden;
   transition: height 0.4s ease-in-out;
-  height: ${({ active }) => (active ? '3rem' : '0rem')};
+  height: ${({ $active }) => ($active ? '3rem' : '0rem')};
 `
 export const LogOut = styled.div<ProfileProps>`
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSize.m};
-  color: ${({ page, theme }) =>
-    page ? theme.colors.white : theme.colors.black};
+  color: ${({ $page, theme }) =>
+    $page ? theme.colors.white : theme.colors.black};
 `

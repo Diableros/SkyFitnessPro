@@ -48,7 +48,7 @@ const ProfilePlate = ({ visible }: PropsType) => {
             <S.UserPlateBox>
               <S.UseerPlate onClick={() => setIsLogoutShow(!isLogoutShow)}>
                 <S.Avatar />
-                <S.UserName page={isHomePage}>User Name</S.UserName>
+                <S.UserName $page={isHomePage}>User Name</S.UserName>
                 <S.DropDownButoon>
                   <UiImage
                     name="dropdown_button"
@@ -58,11 +58,11 @@ const ProfilePlate = ({ visible }: PropsType) => {
                   />
                 </S.DropDownButoon>
               </S.UseerPlate>
-              <S.DropDownWraper active={isLogoutShow}>
+              <S.DropDownWraper $active={isLogoutShow}>
                 {isLogoutShow ? (
                   <S.LogOut
                     onClick={() => handleButtonLogoutClick}
-                    page={isHomePage}
+                    $page={isHomePage}
                   >
                     Выйти
                   </S.LogOut>
