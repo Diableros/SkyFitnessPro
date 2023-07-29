@@ -45,7 +45,7 @@ class ApiService {
     this.db = ref(getDatabase(app))
     this.auth = getAuth(app)
 
-    if (!this.db) throw new Error(`Firestore was not connected`)
+    if (!this.db) throw new Error(`Firebase Realtime Database was not connected`)
   }
 
   static getInstance(): ApiService {
