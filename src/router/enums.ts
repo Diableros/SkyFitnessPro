@@ -1,11 +1,11 @@
-export const enum RouterPath {
+export enum RouterPath {
   Home = '/',
   Course = '/course/:courseOrder',
   Auth = '/auth',
   Profile = '/profile',
   Workout = '/workout',
   NotFound = '*',
-  Sandbox = '/sandbox'
+  Sandbox = '/sandbox',
 }
 
 export const enum LinkPath {
