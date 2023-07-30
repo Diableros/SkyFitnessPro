@@ -6,10 +6,14 @@ import { useUserContext } from '@/context'
 import { routes } from '@/router/appRoutes'
 
 const AppRouterProvider = ({ children }: { children: React.ReactNode }) => {
-  const { logged: access } = useUserContext()
+  const { user: access } = useUserContext()
+
+  React.useEffect(() => {
+    console.log('User state from router provider', access)
+  }, [access])
 
   return (
-    <RouterProvider router={createBrowserRouter(routes(children, access))} />
+    <RouterProvider router={createBrowserRouter(routes(children, !!access))} />
   )
 }
 

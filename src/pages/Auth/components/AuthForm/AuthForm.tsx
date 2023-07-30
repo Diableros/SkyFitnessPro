@@ -7,9 +7,8 @@ import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
-import api from '@/api/ApiService'
+import { useAuth } from '@/api/hooks'
 import { Credentials } from '@/api/types'
-import { Action, useUserContext } from '@/context'
 
 import formFields from './constants'
 import { AuthFields } from './types'
@@ -19,11 +18,18 @@ import { RouterPath } from '@/router/enums'
 import * as S from './AuthForm.style'
 
 const UiAuthForm = () => {
+  const navigate = useNavigate()
+
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
 
-  const { dispatch } = useUserContext()
+  const [login, setLogin] = React.useState<string>('')
+  const [password, setPassword] = React.useState<string>('')
 
-  const navigate = useNavigate()
+  const { data: authResult, isLoading: authWaiting } = useAuth(
+    login,
+    password,
+    isSignUp ? 'signup' : 'login'
+  )
 
   const {
     handleSubmit,
@@ -33,25 +39,14 @@ const UiAuthForm = () => {
     mode: 'onTouched',
   })
 
-  const onSubmit: SubmitHandler<Credentials> = (credentials) => {
-    const handleResult = async () => {
-      if (isSignUp) {
-        return await api.signUp(credentials)
-      } else {
-        return await api.login(credentials)
-      }
-    }
-
-    handleResult().then((result) => {
-      if (result) {
-        dispatch({
-          type: Action.Login,
-          payload: true,
-        })
-        navigate(RouterPath.Home)
-      }
-    })
+  const onSubmit: SubmitHandler<Credentials> = ({ email, password }) => {
+    setLogin(email)
+    setPassword(password)
   }
+
+  React.useEffect(() => {
+    if (authResult && !authWaiting) navigate(RouterPath.Profile)
+  }, [authResult, authWaiting])
 
   return (
     <S.AuthForm onSubmit={handleSubmit(onSubmit)}>

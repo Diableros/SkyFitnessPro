@@ -8,8 +8,8 @@ import { CardView, PageType } from '@/components/UiCourseCard/enums'
 import UiImage from '@/components/UiImage'
 import UiLoader from '@/components/UiLoader'
 
+import { useCourses } from '@/api/hooks'
 import { Course } from '@/api/types'
-import useCourses from '@/api/hooks/useCourses'
 
 import * as S from './Course.style'
 

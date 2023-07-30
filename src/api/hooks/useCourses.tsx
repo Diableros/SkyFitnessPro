@@ -4,7 +4,7 @@ import api from '@/api/ApiService'
 import { ChildKey } from '@/api/enums'
 import { Course } from '@/api/types'
 
-const useCourses = () => {
+export const useCourses = () => {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [ChildKey.Courses],
     queryFn: () => api.getDbChild<Course[]>(ChildKey.Courses),
@@ -19,5 +19,3 @@ const useCourses = () => {
     isError,
   }
 }
-
-export default useCourses

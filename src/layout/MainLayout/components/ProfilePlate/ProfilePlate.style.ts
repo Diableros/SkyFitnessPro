@@ -16,9 +16,12 @@ export const Plate = styled.div`
   display: flex;
   flex-wrap: nowrap;
 
+  justify-content: flex-end;
   align-items: center;
 
   gap: 1rem;
+
+  z-index: 99;
 `
 
 export const Avatar = styled.div`
@@ -31,7 +34,7 @@ export const Avatar = styled.div`
 export const UserName = styled.span<ProfileProps>`
   min-width: 4rem;
   max-width: 10rem;
-  cursor: default;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -45,7 +48,7 @@ export const DropDownButoon = styled.div<ProfileProps>`
   cursor: pointer;
 `
 
-export const UseerPlate = styled.div`
+export const UserPlate = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -63,24 +66,31 @@ export const dropdownMenu = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 110px;
+
   height: 50px;
   margin-top: 55px;
   border-radius: 10px;
   right: 0;
 `
 
-export const DropDownWraper = styled.div<ProfileProps>`
+export const DropDownWrapper = styled.div<ProfileProps>`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
   position: absolute;
-  top: 45px;
-  left: 115px;
+  top: 3rem;
+  right: -1rem;
   overflow: hidden;
-  transition: height 0.4s ease-in-out;
-  height: ${({ $active }) => ($active ? '3rem' : '0rem')};
+  transition: height 0.5s ease-in-out;
+  height: ${({ $active }) => ($active ? '6rem' : '0rem')};
 `
-export const LogOut = styled.div<ProfileProps>`
+export const MenuItem = styled.div<ProfileProps>`
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSize.m};
   color: ${({ $page, theme }) =>
     $page ? theme.colors.white : theme.colors.black};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.grayNormal};
+  }
 `

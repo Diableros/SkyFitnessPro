@@ -1,12 +1,15 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import {
   Auth,
+  browserLocalPersistence,
   createUserWithEmailAndPassword,
   getAuth,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
   updateProfile,
+  User,
 } from 'firebase/auth'
 import {
   child,
@@ -24,6 +27,7 @@ class ApiService {
   private static instance: ApiService
   private db: DatabaseReference
   private auth: Auth
+  public user: User | undefined
 
   private constructor() {
     const databaseURL = import.meta.env.VITE_FIREBASE_URL
@@ -45,7 +49,12 @@ class ApiService {
     this.db = ref(getDatabase(app))
     this.auth = getAuth(app)
 
-    if (!this.db) throw new Error(`Firebase Realtime Database was not connected`)
+    setPersistence(this.auth, browserLocalPersistence).then(() =>
+      console.log('Local persistence is ON')
+    )
+
+    if (!this.db)
+      throw new Error(`Firebase Realtime Database was not connected`)
   }
 
   static getInstance(): ApiService {
@@ -60,6 +69,7 @@ class ApiService {
     return createUserWithEmailAndPassword(this.auth, email, password)
       .then(({ user }) => {
         console.log('User registered successfully')
+        this.user = user
         this.createUserProgress()
         return user
       })
@@ -71,6 +81,7 @@ class ApiService {
   loginUser = async (email: string, password: string) => {
     return signInWithEmailAndPassword(this.auth, email, password)
       .then(({ user }) => {
+        this.user = user
         console.log('User logged in successfully')
         return user
       })
@@ -82,6 +93,7 @@ class ApiService {
   logoutUser = async () => {
     return signOut(this.auth)
       .then(() => {
+        this.user = undefined
         console.log('User logged out successfully')
         return true
       })
@@ -118,7 +130,7 @@ class ApiService {
     console.log('Not set currentUser')
   }
 
-  createUserProgress = async () => {
+  private createUserProgress = async () => {
     if (this.auth.currentUser) {
       const { uid } = this.auth.currentUser
 
@@ -165,8 +177,8 @@ class ApiService {
     console.warn('updateUserProgress filed. Not set currentUser')
   }
 
-  getDbChild = async <T>(childKey: ChildKey) => {
-    return await get(child(this.db, childKey))
+  getDbChild = async <T>(childPath: string) => {
+    return await get(child(this.db, childPath))
       .then((snapshot) => {
         if (snapshot.exists()) {
           const dataObject = snapshot.val()
