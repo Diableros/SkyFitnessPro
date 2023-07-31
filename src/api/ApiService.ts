@@ -5,6 +5,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
   updatePassword,
   updateProfile,
   User,
@@ -100,11 +101,11 @@ class ApiService {
       })
   }
 
-  updateUserName = async (name: string) => {
+  updateUserEmail = async (email: string) => {
     if (this.auth.currentUser) {
-      return updateProfile(this.auth.currentUser, { displayName: name })
+      return updateEmail(this.auth.currentUser, email)
         .then(() => {
-          console.log('Username updated successfully')
+          console.log('User email updated successfully')
           true
         })
         .catch((error) => {
