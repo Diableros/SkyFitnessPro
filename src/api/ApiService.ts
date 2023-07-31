@@ -7,7 +7,6 @@ import {
   signOut,
   updateEmail,
   updatePassword,
-  updateProfile,
   User,
 } from 'firebase/auth'
 import {
@@ -106,13 +105,14 @@ class ApiService {
       return updateEmail(this.auth.currentUser, email)
         .then(() => {
           console.log('User email updated successfully')
-          true
+          return true
         })
         .catch((error) => {
           throw new Error(error)
         })
     }
     console.log('User is not logged')
+    return false
   }
 
   updateUserPassword = async (newPassword: string) => {
@@ -120,13 +120,14 @@ class ApiService {
       return updatePassword(this.auth.currentUser, newPassword)
         .then(() => {
           console.log('Password updated successfully')
-          true
+          return true
         })
         .catch((error) => {
           throw new Error(error)
         })
     }
     console.log('Not set currentUser')
+    return false
   }
 
   private createUserProgress = async () => {
