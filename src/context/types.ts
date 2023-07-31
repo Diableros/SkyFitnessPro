@@ -1,7 +1,9 @@
+import { User } from 'firebase/auth'
+
 import { UserAction } from './reducer/types'
 
 export type UserState = {
-  logged: boolean
+  user: User | undefined
 }
 
 export type UserContext = UserState & {

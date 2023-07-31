@@ -3,8 +3,8 @@ import UiCourseCard from '@/components/UiCourseCard/UiCourseCard'
 import UiImage from '@/components/UiImage'
 import UiLoader from '@/components/UiLoader'
 
+import { useCourses } from '@/api/hooks'
 import { Course } from '@/api/types'
-import useCourses from '@/hooks/useCourses'
 
 import * as S from './Home.style'
 

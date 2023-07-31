@@ -1,37 +1,58 @@
+import { FirebaseOptions, initializeApp } from 'firebase/app'
 import {
-  API_REQUEST_DELAY,
-  USER_INITIAL_DATA,
-  USER_INITIAL_PROGRESS,
-} from './constants'
+  Auth,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  updatePassword,
+  updateProfile,
+  User,
+} from 'firebase/auth'
 import {
-  AuthErrorResponse,
-  CourseResponse,
-  Credentials,
-  Endpoint,
-  LoginResponse,
-  SignUpResponse,
-  UserAccount,
-  UserData,
-} from './types'
-import { EndpointPath } from './enums'
+  child,
+  DatabaseReference,
+  get,
+  getDatabase,
+  ref,
+  update,
+} from 'firebase/database'
+
+import { USER_INITIAL_PROGRESS } from './constants'
+import { ChildKey } from './enums'
 
 class ApiService {
   private static instance: ApiService
-  private googleIdentApiUrl?: string
-  private dbUrl?: string
-  private dbApiKey?: string
-  public user: UserData
+  private db: DatabaseReference
+  private auth: Auth
+  public user: User | undefined
 
   private constructor() {
-    this.dbUrl = import.meta.env.VITE_FIREBASE_URL
-    this.dbApiKey = import.meta.env.VITE_FIREBASE_API_KEY
-    this.googleIdentApiUrl = import.meta.env.VITE_GOOGLE_IDENTITY_API_URL
-    this.user = USER_INITIAL_DATA
+    const databaseURL = import.meta.env.VITE_FIREBASE_URL
+    const apiKey = import.meta.env.VITE_FIREBASE_API_KEY
+    const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID
 
-    if (!this.dbUrl || !this.dbApiKey || !this.googleIdentApiUrl)
+    if (!databaseURL || !apiKey || !projectId)
       throw new Error(
         'Some local data is undefined. Check the .env.local file in the package directory.'
       )
+
+    const firebaseConfig: FirebaseOptions = {
+      apiKey,
+      databaseURL,
+      projectId,
+    }
+
+    const app = initializeApp(firebaseConfig)
+    this.db = ref(getDatabase(app))
+    this.auth = getAuth(app)
+
+    // setPersistence(this.auth, browserLocalPersistence).then(() =>
+    //   console.log('Local persistence is ON')
+    // )
+
+    if (!this.db)
+      throw new Error(`Firebase Realtime Database was not connected`)
   }
 
   static getInstance(): ApiService {
@@ -42,148 +63,136 @@ class ApiService {
     return ApiService.instance
   }
 
-  private dbRequest = async <T = unknown, U = unknown>(
-    { endpointPath, param, auth = false }: Endpoint,
-    config: RequestInit
-  ): Promise<T | U> => {
-    const authParam = auth ? `?auth=${this.user.refreshToken}` : ''
-
-    const fullRequestURL = `${this.dbUrl}${
-      param ? endpointPath.replace(':id', param) : endpointPath
-    }${authParam}`
-
-    const defaultHeaders = {
-      'Content-Type': 'application/json',
-    }
-
-    const mergedConfig: RequestInit = {
-      headers: {
-        ...defaultHeaders,
-        ...config.headers,
-      },
-      ...config,
-    }
-
-    const dbResponse = await new Promise<Response>((resolve) => {
-      const timer = setTimeout(() => {
-        resolve(fetch(fullRequestURL, mergedConfig))
-        clearTimeout(timer)
-      }, API_REQUEST_DELAY)
-    })
-
-    if (!dbResponse.ok) {
-      const errorResponse = await dbResponse.json()
-      throw errorResponse as U
-    }
-
-    const successResponse = await dbResponse.json()
-    return successResponse as T
+  createUser = async (email: string, password: string) => {
+    return createUserWithEmailAndPassword(this.auth, email, password)
+      .then(({ user }) => {
+        console.log('User registered successfully')
+        this.user = user
+        this.createUserProgress()
+        return user
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
   }
 
-  private addDbUser = async (localId: UserData['localId']) => {
-    return await this.dbRequest<UserAccount, Error>(
-      {
-        endpointPath: EndpointPath.User,
-        param: localId,
-        auth: true,
-      },
-      {
-        method: 'PATCH',
-        body: JSON.stringify({ ...USER_INITIAL_PROGRESS, _id: localId }),
-      }
-    )
+  loginUser = async (email: string, password: string) => {
+    return signInWithEmailAndPassword(this.auth, email, password)
+      .then(({ user }) => {
+        this.user = user
+        console.log('User logged in successfully')
+        return user
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
   }
 
-  private authRequest = async <T = unknown, U = AuthErrorResponse>(
-    endpointPath: EndpointPath,
-    credentials: Credentials
-  ): Promise<T | U> => {
-    const fullRequestURL = `${this.googleIdentApiUrl}${endpointPath}${this.dbApiKey}`
-
-    const defaultHeaders = {
-      'Content-Type': 'application/json',
-    }
-
-    const config: RequestInit = {
-      headers: {
-        ...defaultHeaders,
-      },
-      body: JSON.stringify(credentials),
-      method: 'POST',
-    }
-
-    const authResponse = await fetch(fullRequestURL, config)
-
-    if (!authResponse.ok) {
-      const errorResponse = await authResponse.json()
-      throw errorResponse as U
-    }
-
-    const successResponse = await authResponse.json()
-    return successResponse as T
+  logoutUser = async () => {
+    return signOut(this.auth)
+      .then(() => {
+        this.user = undefined
+        console.log('User logged out successfully')
+        return true
+      })
+      .catch((error) => {
+        throw new Error(error)
+      })
   }
 
-  public login = async (credentials: Credentials): Promise<boolean> => {
-    const loginResponse = await this.authRequest<LoginResponse>(
-      EndpointPath.Login,
-      credentials
-    )
-
-    if ('kind' in loginResponse) {
-      const {
-        idToken: refreshToken,
-        email,
-        displayName: name,
-        localId,
-      } = loginResponse
-
-      this.user = { refreshToken, email, name, localId }
-
-      console.log(`User ${localId} was logged`)
-      return true
-    } else {
-      console.warn(loginResponse.error.message)
-      return false
+  updateUserName = async (name: string) => {
+    if (this.auth.currentUser) {
+      return updateProfile(this.auth.currentUser, { displayName: name })
+        .then(() => {
+          console.log('Username updated successfully')
+          true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
     }
+    console.log('User is not logged')
   }
 
-  public signUp = async ({
-    email,
-    password,
-  }: Credentials): Promise<boolean> => {
-    const signUpResponse = await this.authRequest<SignUpResponse>(
-      EndpointPath.SignUp,
-      { email, password }
-    )
+  updateUserPassword = async (newPassword: string) => {
+    if (this.auth.currentUser) {
+      return updatePassword(this.auth.currentUser, newPassword)
+        .then(() => {
+          console.log('Password updated successfully')
+          true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.log('Not set currentUser')
+  }
 
-    if ('kind' in signUpResponse) {
-      console.log('User registered')
+  private createUserProgress = async () => {
+    if (this.auth.currentUser) {
+      const { uid } = this.auth.currentUser
 
-      const { idToken: refreshToken, email, localId } = signUpResponse
-      this.user = { refreshToken, email }
-
-      return await this.addDbUser(localId).then((response) => {
-        if ('_id' in response) {
-          console.log(`User ${response._id} successfully added in DB`)
+      return update(child(this.db, 'users'), {
+        [uid]: { ...USER_INITIAL_PROGRESS, _id: uid },
+      })
+        .then(() => {
+          console.log('User progress created successfully')
           return true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.log('Not set currentUser')
+  }
+
+  updateUserProgress = async (
+    courseId: string,
+    workoutId: string,
+    exerciseProgressArray: number[]
+  ) => {
+    if (this.auth.currentUser) {
+      const { uid } = this.auth.currentUser
+
+      const updatedExercisePath = [
+        ChildKey.Users,
+        uid,
+        ChildKey.Courses,
+        courseId,
+      ].join('/')
+
+      return update(child(this.db, updatedExercisePath), {
+        [workoutId]: exerciseProgressArray,
+      })
+        .then(() => {
+          console.log('User progress updated successfully')
+          return true
+        })
+        .catch((error) => {
+          throw new Error(error)
+        })
+    }
+    console.warn('updateUserProgress filed. Not set currentUser')
+  }
+
+  getDbChild = async <T>(childPath: string) => {
+    return await get(child(this.db, childPath))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const dataObject = snapshot.val()
+          const data = Object.keys(dataObject)
+            .map((key) => dataObject[key])
+            .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
+
+          return data as T
         } else {
-          console.warn(response.message)
-          return false
+          console.log('No data available')
+          return
         }
       })
-    } else {
-      console.warn(signUpResponse.error.message)
-      return false
-    }
-  }
-
-  public getCourses = () => {
-    return this.dbRequest<CourseResponse, Error>(
-      {
-        endpointPath: EndpointPath.Courses,
-      },
-      { method: 'GET' }
-    )
+      .catch((error) => {
+        throw new Error(error)
+      })
   }
 }
 
