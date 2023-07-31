@@ -17,10 +17,18 @@ const MainLayout = () => {
     pathname.includes(RouterPath.Profile) ||
     pathname.includes(RouterPath.Workout)
 
+  const isLogoInteractive = pathname !== RouterPath.Home
+
   return (
     <S.Layout>
       <S.LogoWrapper>
-        <UiImage onClick={() => navigate(RouterPath.Home)} name={isLogoBlack ? 'logoBlack' : 'logoWhite'} width="220px" />
+        <UiImage
+          onClick={
+            isLogoInteractive ? () => navigate(RouterPath.Home) : undefined
+          }
+          name={isLogoBlack ? 'logoBlack' : 'logoWhite'}
+          width="220px"
+        />
       </S.LogoWrapper>
       <ProfilePlate visible={pathname !== RouterPath.Auth} />
       <Outlet />

@@ -21,7 +21,7 @@ const UiImage = ({
   const Svg = svg[name]
 
   return (
-    <S.ImageWrapper onClick={onClick}>
+    <S.ImageWrapper onClick={onClick} $isInteractive={Boolean(onClick)}>
       <Svg width={width} height={height} color={color} />
     </S.ImageWrapper>
   )

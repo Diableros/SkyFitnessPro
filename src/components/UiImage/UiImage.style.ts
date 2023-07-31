@@ -4,7 +4,7 @@ import { ColorType } from '@/theme/themeTypes'
 
 type ImageWrapper = {
   color?: keyof ColorType['colors']
-  onClick?: () => void
+  $isInteractive: boolean
 }
 
 export const ImageWrapper = styled.div<ImageWrapper>`
@@ -14,5 +14,5 @@ export const ImageWrapper = styled.div<ImageWrapper>`
 
   ${({ color, theme }) => (color ? `color: ${theme.colors[color]};` : '')};
 
-  ${({ onClick }) => (onClick ? 'cursor: pointer;' : '')};
+  ${({ $isInteractive }) => ($isInteractive ? 'cursor: pointer;' : '')};
 `
