@@ -73,3 +73,9 @@ export type UserData = {
 export type CourseProgress = Record<string, number[]>
 
 export type UserAccount = Record<string, CourseProgress>
+
+export type UseAuth = {
+  email: string
+  password: string
+  isSignUp?: boolean
+}

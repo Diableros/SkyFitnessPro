@@ -76,17 +76,23 @@ export const dropdownMenu = styled.div`
 export const DropDownWrapper = styled.div<ProfileProps>`
   display: flex;
   flex-flow: column nowrap;
-  align-items: flex-end;
+  justify-content: flex-end;
   position: absolute;
-  top: 3rem;
-  right: -1rem;
+  top: 2rem;
+  right: 0rem;
+  width: 100%;
+
   overflow: hidden;
-  transition: height 0.5s ease-in-out;
-  height: ${({ $active }) => ($active ? '6rem' : '0rem')};
+  transition: height 0.3s ease-in-out;
+  height: ${({ $active }) => ($active ? '9rem' : '0rem')};
 `
 export const MenuItem = styled.div<ProfileProps>`
+  width: inherit;
+  text-align: right;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSize.m};
+  line-height: 1.7;
+
   color: ${({ $page, theme }) =>
     $page ? theme.colors.white : theme.colors.black};
 

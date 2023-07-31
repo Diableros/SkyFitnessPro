@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 
 import FormInput from './components/FormInput'
 import UiButton from '@/components/UiButton'
@@ -13,23 +12,13 @@ import { Credentials } from '@/api/types'
 import formFields from './constants'
 import { AuthFields } from './types'
 import { ButtonTitle, FieldsList } from './enums'
-import { RouterPath } from '@/router/enums'
 
 import * as S from './AuthForm.style'
 
 const UiAuthForm = () => {
-  const navigate = useNavigate()
-
   const [isSignUp, setIsSignUp] = React.useState<boolean>(false)
 
-  const [login, setLogin] = React.useState<string>('')
-  const [password, setPassword] = React.useState<string>('')
-
-  const { data: authResult, isLoading: authWaiting } = useAuth(
-    login,
-    password,
-    isSignUp ? 'signup' : 'login'
-  )
+  const { auth, isLoading } = useAuth()
 
   const {
     handleSubmit,
@@ -40,13 +29,8 @@ const UiAuthForm = () => {
   })
 
   const onSubmit: SubmitHandler<Credentials> = ({ email, password }) => {
-    setLogin(email)
-    setPassword(password)
+    auth({ email, password, isSignUp })
   }
-
-  React.useEffect(() => {
-    if (authResult && !authWaiting) navigate(RouterPath.Profile)
-  }, [authResult, authWaiting])
 
   return (
     <S.AuthForm onSubmit={handleSubmit(onSubmit)}>
@@ -77,13 +61,17 @@ const UiAuthForm = () => {
           <UiButton
             buttonType="submit"
             size={ButtonSize.L}
-            title={ButtonTitle.LoginTitle}
+            title={isLoading ? ButtonTitle.LoginLoader : ButtonTitle.LoginTitle}
           />
         ) : null}
         <UiButton
           buttonType={isSignUp ? 'submit' : 'button'}
           size={ButtonSize.L}
-          title={ButtonTitle.SignUpTitle}
+          title={
+            isSignUp && isLoading
+              ? ButtonTitle.SignUpLoader
+              : ButtonTitle.SignUpTitle
+          }
           buttonTheme={isSignUp ? ButtonTheme.PurpleBright : ButtonTheme.White}
           onClick={() => setIsSignUp(true)}
           outlined

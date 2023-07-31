@@ -10,7 +10,6 @@ export const useWorkouts = () => {
     queryFn: () => api.getDbChild<Workout[]>(ChildKey.Workouts),
     staleTime: 60 * 60 * 1000,
   })
-  // console.log(`data =>`, data)
 
   return {
     data,

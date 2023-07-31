@@ -1,10 +1,8 @@
 import { FirebaseOptions, initializeApp } from 'firebase/app'
 import {
   Auth,
-  browserLocalPersistence,
   createUserWithEmailAndPassword,
   getAuth,
-  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
@@ -49,9 +47,9 @@ class ApiService {
     this.db = ref(getDatabase(app))
     this.auth = getAuth(app)
 
-    setPersistence(this.auth, browserLocalPersistence).then(() =>
-      console.log('Local persistence is ON')
-    )
+    // setPersistence(this.auth, browserLocalPersistence).then(() =>
+    //   console.log('Local persistence is ON')
+    // )
 
     if (!this.db)
       throw new Error(`Firebase Realtime Database was not connected`)

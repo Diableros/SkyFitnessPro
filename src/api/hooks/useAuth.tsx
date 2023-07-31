@@ -1,36 +1,34 @@
-import { useQuery } from '@tanstack/react-query'
+import * as React from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { User } from 'firebase/auth'
 
 import api from '@/api/ApiService'
 import { Action, useUserContext } from '@/context'
 
-import { QueryKey } from '../enums'
+import { UseAuth } from '../types'
 
-export const useAuth = (
-  email: string,
-  password: string,
-  authType: 'login' | 'signup'
-) => {
+export const useAuth = () => {
   const { dispatch } = useUserContext()
 
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: authType === 'login' ? [QueryKey.Login] : [QueryKey.SignUp],
-    queryFn: () =>
-      authType === 'login'
-        ? api.loginUser(email, password)
-        : api.createUser(email, password),
-    staleTime: 60 * 60 * 1000,
-    enabled: !!email && !!password && !!authType,
-    onSuccess: (data) => {
-      if (data) {
-        console.log('User dispatched in context state')
-        dispatch({
-          type: Action.Login,
-          payload: data,
-        })
-      }
-    },
-    retry: 0,
-  })
+  const {
+    mutate: auth,
+    data,
+    isLoading,
+    error,
+    isError,
+    isSuccess,
+  } = useMutation<User, Error, UseAuth>(({ email, password, isSignUp }) =>
+    isSignUp ? api.createUser(email, password) : api.loginUser(email, password)
+  )
 
-  return { data, isLoading, error, isError }
+  React.useEffect(() => {
+    if (isSuccess) {
+      dispatch({
+        type: Action.Login,
+        payload: data,
+      })
+    }
+  }, [isSuccess])
+
+  return { auth, data, isLoading, error, isError }
 }

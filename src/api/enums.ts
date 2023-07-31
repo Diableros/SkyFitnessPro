@@ -10,9 +10,8 @@ export const enum EndpointPath {
 }
 
 export const enum QueryKey {
-  Login = 'login',
+  Auth = 'auth',
   Logout = 'logout',
-  SignUp = 'signup',
 }
 
 export const enum ChildKey {

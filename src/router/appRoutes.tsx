@@ -29,7 +29,7 @@ export const routes = (
         },
         {
           path: RouterPath.Auth,
-          element: <Auth />,
+          element: access ? <Navigate to={RouterPath.Profile} /> : <Auth />,
         },
         {
           path: RouterPath.Profile,

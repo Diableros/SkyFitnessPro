@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import UiButton from '@/components/UiButton'
@@ -7,7 +6,6 @@ import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
 import api from '@/api/ApiService'
-import { QueryKey } from '@/api/enums'
 import { Action } from '@/context'
 import { useUserContext } from '@/context'
 
@@ -20,7 +18,6 @@ type PropsType = {
 }
 
 const ProfilePlate = ({ visible }: PropsType) => {
-  const queryClient = useQueryClient()
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
@@ -31,14 +28,11 @@ const ProfilePlate = ({ visible }: PropsType) => {
   const isHomePage = pathname === RouterPath.Home
 
   const handleButtonLoginClick = () => {
-    navigate(`${RouterPath.Auth}`)
+    navigate(RouterPath.Auth)
   }
 
   const handleLogoutClick = () => {
     api.logoutUser().then(() => {
-      queryClient.invalidateQueries([QueryKey.Login])
-      queryClient.invalidateQueries([QueryKey.SignUp])
-
       dispatch({
         type: Action.Logout,
       })
@@ -46,14 +40,10 @@ const ProfilePlate = ({ visible }: PropsType) => {
     })
   }
 
-  // React.useEffect(() => {
-  //   console.log('User current state', user)
-  // }, [user])
-
   return (
     <>
       {visible ? (
-        <S.Plate>
+        <S.Plate onMouseLeave={() => setIsMenuShow(!isMenuShow)}>
           {user ? (
             <S.UserPlateBox>
               <S.UserPlate onClick={() => setIsMenuShow(!isMenuShow)}>
@@ -70,10 +60,7 @@ const ProfilePlate = ({ visible }: PropsType) => {
                   />
                 </S.DropDownButoon>
               </S.UserPlate>
-              <S.DropDownWrapper
-                $active={isMenuShow}
-                onMouseLeave={() => setIsMenuShow(!isMenuShow)}
-              >
+              <S.DropDownWrapper $active={isMenuShow}>
                 <S.MenuItem
                   onClick={() => navigate(RouterPath.Home)}
                   $page={isHomePage}
