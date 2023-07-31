@@ -8,6 +8,7 @@ type PropsType = {
   width?: string
   height?: string
   color?: keyof ColorType['colors']
+  onClick?: () => void
 }
 
 const UiImage = ({
@@ -15,11 +16,12 @@ const UiImage = ({
   width = '100%',
   height = '100%',
   color,
+  onClick,
 }: PropsType) => {
   const Svg = svg[name]
 
   return (
-    <S.ImageWrapper>
+    <S.ImageWrapper onClick={onClick}>
       <Svg width={width} height={height} color={color} />
     </S.ImageWrapper>
   )

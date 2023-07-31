@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 // import DraftNavigate from './components/DraftNavigate'
 import UiImage from '@/components/UiImage'
@@ -10,6 +10,7 @@ import * as S from './MainLayout.style'
 
 const MainLayout = () => {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   const isLogoBlack =
     pathname.includes(LinkPath.Course) ||
@@ -19,7 +20,7 @@ const MainLayout = () => {
   return (
     <S.Layout>
       <S.LogoWrapper>
-        <UiImage name={isLogoBlack ? 'logoBlack' : 'logoWhite'} width="220px" />
+        <UiImage onClick={() => navigate(RouterPath.Home)} name={isLogoBlack ? 'logoBlack' : 'logoWhite'} width="220px" />
       </S.LogoWrapper>
       <ProfilePlate visible={pathname !== RouterPath.Auth} />
       <Outlet />
