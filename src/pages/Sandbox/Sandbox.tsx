@@ -1,4 +1,5 @@
-import UiProgressForm from '../Workout/components/ProgressForm/ProgressForm'
+import CredsChangeForm from '../Profile/components/CredsChangeForm'
+import { InputType } from '../Profile/components/CredsChangeForm/enums'
 import UiModal from '@/components/UiModal'
 
 const Sandbox = () => {
@@ -6,7 +7,7 @@ const Sandbox = () => {
     <>
       <div>Text from Sandbox component</div>
       <UiModal>
-        <UiProgressForm />
+        <CredsChangeForm formType={InputType.Password} />
       </UiModal>
     </>
   )
