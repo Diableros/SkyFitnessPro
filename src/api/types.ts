@@ -14,6 +14,7 @@ export type SignUpResponse = {
   kind: string
   localId: string
   email: string
+  displayName: string
   idToken: string
   refreshToken: string
   expiresIn: string
@@ -21,7 +22,6 @@ export type SignUpResponse = {
 
 export type LoginResponse = SignUpResponse & {
   registered: boolean
-  displayName: string
 }
 
 export type AuthErrorResponse = {
@@ -49,6 +49,18 @@ export type Course = {
   workouts: string[]
 }
 
+export type Workout = {
+  _id: string
+  name: string
+  video: string
+  exercises?: Exercise[]
+}
+
+export type Exercise = {
+  name: string
+  quantity: number
+}
+
 export type CourseResponse = Record<string, Course>
 
 export type UserData = {
@@ -60,7 +72,10 @@ export type UserData = {
 
 export type CourseProgress = Record<string, number[]>
 
-export type UserAccount = {
-  _id: string
-  courses: Record<string, CourseProgress>
+export type UserAccount = Record<string, CourseProgress>
+
+export type UseAuth = {
+  email: string
+  password: string
+  isSignUp?: boolean
 }

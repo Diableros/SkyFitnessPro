@@ -30,9 +30,9 @@ const UiModal = ({ children, isShow = true }: PropsType) => {
     <S.ModalScreen>
       <S.ModalContentBox>
         <S.ImageWrapper onClick={handleCloseModal}>
-        <UiImage name="cross" width='20px' height='20px'/>
+          <UiImage name="cross" width="20px" height="20px" />
         </S.ImageWrapper>
-        <Content onClose={handleCloseModal} />
+        <Content {...children.props} onClose={handleCloseModal} />
       </S.ModalContentBox>
     </S.ModalScreen>
   ) : null

@@ -1,3 +1,4 @@
+import { USER_INITIAL_DATA } from '@/api/constants'
 import { UserReducer } from './types'
 import { Action } from './enums'
 
@@ -6,7 +7,11 @@ export const userReducer: UserReducer = (state, action) => {
     case Action.Login:
       return {
         ...state,
-        logged: action.payload,
+        user: action.payload,
+      }
+    case Action.Logout:
+      return {
+        ...USER_INITIAL_DATA,
       }
 
     default:

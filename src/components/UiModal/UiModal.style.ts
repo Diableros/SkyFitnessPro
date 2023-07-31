@@ -2,6 +2,7 @@ import { styled } from 'styled-components'
 
 export const ModalScreen = styled.div`
   position: fixed;
+  z-index: 999;
 
   width: 100vw;
   height: 100vh;

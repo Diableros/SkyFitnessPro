@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import * as React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import UiButton from '../../../../components/UiButton'
-import { ButtonSize, ButtonTheme } from '../../../../components/UiButton/enums'
-import UiImage from '../../../../components/UiImage'
+import UiButton from '@/components/UiButton'
+import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
+import UiImage from '@/components/UiImage'
 
+import api from '@/api/ApiService'
 import { Action } from '@/context'
 import { useUserContext } from '@/context'
 
@@ -17,38 +18,39 @@ type PropsType = {
 }
 
 const ProfilePlate = ({ visible }: PropsType) => {
-  const { logged: isLogged, dispatch } = useUserContext()
-  const [isLogoutShow, setIsLogoutShow] = useState(false)
-  const navigate = useNavigate()
   const { pathname } = useLocation()
-  console.log(visible)
+  const navigate = useNavigate()
+
+  const { user, dispatch } = useUserContext()
+
+  const [isMenuShow, setIsMenuShow] = React.useState<boolean>(!!user)
 
   const isHomePage = pathname === RouterPath.Home
 
   const handleButtonLoginClick = () => {
-    navigate(`${RouterPath.Auth}`)
+    navigate(RouterPath.Auth)
   }
 
-  const handleButtonLogoutClick = () => {
-    console.log(isHomePage)
-
-    dispatch({
-      type: Action.Login,
-      payload: false,
+  const handleLogoutClick = () => {
+    api.logoutUser().then(() => {
+      dispatch({
+        type: Action.Logout,
+      })
+      navigate(RouterPath.Home)
     })
-
-    navigate(`${RouterPath.Auth}`)
   }
 
   return (
     <>
       {visible ? (
-        <S.Plate>
-          {isLogged ? (
+        <S.Plate onMouseLeave={() => setIsMenuShow(!isMenuShow)}>
+          {user ? (
             <S.UserPlateBox>
-              <S.UseerPlate onClick={() => setIsLogoutShow(!isLogoutShow)}>
+              <S.UserPlate onClick={() => setIsMenuShow(!isMenuShow)}>
                 <S.Avatar />
-                <S.UserName $page={isHomePage}>User Name</S.UserName>
+                <S.UserName $page={isHomePage}>
+                  {user.displayName || user.email}
+                </S.UserName>
                 <S.DropDownButoon>
                   <UiImage
                     name="dropdown_button"
@@ -57,19 +59,24 @@ const ProfilePlate = ({ visible }: PropsType) => {
                     color={isHomePage ? 'white' : 'black'}
                   />
                 </S.DropDownButoon>
-              </S.UseerPlate>
-              <S.DropDownWraper $active={isLogoutShow}>
-                {isLogoutShow ? (
-                  <S.LogOut
-                    onClick={() => handleButtonLogoutClick}
-                    $page={isHomePage}
-                  >
-                    Выйти
-                  </S.LogOut>
-                ) : (
-                  ''
-                )}
-              </S.DropDownWraper>
+              </S.UserPlate>
+              <S.DropDownWrapper $active={isMenuShow}>
+                <S.MenuItem
+                  onClick={() => navigate(RouterPath.Home)}
+                  $page={isHomePage}
+                >
+                  На главную
+                </S.MenuItem>
+                <S.MenuItem
+                  onClick={() => navigate(RouterPath.Profile)}
+                  $page={isHomePage}
+                >
+                  Профиль
+                </S.MenuItem>
+                <S.MenuItem onClick={handleLogoutClick} $page={isHomePage}>
+                  Выйти
+                </S.MenuItem>
+              </S.DropDownWrapper>
             </S.UserPlateBox>
           ) : (
             <UiButton
