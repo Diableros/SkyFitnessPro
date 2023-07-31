@@ -43,7 +43,7 @@ const ProfilePlate = ({ visible }: PropsType) => {
   return (
     <>
       {visible ? (
-        <S.Plate onMouseLeave={() => setIsMenuShow(!isMenuShow)}>
+        <S.Plate onMouseLeave={() => setIsMenuShow(false)}>
           {user ? (
             <S.UserPlateBox>
               <S.UserPlate onClick={() => setIsMenuShow(!isMenuShow)}>

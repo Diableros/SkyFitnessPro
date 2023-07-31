@@ -3,6 +3,10 @@ import React, { useState } from 'react'
 import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
+import UiLoader from '@/components/UiLoader'
+import { LoaderSize } from '@/components/UiLoader/enums'
+
+import { UpdateCredsOptions } from '@/api/hooks/useChangeCreds'
 
 import { InputErrorText, InputName, InputType } from './enums'
 
@@ -10,9 +14,11 @@ import * as S from './CredsChangeForm.style'
 
 type PropsType = {
   formType: InputType
+  changeCredsFn: (options: UpdateCredsOptions) => void
+  isLoading: boolean
 }
 
-const CredsChangeForm = ({ formType }: PropsType) => {
+const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
   const [newLogin, setNewLogin] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
@@ -38,7 +44,7 @@ const CredsChangeForm = ({ formType }: PropsType) => {
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length === 0) {
       setError(InputErrorText.ShortLogin)
-    } else if (e.target.value.length > 10) {
+    } else if (e.target.value.length > 64) {
       setError(InputErrorText.LongLogin)
     } else {
       setError(null)
@@ -55,15 +61,15 @@ const CredsChangeForm = ({ formType }: PropsType) => {
     if (formType === InputType.Password) {
       if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
-        console.log('отмена отпраки данных')
+        alert('Недопустимый пароль')
       } else {
         setError(null)
-        console.log(`old pass => ${password}, new pass => ${newPassword}`)
+        changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
-    } else if (newLogin.length > 10) {
-      console.log('отмена отпраки данных')
+    } else if (newLogin.length > 64 || newLogin.length < 6) {
+      alert('Недопустимый логин')
     } else {
-      console.log(`new login => ${newLogin}`)
+      changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
   }
 
@@ -72,10 +78,8 @@ const CredsChangeForm = ({ formType }: PropsType) => {
   const title =
     formType === InputType.Password ? 'Новый пароль:' : 'Новый логин:'
 
-  return (
-    <S.CredsFormWrapper>
-      <UiImage width="220px" height="35px" name="logoBlack" />
-      <S.CredsFormHeader>{title}</S.CredsFormHeader>
+  const formContent = (
+    <>
       {formType === InputType.Password ? (
         <>
           <CredsInput
@@ -103,9 +107,17 @@ const CredsChangeForm = ({ formType }: PropsType) => {
       {error ? <S.CredsFormError>{error}</S.CredsFormError> : null}
       <UiButton
         buttonType="submit"
-        title={'Отправить'}
+        title={isLoading ? 'Отправляем данные' : 'Отправить'}
         onClick={handleDataSend}
       />
+    </>
+  )
+
+  return (
+    <S.CredsFormWrapper>
+      <UiImage width="220px" height="35px" name="logoBlack" />
+      <S.CredsFormHeader>{title}</S.CredsFormHeader>
+      {formContent}
     </S.CredsFormWrapper>
   )
 }

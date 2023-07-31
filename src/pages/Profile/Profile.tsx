@@ -1,46 +1,70 @@
+import * as React from 'react'
+
+import CredsChangeForm from './components/CredsChangeForm/CredsChangeForm'
+import { InputType } from './components/CredsChangeForm/enums'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiButton from '@/components/UiButton/UiButton'
 import UiCourseCard from '@/components/UiCourseCard'
 import { PageType } from '@/components/UiCourseCard/enums'
+import UiModal from '@/components/UiModal'
 import { mockData } from '../Home/mockData'
+
+import { useUserContext } from '@/context'
+import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 
 import * as S from './Profile.style'
 
 import { user } from './mockUserData'
 
-const { login, password, coursesId } = user
+const { coursesId } = user
 const userCourses = mockData.filter((course) => coursesId.includes(course._id))
 
 const Profile = () => {
-  const handleClick = () => {
-    // TODO открытие модалок смены логина/пароля
-    alert('открылась модалка')
-  }
+  const { user } = useUserContext()
+  const [showModalType, setShowModalType] = React.useState<InputType | null>(
+    null
+  )
+
+  const { updateCreds, data, isLoading } = useChangeCreds()
+
+  const credsModalContent = showModalType ? (
+    <UiModal isShow={Boolean(showModalType)}>
+      <CredsChangeForm
+        formType={showModalType}
+        changeCredsFn={updateCreds}
+        isLoading={isLoading}
+      />
+    </UiModal>
+  ) : null
+
+  React.useEffect(() => {
+    if (data) setShowModalType(null)
+  }, [data])
+
   return (
     <S.PageWrapper>
       <S.ProfileDataBlock>
         <S.ProfileHeader>Мой профиль</S.ProfileHeader>
 
         <S.ProfileData>
-          <S.ProfileDataItem>Логин: {login}</S.ProfileDataItem>
-          <S.ProfileDataItem>Пароль: {password}</S.ProfileDataItem>
+          <S.ProfileDataItem>Логин: {user?.email}</S.ProfileDataItem>
         </S.ProfileData>
 
         <S.ProfileChangeBtns>
           <UiButton
-            title="Редактировать логин"
+            title="Изменить логин"
             buttonTheme={ButtonTheme.PurpleBright}
             fontSize="s"
             size={ButtonSize.L}
-            onClick={handleClick}
+            onClick={() => setShowModalType(InputType.Login)}
           ></UiButton>
 
           <UiButton
-            title="Редактировать пароль"
+            title="Изменить пароль"
             buttonTheme={ButtonTheme.PurpleBright}
             fontSize="s"
             size={ButtonSize.L}
-            onClick={handleClick}
+            onClick={() => setShowModalType(InputType.Password)}
           ></UiButton>
         </S.ProfileChangeBtns>
       </S.ProfileDataBlock>
@@ -58,9 +82,9 @@ const Profile = () => {
             ))
           : null}
       </S.ProfileCourses>
+      {credsModalContent ? credsModalContent : null}
     </S.PageWrapper>
   )
 }
 
 export default Profile
-
