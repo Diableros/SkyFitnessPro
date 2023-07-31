@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
-import UiLoader from '@/components/UiLoader'
-import { LoaderSize } from '@/components/UiLoader/enums'
 
 import { UpdateCredsOptions } from '@/api/hooks/useChangeCreds'
 
