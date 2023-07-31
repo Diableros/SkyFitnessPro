@@ -9,7 +9,7 @@ import { InputErrorText, InputName, InputType } from './enums'
 import * as S from './CredsChangeForm.style'
 
 type PropsType = {
-  formType?: InputType
+  formType: InputType
 }
 
 const CredsChangeForm = ({ formType }: PropsType) => {
@@ -73,7 +73,7 @@ const CredsChangeForm = ({ formType }: PropsType) => {
     formType === InputType.Password ? 'Новый пароль:' : 'Новый логин:'
 
   return (
-    <S.CredsFormWrapper $formType={formType}>
+    <S.CredsFormWrapper>
       <UiImage width="220px" height="35px" name="logoBlack" />
       <S.CredsFormHeader>{title}</S.CredsFormHeader>
       {formType === InputType.Password ? (

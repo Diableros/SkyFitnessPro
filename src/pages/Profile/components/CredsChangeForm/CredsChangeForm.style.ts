@@ -1,12 +1,6 @@
 import { styled } from 'styled-components'
 
-import { InputType } from './enums'
-
-type InputProps = {
-  $formType?: InputType
-}
-
-export const CredsFormWrapper = styled.div<InputProps>`
+export const CredsFormWrapper = styled.div`
   border-radius: 12px;
   background: ${({ theme }) => theme.colors.white};
   display: flex;
@@ -21,7 +15,7 @@ export const CredsFormWrapper = styled.div<InputProps>`
     left: 73px;
   }
 `
-export const CredsFormHeader = styled.span<InputProps>`
+export const CredsFormHeader = styled.span`
   font-size: ${({ theme }) => theme.fontSize.m};
   margin-bottom: 20px;
 `
