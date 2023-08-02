@@ -8,14 +8,22 @@ export const useCourses = () => {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [ChildKey.Courses],
     queryFn: () => api.getDbChild<Course[]>(ChildKey.Courses),
-    //select(data) {},
+    select: (data) => {
+      const result = data
+        ? Object.keys(data).map((key: string) => data[key as keyof typeof data])
+        : // .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
+          null
+
+      // если сортировку делать сразу после мэп, пишет ошибку у 'order', но работает в браузере и так и так
+      return [].sort.call(
+        result,
+        ({ order: orderA }, { order: orderB }) => orderA - orderB
+      )
+    },
     staleTime: 60 * 60 * 1000,
   })
 
-  //  const dataSorted = Object.keys(data)
-  //         .map((key: string) => data[key])
-  //         //   .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
-  //  console.log(`data =>`, data)
+ // console.log(`data =>`, data)
 
   return {
     data,
