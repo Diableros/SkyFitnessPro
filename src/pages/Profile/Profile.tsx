@@ -51,7 +51,7 @@ const Profile = () => {
   const coursesIDs = courses ? Object.keys(courses) : null
   const userCourses = coursesAll?.filter(({ _id }) => coursesIDs?.includes(_id))
 
-  const [workoutModal, setWorkoutModal] = React.useState<string[] | null>(null)
+  const [workoutModal, setWorkoutModal] = React.useState<Workout[] | null>(null)
 
   const workoutModalContent = workoutModal ? (
     <UiModal isShow={Boolean(workoutModal)}>
@@ -65,7 +65,8 @@ const Profile = () => {
 
   const handleWorkoutClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    const id = 'yoga'
+    const target = e.target as HTMLButtonElement
+    const id = target.getAttribute('data-workout-id')
     navigate(`${LinkPath.Workout}/${id}`)
   }
 
@@ -75,16 +76,13 @@ const Profile = () => {
     const chosenID = card?.getAttribute('data-course-id')
     const chosenCourse = userCourses?.find(({ _id }) => _id === chosenID)
     const workoutsIDs = chosenCourse?.['workouts'] //TODO разобраться с ошибкой: Property  does not exist on type 'never'.
-    const workoutsNames = workoutsIDs
-      ? workoutsAll
-          ?.filter((workout) =>
-            (workoutsIDs as string[]).includes((workout as Workout)._id)
-          )
-          .map((workout) => (workout as Workout).name)
+    const workouts = workoutsIDs
+      ? workoutsAll?.filter((workout) =>
+          (workoutsIDs as string[]).includes((workout as Workout)._id)
+        )
       : null
-
-    // console.log('workouts names=>', workoutsNames)
-    setWorkoutModal(workoutsNames || null)
+    // console.log('workouts names=>', workouts)
+    setWorkoutModal((workouts as Workout[]) || null)
   }
 
   return (

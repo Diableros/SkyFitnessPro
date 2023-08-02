@@ -17,7 +17,7 @@ type PropsType = {
   course: Course
   size?: CardView
   pageType?: PageType
-  onButtonClick?: (e:React.MouseEvent) => void
+  onButtonClick?: (e: React.MouseEvent) => void
 }
 
 const UiCourseCard = ({
@@ -40,7 +40,12 @@ const UiCourseCard = ({
 
   return (
     <>
-      <S.CourseCard $pageType={pageType} onClick={handleCardClick} size={size} data-course-id={_id}>
+      <S.CourseCard
+        $pageType={pageType}
+        onClick={handleCardClick}
+        size={size}
+        data-course-id={_id}
+      >
         <S.CardTitle $pageType={pageType} size={size}>
           {nameRU}
         </S.CardTitle>

@@ -10,5 +10,5 @@ export enum RouterPath {
 
 export const enum LinkPath {
   Course = '/course',
-  Workout = '/workout'
+  Workout = '/workout',
 }
