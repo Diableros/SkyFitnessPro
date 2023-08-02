@@ -2,23 +2,34 @@ import { useQuery } from '@tanstack/react-query'
 
 import api from '@/api/ApiService'
 import { ChildKey } from '@/api/enums'
+import { useUserContext } from '@/context'
 
 import { UserAccount } from '../types'
 
-export const useProgress = (userID: string | undefined) => {
-  const { data, isLoading, error, isError } = useQuery({
+export const useProgress = () => {
+  const { user } = useUserContext()
+
+  const {
+    data: courses,
+    isLoading: isProgressLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: ['userInfo'],
     queryFn: () =>
-      api.getDbChild<[string, ...UserAccount[]]>(`${ChildKey.Users}/${userID}`),
-    // ответ с бд приходит в формате массива где первый элемент строка id,  а потом уже идут объекты прогресса
+      api.getDbChild<UserAccount>(`${ChildKey.Users}/${user?.uid}`),
+    select: (data) => {
+      const result = { ...data }
+      delete result?._id
+      return result
+    },
     staleTime: 60 * 60 * 1000,
   })
-  const coursesProgress = data?.slice(1)
-  console.log('курсы пользователя=>', data)
+  // console.log('курсы пользователя=>', courses)
 
   return {
-    coursesProgress,
-    isLoading,
+    courses,
+    isProgressLoading,
     error,
     isError,
   }

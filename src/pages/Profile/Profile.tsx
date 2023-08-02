@@ -8,21 +8,13 @@ import UiCourseCard from '@/components/UiCourseCard'
 import { PageType } from '@/components/UiCourseCard/enums'
 import UiLoader from '@/components/UiLoader'
 import UiModal from '@/components/UiModal'
-import { mockData } from '../Home/mockData'
 
 import { useCourses } from '@/api/hooks'
-import { UserAccount } from '@/api/types'
 import { useUserContext } from '@/context'
-import { getUserCourses } from './utils'
 import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 import { useProgress } from '@/api/hooks/useProgress'
 
 import * as S from './Profile.style'
-
-import { user } from './mockUserData'
-
-const { coursesId } = user
-const userCour = mockData.filter((course) => coursesId.includes(course._id))
 
 const Profile = () => {
   const { user } = useUserContext()
@@ -47,28 +39,10 @@ const Profile = () => {
     if (data) setShowModalType(null)
   }, [data])
 
-  const { data: coursesALL } = useCourses()
-  const { coursesProgress, isLoading: isProgressLoading } = useProgress(
-    user?.uid
-  )
-
-  getUserCourses(coursesALL, coursesProgress as UserAccount[])
-
-  const couresesContent = !isProgressLoading ? (
-    <S.ProfileCourses>
-      {userCour.length > 0
-        ? userCour.map((course) => (
-            <UiCourseCard
-              key={course._id}
-              course={course}
-              pageType={PageType.Profile}
-            />
-          ))
-        : null}
-    </S.ProfileCourses>
-  ) : (
-    <UiLoader color="purpleDark" />
-  )
+  const { data: coursesAll } = useCourses()
+  const { courses, isProgressLoading } = useProgress()
+  const coursesIDs = courses ? Object.keys(courses) : null
+  const userCourses = coursesAll?.filter(({ _id }) => coursesIDs?.includes(_id))
 
   return (
     <S.PageWrapper>
@@ -99,19 +73,21 @@ const Profile = () => {
       </S.ProfileDataBlock>
 
       <S.ProfileHeader>Мои курсы</S.ProfileHeader>
-      {couresesContent}
-
-      {/* <S.ProfileCourses>
-        {userCour.length > 0
-          ? userCour.map((course) => (
-              <UiCourseCard
-                key={course._id}
-                course={course}
-                pageType={PageType.Profile}
-              />
-            ))
-          : null}
-      </S.ProfileCourses> */}
+      {!isProgressLoading ? (
+        <S.ProfileCourses>
+          {userCourses
+            ? userCourses.map((course) => (
+                <UiCourseCard
+                  key={course['_id']} //TODO разобраться с ошибкой: Property '_id' does not exist on type 'never'.
+                  course={course}
+                  pageType={PageType.Profile}
+                />
+              ))
+            : null}
+        </S.ProfileCourses>
+      ) : (
+        <UiLoader color="purpleDark" />
+      )}
       {credsModalContent ? credsModalContent : null}
     </S.PageWrapper>
   )

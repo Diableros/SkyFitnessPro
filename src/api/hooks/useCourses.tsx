@@ -23,7 +23,7 @@ export const useCourses = () => {
     staleTime: 60 * 60 * 1000,
   })
 
- // console.log(`data =>`, data)
+  // console.log(`data =>`, data)
 
   return {
     data,
