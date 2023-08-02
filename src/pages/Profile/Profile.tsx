@@ -6,21 +6,27 @@ import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiButton from '@/components/UiButton/UiButton'
 import UiCourseCard from '@/components/UiCourseCard'
 import { PageType } from '@/components/UiCourseCard/enums'
+import UiLoader from '@/components/UiLoader'
 import UiModal from '@/components/UiModal'
 import { mockData } from '../Home/mockData'
 
+import { useCourses } from '@/api/hooks'
+import { UserAccount } from '@/api/types'
 import { useUserContext } from '@/context'
+import { getUserCourses } from './utils'
 import { useChangeCreds } from '@/api/hooks/useChangeCreds'
+import { useProgress } from '@/api/hooks/useProgress'
 
 import * as S from './Profile.style'
 
 import { user } from './mockUserData'
 
 const { coursesId } = user
-const userCourses = mockData.filter((course) => coursesId.includes(course._id))
+const userCour = mockData.filter((course) => coursesId.includes(course._id))
 
 const Profile = () => {
   const { user } = useUserContext()
+
   const [showModalType, setShowModalType] = React.useState<InputType | null>(
     null
   )
@@ -40,6 +46,29 @@ const Profile = () => {
   React.useEffect(() => {
     if (data) setShowModalType(null)
   }, [data])
+
+  const { data: coursesALL } = useCourses()
+  const { coursesProgress, isLoading: isProgressLoading } = useProgress(
+    user?.uid
+  )
+
+  getUserCourses(coursesALL, coursesProgress as UserAccount[])
+
+  const couresesContent = !isProgressLoading ? (
+    <S.ProfileCourses>
+      {userCour.length > 0
+        ? userCour.map((course) => (
+            <UiCourseCard
+              key={course._id}
+              course={course}
+              pageType={PageType.Profile}
+            />
+          ))
+        : null}
+    </S.ProfileCourses>
+  ) : (
+    <UiLoader color="purpleDark" />
+  )
 
   return (
     <S.PageWrapper>
@@ -70,10 +99,11 @@ const Profile = () => {
       </S.ProfileDataBlock>
 
       <S.ProfileHeader>Мои курсы</S.ProfileHeader>
+      {couresesContent}
 
-      <S.ProfileCourses>
-        {userCourses.length > 0
-          ? userCourses.map((course) => (
+      {/* <S.ProfileCourses>
+        {userCour.length > 0
+          ? userCour.map((course) => (
               <UiCourseCard
                 key={course._id}
                 course={course}
@@ -81,7 +111,7 @@ const Profile = () => {
               />
             ))
           : null}
-      </S.ProfileCourses>
+      </S.ProfileCourses> */}
       {credsModalContent ? credsModalContent : null}
     </S.PageWrapper>
   )

@@ -7,12 +7,7 @@ type PropsType = {
   type: string
 }
 
-const CredsInput = ({
-  name,
-  placeholder,
-  onChange,
-  type,
-}: PropsType) => {
+const CredsInput = ({ name, placeholder, onChange, type }: PropsType) => {
   return (
     <S.FormInput
       name={name}

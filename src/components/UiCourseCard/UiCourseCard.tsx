@@ -34,7 +34,7 @@ const UiCourseCard = ({
   const handleButtonClick = (event: React.MouseEvent) => {
     event.stopPropagation()
     console.log('click on button')
-    navigate(`${LinkPath.Course}/${order}`)
+    // navigate(`${LinkPath.Course}/${order}`)
   }
 
   const svgName = `${
