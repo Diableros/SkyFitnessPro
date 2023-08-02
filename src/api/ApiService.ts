@@ -175,6 +175,7 @@ class ApiService {
         })
     }
     console.warn('updateUserProgress filed. Not set currentUser')
+    return false
   }
 
   getDbChild = async <T>(childPath: string) => {

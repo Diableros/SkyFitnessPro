@@ -11,9 +11,6 @@ export const Layout = styled.div`
 
 export const LogoWrapper = styled.div`
   position: absolute;
-  width: 1160px;
-  margin: 2rem auto 0;
-  & > div {
-    justify-content: flex-start;
-  }
+  top: 2rem;
+  left: 5rem;
 `

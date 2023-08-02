@@ -1,24 +1,23 @@
-import { useState } from 'react'
+import * as React from 'react'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
+import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
+
 import * as S from './ProgressForm.style'
 
 import { mockData } from './mockData'
 
-const UiProgressForm = () => {
-  const [filled, setIsFilled] = useState<boolean>(false)
+type PropsType = {
+  updateProgressFn: (options: UpdateProgressOptions) => void
+}
 
-  const example = mockData[2].workoutTWO
-
-  const [inputValues, setInputValues] = useState({})
-
-  const handleSendSuccess = () => {
-    setIsFilled(true)
-  }
+const UiProgressForm = ({ updateProgressFn }: PropsType) => {
+  const [filled, setIsFilled] = React.useState<boolean>(false)
+  const [inputValues, setInputValues] = React.useState({})
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -28,9 +27,11 @@ const UiProgressForm = () => {
     }))
   }
 
-  //TODO: 
-  //      закончить логику с картинкой; 
-  //      правильно типизировать.
+  const example = mockData[2].workoutTWO
+
+  const handleSendSuccess = () => {
+    setIsFilled(true)
+  }
 
   return (
     <S.ProgressWrapper>
@@ -62,7 +63,9 @@ const UiProgressForm = () => {
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
               handleSendSuccess()
-              console.log(inputValues)
+              const newValues = Object.values(inputValues)
+              console.log(newValues)
+              // updateProgressFn({ courseId: , workoutId: , exerciseProgressArray: newValues})
             }}
           />
         </>
