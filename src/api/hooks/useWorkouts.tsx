@@ -5,18 +5,15 @@ import { ChildKey } from '@/api/enums'
 import { Workout } from '@/api/types'
 
 export const useWorkouts = () => {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data: workouts, isLoading, isError, error } = useQuery({
     queryKey: [ChildKey.Workouts],
-    queryFn: () => api.getDbChild<Workout[]>(ChildKey.Workouts),
-    select: (data) => {
-      const result = data
-        ? Object.keys(data).map((key: string) => data[key as keyof typeof data])
-        : null
-
-      return result
-    },
+    queryFn: () => api.getDbChild<Record<string, Workout>>(ChildKey.Workouts),
     staleTime: 60 * 60 * 1000,
   })
+
+  const data = workouts
+  ? Object.keys(workouts).map((key: string) => workouts[key as keyof typeof workouts])
+  : null
 
   return {
     data,

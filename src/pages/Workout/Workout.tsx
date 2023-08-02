@@ -48,9 +48,7 @@ const Workout = () => {
             <UserProgress exercises={userProgress} />
           </S.ProgressBlock>
         </>
-      ) : 
-        null
-      }
+      ) : null}
     </S.PageWrapper>
   )
 }

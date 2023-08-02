@@ -17,14 +17,12 @@ export const useProgress = () => {
   } = useQuery({
     queryKey: ['userInfo'],
     queryFn: () =>
-      api.getDbChild<UserAccount>(`${ChildKey.Users}/${user?.uid}`),
-    select: (data) => {
-      const result = { ...data }
-      delete result?._id
-      return result
-    },
+      api.getDbChild<Record<string, UserAccount>>(
+        `${ChildKey.Users}/${user?.uid}`
+      ),
     staleTime: 60 * 60 * 1000,
   })
+  delete courses?._id
   // console.log('курсы пользователя=>', courses)
 
   return {
