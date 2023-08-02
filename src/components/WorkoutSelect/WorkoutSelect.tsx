@@ -1,35 +1,20 @@
-import { useNavigate } from 'react-router-dom'
-
 import UiImage from '../UiImage'
 
 import * as S from './WorkoutSelect.style'
 
-import { Course } from '@/pages/Home/mockData'
-
 type PropsType = {
-  course: Course
+  workouts: string[]
   isFinished: boolean
+  onClick: (e: React.MouseEvent) => void
 }
 
-const WorkoutSelect = ({ course: { workouts }, isFinished }: PropsType) => {
-  const navigate = useNavigate()
-
-  const handleButtonClick = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    console.log('clicked')
-    navigate('courses/exercises/')
-  }
-
+const WorkoutSelect = ({ workouts, isFinished, onClick }: PropsType) => {
   return (
     <S.SelectWrapper>
       <S.SelectHeader>Выберите тренировку</S.SelectHeader>
       {workouts.map((name, index) => {
         return (
-          <S.SelectItem
-            onClick={handleButtonClick}
-            $isFinished={isFinished}
-            key={index}
-          >
+          <S.SelectItem onClick={onClick} $isFinished={isFinished} key={index} data-workout-id>
             {name}
             {isFinished ? (
               <UiImage name="checkMark" width="27px" height="25px" />

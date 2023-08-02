@@ -1,3 +1,4 @@
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ButtonSize, ButtonTheme } from '../UiButton/enums'
@@ -16,12 +17,14 @@ type PropsType = {
   course: Course
   size?: CardView
   pageType?: PageType
+  onButtonClick?: (e:React.MouseEvent) => void
 }
 
 const UiCourseCard = ({
-  course: { nameRU, nameEN, order },
+  course: { _id, nameRU, nameEN, order },
   size = CardView.Card,
   pageType,
+  onButtonClick,
 }: PropsType) => {
   const navigate = useNavigate()
 
@@ -31,19 +34,13 @@ const UiCourseCard = ({
     }
   }
 
-  const handleButtonClick = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    console.log('click on button')
-    // navigate(`${LinkPath.Course}/${order}`)
-  }
-
   const svgName = `${
     pageType === PageType.Course ? 'banner' : 'card'
   }${nameEN}` as keyof typeof svg
 
   return (
     <>
-      <S.CourseCard $pageType={pageType} onClick={handleCardClick} size={size}>
+      <S.CourseCard $pageType={pageType} onClick={handleCardClick} size={size} data-course-id={_id}>
         <S.CardTitle $pageType={pageType} size={size}>
           {nameRU}
         </S.CardTitle>
@@ -51,7 +48,7 @@ const UiCourseCard = ({
         {pageType === PageType.Profile ? (
           <UiButton
             title="Перейти"
-            onClick={handleButtonClick}
+            onClick={onButtonClick}
             buttonTheme={ButtonTheme.Salad}
             fontSize="s"
             size={ButtonSize.S}

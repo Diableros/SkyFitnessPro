@@ -8,6 +8,13 @@ export const useWorkouts = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: [ChildKey.Workouts],
     queryFn: () => api.getDbChild<Workout[]>(ChildKey.Workouts),
+    select: (data) => {
+      const result = data
+        ? Object.keys(data).map((key: string) => data[key as keyof typeof data])
+        : null
+
+      return result
+    },
     staleTime: 60 * 60 * 1000,
   })
 
