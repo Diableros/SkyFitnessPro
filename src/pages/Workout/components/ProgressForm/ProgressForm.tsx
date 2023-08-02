@@ -23,15 +23,13 @@ const UiProgressForm = ({ updateProgressFn }: PropsType) => {
     const { name, value } = e.target
     setInputValues((prevState) => ({
       ...prevState,
-      [name]: Math.max(0, parseInt(value.slice(0,2)) || 0),
+      [name]: Math.max(0, parseInt(value.slice(0, 2)) || 0),
     }))
   }
 
-  const example = mockData[2].workoutTWO
-
-  const handleSendSuccess = () => {
-    setIsFilled(true)
-  }
+  //TODO: 
+  //      закончить логику с картинкой; 
+  //      правильно типизировать.
 
   return (
     <S.ProgressWrapper>
@@ -49,7 +47,7 @@ const UiProgressForm = ({ updateProgressFn }: PropsType) => {
                   type="number"
                   key={index + 2}
                   placeholder={'Введите значение'}
-                  value={inputValues[`${index}`] || ''} 
+                  value={inputValues[`${index}`] || ''}
                   onChange={inputHandler}
                 />
               </S.ProgressInputsBox>

@@ -1,34 +1,26 @@
-import { useNavigate } from 'react-router-dom'
-
 import UiImage from '../UiImage'
+
+import { Workout } from '@/api/types'
 
 import * as S from './WorkoutSelect.style'
 
-import { Course } from '@/pages/Home/mockData'
-
 type PropsType = {
-  course: Course
+  workouts: Workout[]
   isFinished: boolean
+  onClick: (e: React.MouseEvent) => void
 }
 
-const WorkoutSelect = ({ course: { workouts }, isFinished }: PropsType) => {
-  const navigate = useNavigate()
-
-  const handleButtonClick = (event: React.MouseEvent) => {
-    event.stopPropagation()
-    console.log('clicked')
-    navigate('courses/exercises/')
-  }
-
+const WorkoutSelect = ({ workouts, isFinished, onClick }: PropsType) => {
   return (
     <S.SelectWrapper>
       <S.SelectHeader>Выберите тренировку</S.SelectHeader>
-      {workouts.map((name, index) => {
+      {workouts.map(({ _id, name }, index) => {
         return (
           <S.SelectItem
-            onClick={handleButtonClick}
+            onClick={onClick}
             $isFinished={isFinished}
             key={index}
+            data-workout-id={_id}
           >
             {name}
             {isFinished ? (

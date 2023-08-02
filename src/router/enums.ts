@@ -3,11 +3,12 @@ export enum RouterPath {
   Course = '/course/:courseOrder',
   Auth = '/auth',
   Profile = '/profile',
-  Workout = '/workout',
+  Workout = '/workout/:id',
   NotFound = '*',
   Sandbox = '/sandbox',
 }
 
 export const enum LinkPath {
   Course = '/course',
+  Workout = '/workout',
 }
