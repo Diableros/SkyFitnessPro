@@ -20,10 +20,23 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
-  const { updateCreds: changeCredsFn, data, isLoading } = useChangeCreds()
+  const {
+    updateCreds: changeCredsFn,
+    data,
+    isLoading,
+    error: queryError,
+  } = useChangeCreds()
 
   React.useEffect(() => {
-    if (data) modalClose()
+    if (data) {
+      const timer = setTimeout(() => {
+        modalClose()
+      }, 2000)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
   }, [data])
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +95,7 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
 
   const formContent = (
     <>
+      <S.CredsFormHeader>{title}</S.CredsFormHeader>
       {formType === InputType.Password ? (
         <>
           <CredsInput
@@ -115,11 +129,18 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
     </>
   )
 
+  const resultContent = (
+    <h6>
+      {!queryError
+        ? `${formType} успешно изменен!`
+        : `Не удалось изменить ${formType}. По причине: ${queryError.message}`}{' '}
+    </h6>
+  )
+
   return (
     <S.CredsFormWrapper>
       <UiImage width="220px" height="35px" name="logoBlack" />
-      <S.CredsFormHeader>{title}</S.CredsFormHeader>
-      {formContent}
+      {data || queryError ? resultContent : formContent}
     </S.CredsFormWrapper>
   )
 }
