@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import api from '@/api/ApiService'
-import { ChildKey } from '@/api/enums'
+import { ChildKey, QueryKey } from '@/api/enums'
 import { useUserContext } from '@/context'
 
 import { UserAccount } from '../types'
@@ -15,7 +15,7 @@ export const useProgress = () => {
     error,
     isError,
   } = useQuery({
-    queryKey: ['userInfo'],
+    queryKey: [QueryKey.UserProgress],
     queryFn: () =>
       api.getDbChild<Record<string, UserAccount>>(
         `${ChildKey.Users}/${user?.uid}`
