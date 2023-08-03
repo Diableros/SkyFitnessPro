@@ -156,12 +156,7 @@ class ApiService {
     if (this.auth.currentUser) {
       const { uid } = this.auth.currentUser
 
-      const updatedExercisePath = [
-        ChildKey.Users,
-        uid,
-        ChildKey.Courses,
-        courseId,
-      ].join('/')
+      const updatedExercisePath = [ChildKey.Users, uid, courseId].join('/')
 
       return update(child(this.db, updatedExercisePath), {
         [workoutId]: exerciseProgressArray,

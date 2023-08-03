@@ -14,14 +14,20 @@ import * as S from './ProgressForm.style'
 type PropsType = {
   updateProgressFn: (options: UpdateProgressOptions) => void
   isLoading: boolean
-  workouts: WorkoutsType
+  workouts?: WorkoutsType
   course: CourseType
   isSuccess: boolean
 }
 
-const ProgressForm = ({ updateProgressFn, isLoading, workouts, course, isSuccess}: PropsType) => {
+const ProgressForm = ({
+  updateProgressFn,
+  isLoading,
+  workouts,
+  course,
+  isSuccess,
+}: PropsType) => {
   const [filled, setIsFilled] = React.useState<boolean>(false)
-  const [inputValues, setInputValues] = React.useState({})
+  const [inputValues, setInputValues] = React.useState(Array(0))
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -32,9 +38,9 @@ const ProgressForm = ({ updateProgressFn, isLoading, workouts, course, isSuccess
   }
 
   const handleSendSuccess = () => {
-    if(!isSuccess) {
+    if (!isSuccess) {
       console.log('Error')
-    } else {  
+    } else {
       setIsFilled(true)
     }
   }
@@ -44,23 +50,24 @@ const ProgressForm = ({ updateProgressFn, isLoading, workouts, course, isSuccess
       {!filled ? (
         <>
           <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-          {workouts.exercises.map(({name}, index) => {
-            return (
-              <S.ProgressInputsBox key={index}>
-                <S.ProgressLabelText key={index + 1}>
-                  Сколько повторений вы сделали из упражнения: {name}?
-                </S.ProgressLabelText>
-                <ProgressInput
-                  name={`${index}`}
-                  type="number"
-                  key={index + 2}
-                  placeholder={'Введите значение'}
-                  value={inputValues[`${index}`] || ''}
-                  onChange={inputHandler}
-                />
-              </S.ProgressInputsBox>
-            )
-          })}
+          {workouts?.exercises &&
+            workouts.exercises.map(({ name }, index) => {
+              return (
+                <S.ProgressInputsBox key={index}>
+                  <S.ProgressLabelText key={index + 1}>
+                    Сколько повторений вы сделали из упражнения: {name}?
+                  </S.ProgressLabelText>
+                  <ProgressInput
+                    name={`${index}`}
+                    type="number"
+                    key={index + 2}
+                    placeholder={'Введите значение'}
+                    value={inputValues[index] || 0}
+                    onChange={inputHandler}
+                  />
+                </S.ProgressInputsBox>
+              )
+            })}
           <UiButton
             buttonType="submit"
             size={ButtonSize.L}
@@ -71,7 +78,11 @@ const ProgressForm = ({ updateProgressFn, isLoading, workouts, course, isSuccess
               handleSendSuccess()
               const newValues = Object.values(inputValues)
               console.log(newValues)
-              updateProgressFn({ courseId: course[0]._id, workoutId: workouts._id, exerciseProgressArray: newValues})
+              updateProgressFn({
+                courseId: course[0]._id,
+                workoutId: workouts?._id || '',
+                exerciseProgressArray: newValues,
+              })
             }}
           />
         </>
