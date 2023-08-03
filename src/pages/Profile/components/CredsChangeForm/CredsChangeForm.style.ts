@@ -8,7 +8,7 @@ export const CredsFormWrapper = styled.div`
   gap: 12px;
   padding: 106px 41px 47px;
   position: relative;
-  
+
   && > div > svg {
     position: absolute;
     top: 33px;

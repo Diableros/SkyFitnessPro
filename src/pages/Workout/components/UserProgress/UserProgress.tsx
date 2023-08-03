@@ -11,7 +11,7 @@ const UserProgress = ({ exercises }: PropsType) => {
     <S.ProgressBlock>
       <S.ProgressTitle>Мой прогресс по тренировке:</S.ProgressTitle>
 
-      <S.ProgressStats >
+      <S.ProgressStats>
         {exercises.map(({ name, done, quantity }, index) => {
           return (
             <S.ProgressStatsItem $colorIndex={index} key={index}>

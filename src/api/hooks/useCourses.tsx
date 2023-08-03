@@ -5,12 +5,21 @@ import { ChildKey } from '@/api/enums'
 import { Course } from '@/api/types'
 
 export const useCourses = () => {
-  const { data, isLoading, error, isError } = useQuery({
+  const {
+    data: coursesObj,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: [ChildKey.Courses],
-    queryFn: () => api.getDbChild<Course[]>(ChildKey.Courses),
+    queryFn: () => api.getDbChild<Record<string, Course>>(ChildKey.Courses),
     staleTime: 60 * 60 * 1000,
   })
-  // console.log(`data =>`, data)
+  const data = coursesObj
+    ? Object.keys(coursesObj)
+        .map((key: string) => coursesObj[key])
+        .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
+    : null
 
   return {
     data,
