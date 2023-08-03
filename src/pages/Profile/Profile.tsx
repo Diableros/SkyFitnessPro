@@ -50,7 +50,7 @@ const Profile = () => {
 
   const workoutModalContent = workoutModal ? (
     <UiModal isShow={Boolean(workoutModal)}>
-      <WorkoutSelect workouts={workoutModal} isFinished={true} />
+      <WorkoutSelect workouts={workoutModal} />
     </UiModal>
   ) : null
 
@@ -96,18 +96,18 @@ const Profile = () => {
       </S.ProfileDataBlock>
 
       <S.ProfileHeader>Мои курсы</S.ProfileHeader>
-        <S.ProfileCourses>
-          {userCourses
-            ? userCourses.map((course) => (
-                <UiCourseCard
-                  key={course._id} 
-                  course={course}
-                  pageType={PageType.Profile}
-                  onButtonClick={(e) => handleWorkoutModal(e)}
-                />
-              ))
-            : null}
-        </S.ProfileCourses>
+      <S.ProfileCourses>
+        {userCourses
+          ? userCourses.map((course) => (
+              <UiCourseCard
+                key={course._id}
+                course={course}
+                pageType={PageType.Profile}
+                onButtonClick={(e) => handleWorkoutModal(e)}
+              />
+            ))
+          : null}
+      </S.ProfileCourses>
       {credsModalContent ? credsModalContent : null}
       {workoutModalContent ? workoutModalContent : null}
     </S.PageWrapper>
