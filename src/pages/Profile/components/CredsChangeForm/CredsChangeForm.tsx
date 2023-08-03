@@ -76,14 +76,18 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
     if (formType === InputType.Password) {
       if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
-        alert('Недопустимый пароль')
+        // alert('Недопустимый пароль')
       } else {
         setError(null)
         changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
-    } else if (newLogin.length > 64 || newLogin.length < 6) {
-      alert('Недопустимый логин')
-    } else {
+    } else if (newLogin.length > 10 ) {
+      setError(InputErrorText.LongLogin)
+      // alert('Недопустимый логин')
+    }else if(newLogin.length < 3 ){
+      setError(InputErrorText.ShortLogin)
+    } 
+    else {
       changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
   }
@@ -130,11 +134,11 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   )
 
   const resultContent = (
-    <h6>
+    <S.CredsFormMessage>
       {!queryError
         ? `${formType} успешно изменен!`
-        : `Не удалось изменить ${formType}. По причине: ${queryError.message}`}{' '}
-    </h6>
+        : `Не удалось изменить ${formType} по причине: ${queryError.message}`}{' '}
+    </S.CredsFormMessage>
   )
 
   return (

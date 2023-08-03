@@ -8,7 +8,7 @@ export const CredsFormWrapper = styled.div`
   gap: 12px;
   padding: 106px 41px 47px;
   position: relative;
-  
+
   && > div > svg {
     position: absolute;
     top: 33px;
@@ -30,4 +30,13 @@ export const CredsFormError = styled.div`
   position: absolute;
   top: 90px;
   left: 5px;
+`
+
+export const CredsFormMessage = styled.div`
+  text-align: center;
+  line-height: 140%;
+  display: flex;
+  width: 300px;
+  overflow: hidden;
+  white-space: pre-line;
 `
