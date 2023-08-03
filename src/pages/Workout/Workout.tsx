@@ -29,10 +29,16 @@ const Workout = () => {
 
   
   const [showModal, setShowModal] = React.useState<boolean>(false)
-  const { UpdateProgress, exercises, isLoading, isSuccess } = useUpdateProgress()
+  const { UpdateProgress, isLoading, isSuccess } = useUpdateProgress()
+
+  const closeModalFn = () => {
+    setTimeout(() => {
+      setShowModal(false)
+    }, 200);
+  }
 
   const progressModalContent = showModal ? (
-    <UiModal isShow={Boolean(showModal)}>
+    <UiModal modalClose={closeModalFn}>
       <ProgressForm
         updateProgressFn={UpdateProgress}
         isLoading={isLoading}
@@ -42,10 +48,6 @@ const Workout = () => {
       />
     </UiModal>
   ) : null
-
-  React.useEffect(() => {
-    if (exercises) setShowModal(false)
-  }, [exercises])
 
   return (
     <S.PageWrapper>

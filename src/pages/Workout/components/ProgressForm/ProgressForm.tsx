@@ -5,17 +5,16 @@ import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
+import { Course, Workout } from '@/api/types'
 import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
-
-import { CourseType, WorkoutsType } from './types'
 
 import * as S from './ProgressForm.style'
 
 type PropsType = {
   updateProgressFn: (options: UpdateProgressOptions) => void
   isLoading: boolean
-  workouts?: WorkoutsType
-  course: CourseType
+  workouts?: Workout
+  course?: Course[]
   isSuccess: boolean
 }
 
@@ -33,7 +32,7 @@ const ProgressForm = ({
     const { name, value } = e.target
     setInputValues((prevState) => ({
       ...prevState,
-      [name]: Math.max(0, parseInt(value.slice(0, 2)) || 0),
+      [name]: Math.max(0, parseInt(value.slice(0, 2))),
     }))
   }
 
@@ -62,7 +61,7 @@ const ProgressForm = ({
                     type="number"
                     key={index + 2}
                     placeholder={'Введите значение'}
-                    value={inputValues[index] || 0}
+                    value={inputValues[index] || ''}
                     onChange={inputHandler}
                   />
                 </S.ProgressInputsBox>
@@ -79,7 +78,7 @@ const ProgressForm = ({
               const newValues = Object.values(inputValues)
               console.log(newValues)
               updateProgressFn({
-                courseId: course[0]._id,
+                courseId: course ? course[0]._id : '',
                 workoutId: workouts?._id || '',
                 exerciseProgressArray: newValues,
               })

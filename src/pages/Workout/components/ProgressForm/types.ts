@@ -1,25 +1,3 @@
-type ExerciseObjectType = {
-  name: string
-  quantity: number
-}
-
-type ExercisesType = {
-  map(
-    arg0: (
-      { name }: any,
-      index: number
-    ) => import('react/jsx-runtime').JSX.Element
-  ): unknown
-  [index: number]: ExerciseObjectType
-}
-
-export type WorkoutsType = {
-  exercises: ExercisesType
-  name: string
-  video: string
-  _id: string
-}
-
 type Directions = {
   [index: number]: string
 }
