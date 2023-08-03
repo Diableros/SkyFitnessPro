@@ -56,9 +56,10 @@ const Workout = () => {
             <S.Workouts>
               <S.WorkoutsHeader>Упражнения</S.WorkoutsHeader>
               <S.WorkoutList>
-                {chosenWorkout?.exercises.map(({ name }, index: number) => (
-                  <li key={index}>{name}</li>
-                ))}
+                {chosenWorkout.exercises &&
+                  chosenWorkout.exercises.map(({ name }, index: number) => (
+                    <li key={index}>{name}</li>
+                  ))}
               </S.WorkoutList>
 
               <UiButton

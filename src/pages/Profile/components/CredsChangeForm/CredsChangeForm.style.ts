@@ -31,3 +31,12 @@ export const CredsFormError = styled.div`
   top: 90px;
   left: 5px;
 `
+
+export const CredsFormMessage = styled.div`
+  text-align: center;
+  line-height: 140%;
+  display: flex;
+  width: 300px;
+  overflow: hidden;
+  white-space: pre-line;
+`

@@ -4,7 +4,8 @@ import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
 
-import { UpdateCredsOptions } from '@/api/hooks/useChangeCreds'
+import { Action, useUserContext } from '@/context'
+import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 
 import { InputErrorText, InputName, InputType } from './enums'
 
@@ -12,20 +13,39 @@ import * as S from './CredsChangeForm.style'
 
 type PropsType = {
   formType: InputType
-  changeCredsFn: (options: UpdateCredsOptions) => void
-  isLoading: boolean
+  modalClose: () => void
 }
 
-const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
+const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
+  const { dispatch } = useUserContext()
   const [newLogin, setNewLogin] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
+  const {
+    updateCreds: changeCredsFn,
+    data,
+    isLoading,
+    error: queryError,
+  } = useChangeCreds()
+
+  React.useEffect(() => {
+    if (data) {
+      dispatch({ type: Action.UpdateEmail, payload: newLogin })
+      const timer = setTimeout(() => {
+        modalClose()
+      }, 2000)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [data])
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 8) {
       setError(InputErrorText.ShortPassword)
-    } else if (e.target.value.length > 20) {
+    } else if (e.target.value.length > 64) {
       setError(InputErrorText.LongPassword)
     } else {
       setError(null)
@@ -57,13 +77,16 @@ const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
     if (formType === InputType.Password) {
       if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
-        alert('Недопустимый пароль')
+        // alert('Недопустимый пароль')
       } else {
         setError(null)
         changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
-    } else if (newLogin.length > 64 || newLogin.length < 6) {
-      alert('Недопустимый логин')
+    } else if (newLogin.length > 64) {
+      setError(InputErrorText.LongLogin)
+      // alert('Недопустимый логин')
+    } else if (newLogin.length < 3) {
+      setError(InputErrorText.ShortLogin)
     } else {
       changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
@@ -76,6 +99,7 @@ const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
 
   const formContent = (
     <>
+      <S.CredsFormHeader>{title}</S.CredsFormHeader>
       {formType === InputType.Password ? (
         <>
           <CredsInput
@@ -109,11 +133,18 @@ const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
     </>
   )
 
+  const resultContent = (
+    <S.CredsFormMessage>
+      {!queryError
+        ? `${formType} успешно изменен!`
+        : `Не удалось изменить ${formType} по причине: ${queryError.message}`}{' '}
+    </S.CredsFormMessage>
+  )
+
   return (
     <S.CredsFormWrapper>
       <UiImage width="220px" height="35px" name="logoBlack" />
-      <S.CredsFormHeader>{title}</S.CredsFormHeader>
-      {formContent}
+      {data || queryError ? resultContent : formContent}
     </S.CredsFormWrapper>
   )
 }
