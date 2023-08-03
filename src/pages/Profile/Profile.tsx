@@ -12,7 +12,6 @@ import WorkoutSelect from '@/components/WorkoutSelect'
 import { useCourses, useWorkouts } from '@/api/hooks'
 import { Workout } from '@/api/types'
 import { useUserContext } from '@/context'
-import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 import { useProgress } from '@/api/hooks/useProgress'
 
 import * as S from './Profile.style'
@@ -24,21 +23,15 @@ const Profile = () => {
     null
   )
 
-  const { updateCreds, data, isLoading } = useChangeCreds()
+  const handleModalClose = () => {
+    setShowModalType(null)
+  }
 
   const credsModalContent = showModalType ? (
-    <UiModal isShow={Boolean(showModalType)}>
-      <CredsChangeForm
-        formType={showModalType}
-        changeCredsFn={updateCreds}
-        isLoading={isLoading}
-      />
+    <UiModal modalClose={handleModalClose}>
+      <CredsChangeForm formType={showModalType} modalClose={handleModalClose} />
     </UiModal>
   ) : null
-
-  React.useEffect(() => {
-    if (data) setShowModalType(null)
-  }, [data])
 
   const { data: coursesAll } = useCourses()
   const { data: workoutsAll } = useWorkouts()
@@ -49,7 +42,7 @@ const Profile = () => {
   const [workoutModal, setWorkoutModal] = React.useState<Workout[] | null>(null)
 
   const workoutModalContent = workoutModal ? (
-    <UiModal isShow={Boolean(workoutModal)}>
+    <UiModal modalClose={() => setWorkoutModal(null)}>
       <WorkoutSelect workouts={workoutModal} />
     </UiModal>
   ) : null
@@ -63,7 +56,6 @@ const Profile = () => {
     const workouts = workoutsIDs
       ? workoutsAll?.filter((workout) => workoutsIDs.includes(workout._id))
       : null
-    // console.log('workouts names=>', workouts)
     setWorkoutModal(workouts || null)
   }
 

@@ -16,7 +16,6 @@ const Workout = () => {
   const { data } = useWorkouts()
 
   const chosenWorkout = data?.find(({ _id }) => _id === id)
-  console.log(data, chosenWorkout)
 
   const handleButtonClick = () => {
     console.log('click to wride down the progress')
@@ -31,9 +30,10 @@ const Workout = () => {
             <S.Workouts>
               <S.WorkoutsHeader>Упражнения</S.WorkoutsHeader>
               <S.WorkoutList>
-                {chosenWorkout?.exercises.map(({ name }, index: number) => (
-                  <li key={index}>{name}</li>
-                ))}
+                {chosenWorkout.exercises &&
+                  chosenWorkout.exercises.map(({ name }, index: number) => (
+                    <li key={index}>{name}</li>
+                  ))}
               </S.WorkoutList>
 
               <UiButton

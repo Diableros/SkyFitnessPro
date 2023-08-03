@@ -23,7 +23,6 @@ export const useProgress = () => {
     staleTime: 60 * 60 * 1000,
   })
   delete courses?._id
-  // console.log('курсы пользователя=>', courses)
 
   return {
     courses,

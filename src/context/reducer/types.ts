@@ -10,7 +10,11 @@ export type UserAction =
     }
   | {
       type: Action.Logout
-      payload?: undefined
+      payload?: object
+    }
+  | {
+      type: Action.UpdateEmail
+      payload: string
     }
 
 export type UserReducer = (state: UserState, action: UserAction) => UserState
