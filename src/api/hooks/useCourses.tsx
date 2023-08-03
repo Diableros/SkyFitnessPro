@@ -5,7 +5,12 @@ import { ChildKey } from '@/api/enums'
 import { Course } from '@/api/types'
 
 export const useCourses = () => {
-  const { data: coursesObj, isLoading, error, isError } = useQuery({
+  const {
+    data: coursesObj,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
     queryKey: [ChildKey.Courses],
     queryFn: () => api.getDbChild<Record<string, Course>>(ChildKey.Courses),
     staleTime: 60 * 60 * 1000,

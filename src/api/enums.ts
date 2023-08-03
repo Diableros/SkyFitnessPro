@@ -12,6 +12,7 @@ export const enum EndpointPath {
 export const enum QueryKey {
   Auth = 'auth',
   Logout = 'logout',
+  UserProgress = 'userProgress',
 }
 
 export const enum ChildKey {
