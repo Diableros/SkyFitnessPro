@@ -7,15 +7,19 @@ import UiImage from '@/components/UiImage'
 
 import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
 
-import * as S from './ProgressForm.style'
+import { CourseType, WorkoutsType } from './types'
 
-import { mockData } from './mockData'
+import * as S from './ProgressForm.style'
 
 type PropsType = {
   updateProgressFn: (options: UpdateProgressOptions) => void
+  isLoading: boolean
+  workouts: WorkoutsType
+  course: CourseType
+  isSuccess: boolean
 }
 
-const UiProgressForm = ({ updateProgressFn }: PropsType) => {
+const ProgressForm = ({ updateProgressFn, isLoading, workouts, course, isSuccess}: PropsType) => {
   const [filled, setIsFilled] = React.useState<boolean>(false)
   const [inputValues, setInputValues] = React.useState({})
 
@@ -27,20 +31,24 @@ const UiProgressForm = ({ updateProgressFn }: PropsType) => {
     }))
   }
 
-  //TODO: 
-  //      закончить логику с картинкой; 
-  //      правильно типизировать.
+  const handleSendSuccess = () => {
+    if(!isSuccess) {
+      console.log('Error')
+    } else {  
+      setIsFilled(true)
+    }
+  }
 
   return (
     <S.ProgressWrapper>
       {!filled ? (
         <>
           <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-          {example.map((item, index: number) => {
+          {workouts.exercises.map(({name}, index) => {
             return (
               <S.ProgressInputsBox key={index}>
                 <S.ProgressLabelText key={index + 1}>
-                  Сколько повторений вы сделали из упражнения: {item}?
+                  Сколько повторений вы сделали из упражнения: {name}?
                 </S.ProgressLabelText>
                 <ProgressInput
                   name={`${index}`}
@@ -56,14 +64,14 @@ const UiProgressForm = ({ updateProgressFn }: PropsType) => {
           <UiButton
             buttonType="submit"
             size={ButtonSize.L}
-            title="Отправить"
+            title={isLoading ? 'Отправляем данные' : 'Отправить'}
             buttonTheme={ButtonTheme.PurpleBright}
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
               handleSendSuccess()
               const newValues = Object.values(inputValues)
               console.log(newValues)
-              // updateProgressFn({ courseId: , workoutId: , exerciseProgressArray: newValues})
+              updateProgressFn({ courseId: course[0]._id, workoutId: workouts._id, exerciseProgressArray: newValues})
             }}
           />
         </>
@@ -76,4 +84,4 @@ const UiProgressForm = ({ updateProgressFn }: PropsType) => {
     </S.ProgressWrapper>
   )
 }
-export default UiProgressForm
+export default ProgressForm
