@@ -182,11 +182,10 @@ class ApiService {
       .then((snapshot) => {
         if (snapshot.exists()) {
           const dataObject = snapshot.val()
-          const data = Object.keys(dataObject)
-            .map((key) => dataObject[key])
-            .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
-
-          return data as T
+          // const data = Object.keys(dataObject)
+          //   .map((key) => dataObject[key])
+          //   .sort(({ order: orderA }, { order: orderB }) => orderA - orderB)
+          return dataObject as T
         } else {
           console.log('No data available')
           return

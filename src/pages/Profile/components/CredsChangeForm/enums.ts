@@ -1,21 +1,20 @@
-
 export enum InputName {
-    Password = 'password',
-    ConfirmPassword = 'confirmPassword',
-    Login = 'login',
+  Password = 'password',
+  ConfirmPassword = 'confirmPassword',
+  Login = 'login',
 }
 
 export enum InputErrorText {
-    ShortPassword = 'Пароль должен содержать более 8 знаков',
-    LongPassword = 'Пароль должен содержать менее 20 знаков',
+  ShortPassword = 'Пароль должен содержать более 8 знаков',
+  LongPassword = 'Пароль должен содержать менее 20 знаков',
 
-    Mismatch = 'Пароли не совпадают. Попробуйте ещё раз.',
+  Mismatch = 'Пароли не совпадают. Попробуйте ещё раз.',
 
-    ShortLogin = 'Логин должен содержать более 3 знаков',
-    LongLogin = 'Логин должен содержать менее 10 знаков',
+  ShortLogin = 'Логин должен содержать более 3 знаков',
+  LongLogin = 'Логин должен содержать менее 10 знаков',
 }
 
 export enum InputType {
-    Password = 'Password',
-    Login = 'Login',
+  Password = 'Password',
+  Login = 'Login',
 }

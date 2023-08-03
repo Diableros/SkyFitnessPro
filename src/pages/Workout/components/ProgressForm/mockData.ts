@@ -1,9 +1,9 @@
 export type Exercises = {
-    workoutONE: string[]
-    workoutTWO: string[]
-    workoutTHREE: string[]
-    workoutFOUR?: string[]
-    workoutFIVE?: string[]
+  workoutONE: string[]
+  workoutTWO: string[]
+  workoutTHREE: string[]
+  workoutFOUR?: string[]
+  workoutFIVE?: string[]
 }
 
 export const mockData: Exercises[] = [
