@@ -10,7 +10,6 @@ import UiModal from '@/components/UiModal'
 import { mockData } from '../Home/mockData'
 
 import { useUserContext } from '@/context'
-import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 
 import * as S from './Profile.style'
 
@@ -29,21 +28,11 @@ const Profile = () => {
     setShowModalType(null)
   }
 
-  const { updateCreds, data, isLoading } = useChangeCreds()
-
   const credsModalContent = showModalType ? (
     <UiModal modalClose={handleModalClose}>
-      <CredsChangeForm
-        formType={showModalType}
-        changeCredsFn={updateCreds}
-        isLoading={isLoading}
-      />
+      <CredsChangeForm formType={showModalType} modalClose={handleModalClose} />
     </UiModal>
   ) : null
-
-  React.useEffect(() => {
-    if (data) setShowModalType(null)
-  }, [data])
 
   return (
     <S.PageWrapper>

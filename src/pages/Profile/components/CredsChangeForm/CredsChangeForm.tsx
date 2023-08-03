@@ -4,7 +4,7 @@ import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
 
-import { UpdateCredsOptions } from '@/api/hooks/useChangeCreds'
+import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 
 import { InputErrorText, InputName, InputType } from './enums'
 
@@ -12,15 +12,19 @@ import * as S from './CredsChangeForm.style'
 
 type PropsType = {
   formType: InputType
-  changeCredsFn: (options: UpdateCredsOptions) => void
-  isLoading: boolean
+  modalClose: () => void
 }
 
-const CredsChangeForm = ({ formType, changeCredsFn, isLoading }: PropsType) => {
+const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   const [newLogin, setNewLogin] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
+  const { updateCreds: changeCredsFn, data, isLoading } = useChangeCreds()
+
+  React.useEffect(() => {
+    if (data) modalClose()
+  }, [data])
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 8) {
