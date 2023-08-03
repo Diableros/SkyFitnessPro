@@ -56,7 +56,6 @@ const Profile = () => {
     const workouts = workoutsIDs
       ? workoutsAll?.filter((workout) => workoutsIDs.includes(workout._id))
       : null
-    // console.log('workouts names=>', workouts)
     setWorkoutModal(workouts || null)
   }
 

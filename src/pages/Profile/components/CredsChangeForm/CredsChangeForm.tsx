@@ -4,6 +4,7 @@ import CredsInput from './components/InputForm'
 import UiButton from '@/components/UiButton'
 import UiImage from '@/components/UiImage'
 
+import { Action, useUserContext } from '@/context'
 import { useChangeCreds } from '@/api/hooks/useChangeCreds'
 
 import { InputErrorText, InputName, InputType } from './enums'
@@ -16,6 +17,7 @@ type PropsType = {
 }
 
 const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
+  const { dispatch } = useUserContext()
   const [newLogin, setNewLogin] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
@@ -29,6 +31,7 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
 
   React.useEffect(() => {
     if (data) {
+      dispatch({ type: Action.UpdateEmail, payload: newLogin })
       const timer = setTimeout(() => {
         modalClose()
       }, 2000)
@@ -42,7 +45,7 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 8) {
       setError(InputErrorText.ShortPassword)
-    } else if (e.target.value.length > 20) {
+    } else if (e.target.value.length > 64) {
       setError(InputErrorText.LongPassword)
     } else {
       setError(null)
@@ -81,13 +84,12 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
         setError(null)
         changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
-    } else if (newLogin.length > 10 ) {
+    } else if (newLogin.length > 64) {
       setError(InputErrorText.LongLogin)
       // alert('Недопустимый логин')
-    }else if(newLogin.length < 3 ){
+    } else if (newLogin.length < 3) {
       setError(InputErrorText.ShortLogin)
-    } 
-    else {
+    } else {
       changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
   }

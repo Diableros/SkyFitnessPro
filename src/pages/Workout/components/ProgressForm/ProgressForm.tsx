@@ -62,7 +62,7 @@ const UiProgressForm = () => {
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
               handleSendSuccess()
-              console.log(inputValues)
+              // console.log(inputValues)
             }}
           />
         </>

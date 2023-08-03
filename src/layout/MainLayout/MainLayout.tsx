@@ -15,7 +15,7 @@ const MainLayout = () => {
   const isLogoBlack =
     pathname.includes(LinkPath.Course) ||
     pathname.includes(RouterPath.Profile) ||
-    pathname.includes(RouterPath.Workout)
+    pathname.includes(LinkPath.Workout)
 
   const isLogoInteractive = pathname !== RouterPath.Home
 
