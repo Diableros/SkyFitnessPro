@@ -25,10 +25,14 @@ const Profile = () => {
     null
   )
 
+  const handleModalClose = () =>{
+    setShowModalType(null)
+  }
+
   const { updateCreds, data, isLoading } = useChangeCreds()
 
   const credsModalContent = showModalType ? (
-    <UiModal isShow={Boolean(showModalType)}>
+    <UiModal modalClose={handleModalClose}>
       <CredsChangeForm
         formType={showModalType}
         changeCredsFn={updateCreds}

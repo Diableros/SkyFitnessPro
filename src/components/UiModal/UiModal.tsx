@@ -10,32 +10,25 @@ type ChildProps = {
 
 type PropsType = {
   children: React.ReactElement<ChildProps>
-  isShow?: boolean
+  modalClose:()=> void
 }
 
-const UiModal = ({ children, isShow = true }: PropsType) => {
-  const [isShowModal, toggleIsShowModal] = React.useReducer(
-    (state: boolean) => !state,
-    isShow
-  )
+const UiModal = ({ children,modalClose}: PropsType) => {
+ 
 
   const Content = children.type
 
-  const handleCloseModal = () => {
-    console.log('Call onClose func')
-    toggleIsShowModal()
-  }
 
-  return isShowModal ? (
+  return (
     <S.ModalScreen>
       <S.ModalContentBox>
-        <S.ImageWrapper onClick={handleCloseModal}>
+        <S.ImageWrapper onClick={modalClose}>
           <UiImage name="cross" width="20px" height="20px" />
         </S.ImageWrapper>
-        <Content {...children.props} onClose={handleCloseModal} />
+        <Content {...children.props} onClose={modalClose} />
       </S.ModalContentBox>
     </S.ModalScreen>
-  ) : null
+  ) 
 }
 
 export default UiModal
