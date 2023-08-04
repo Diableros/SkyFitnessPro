@@ -34,8 +34,6 @@ const WorkoutSelect = ({ courseId, workouts }: PropsType) => {
     const sumOfDoneExercises = [].reduce.call(userProgress, (a, b) => a + b, 0)
     sumsOfDone.push(sumOfDoneExercises as number)
   }
-  console.log('sums of done=>', sumsOfDone)
-  console.log(exercises)
 
   const isFinished = (exercises: Exercise[] = [], index: number): boolean => {
     let exerciseMax = 0

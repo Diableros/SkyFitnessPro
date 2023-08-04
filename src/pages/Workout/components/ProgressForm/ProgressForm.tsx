@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
@@ -10,8 +9,6 @@ import UiImage from '@/components/UiImage'
 import { QueryKey } from '@/api/enums'
 import { Course, Workout } from '@/api/types'
 import { useUpdateProgress } from '@/api/hooks/useUpdateProgress'
-
-import { RouterPath } from '@/router/enums'
 
 import * as S from './ProgressForm.style'
 
@@ -23,8 +20,6 @@ type PropsType = {
 
 const ProgressForm = ({ workouts, course, modalClose }: PropsType) => {
   const [inputValues, setInputValues] = React.useState(Array(0))
-
-  const navigate = useNavigate()
 
   const {
     mutate: updateProgress,
@@ -64,7 +59,6 @@ const ProgressForm = ({ workouts, course, modalClose }: PropsType) => {
 
       timer = setTimeout(() => {
         modalClose()
-        navigate(RouterPath.Profile)
       }, 2000)
     }
 
