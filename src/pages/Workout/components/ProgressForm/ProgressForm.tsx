@@ -80,7 +80,9 @@ const ProgressForm = ({ workouts, course, modalClose }: PropsType) => {
           ? `Ваш прогресс засчитан!`
           : `Не удалось заситать прогресс: ${error?.message}`}
       </S.ImageHeader>
-      <UiImage width="444px" height="360px" name="okHand" />
+      {isSuccess ? (
+        <UiImage width="444px" height="360px" name="okHand" />
+      ) : null}
     </>
   )
 
