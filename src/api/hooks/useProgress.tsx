@@ -20,7 +20,7 @@ export const useProgress = () => {
       api.getDbChild<Record<string, UserAccount>>(
         `${ChildKey.Users}/${user?.uid}`
       ),
-    staleTime: 60 * 60 * 1000,
+      staleTime: 60 * 60 * 1000,
   })
   delete courses?._id
 

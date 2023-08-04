@@ -10,10 +10,11 @@ import { LinkPath } from '@/router/enums'
 import * as S from './WorkoutSelect.style'
 
 type PropsType = {
+  courseId: string
   workouts: Workout[]
 }
 
-const WorkoutSelect = ({ workouts }: PropsType) => {
+const WorkoutSelect = ({ courseId, workouts }: PropsType) => {
   const navigate = useNavigate()
 
   const { courses } = useProgress()
@@ -25,20 +26,23 @@ const WorkoutSelect = ({ workouts }: PropsType) => {
     navigate(`${LinkPath.Workout}/${id}`)
   }
 
-  const exercises = courses ? courses[Object.keys(courses)[0]] : null
+  const exercises = courses ? courses[courseId] : null
   const sumsOfDone: number[] = []
 
   for (const key in exercises) {
     const userProgress = exercises[key]
     const sumOfDoneExercises = [].reduce.call(userProgress, (a, b) => a + b, 0)
-
     sumsOfDone.push(sumOfDoneExercises as number)
   }
+  console.log('sums of done=>', sumsOfDone)
+  console.log(exercises)
 
   const isFinished = (exercises: Exercise[] = [], index: number): boolean => {
-    let exersiseMax = 0
-    exercises.forEach((ex) => (exersiseMax += ex.quantity))
-    return sumsOfDone[index] === exersiseMax
+    let exerciseMax = 0
+    exercises.forEach((ex) => {
+      exerciseMax += ex.quantity
+    })
+    return sumsOfDone[index] >= exerciseMax
   }
 
   return (
