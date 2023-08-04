@@ -75,4 +75,5 @@ export const Progress = styled.div<ProgressProps>`
     right: ${({ $percentage = 0 }) => {
       return $percentage < 15 ? '-4rem' : '1rem'
     }}
+  }
 `

@@ -13,7 +13,6 @@ import { useProgress } from '@/api/hooks/useProgress'
 
 import * as S from './Workout.styles'
 
-import { userProgress } from './mockData'
 
 const Workout = () => {
   const { id } = useParams()
@@ -22,13 +21,11 @@ const Workout = () => {
 
   const chosenWorkout = data?.find(({ _id }) => _id === id)
   const { courses } = useProgress()
-
   const coursesIDs = courses ? Object.keys(courses) : null
   const currentCourse = coursesData?.filter(({ _id }) =>
     coursesIDs?.includes(_id)
   )
-
-  const [showModal, setShowModal] = React.useState<boolean>(false)
+    const [showModal, setShowModal] = React.useState<boolean>(false)
 
   const modalClose = () => {
     setShowModal(false)
@@ -43,6 +40,11 @@ const Workout = () => {
       />
     </UiModal>
   )
+
+
+const exercisesProgress = courses ? courses[Object.keys(courses)[0]] : null
+const currentProggress = (exercisesProgress && id) ? exercisesProgress[id] : null
+
 
   return (
     <S.PageWrapper>
@@ -68,7 +70,7 @@ const Workout = () => {
               />
             </S.Workouts>
 
-            <UserProgress exercises={userProgress} />
+            <UserProgress exercises={chosenWorkout} progress={currentProggress} />
           </S.ProgressBlock>
         </>
       ) : null}
