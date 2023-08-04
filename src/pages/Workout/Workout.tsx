@@ -23,18 +23,17 @@ const Workout = () => {
 
   const chosenWorkout = data?.find(({ _id }) => _id === id)
   const { courses } = useProgress()
- 
-  const coursesIDs = courses ? Object.keys(courses) : null
-  const currentCourse = coursesData?.filter(({ _id }) => coursesIDs?.includes(_id))
 
-  
+  const coursesIDs = courses ? Object.keys(courses) : null
+  const currentCourse = coursesData?.filter(({ _id }) =>
+    coursesIDs?.includes(_id)
+  )
+
   const [showModal, setShowModal] = React.useState<boolean>(false)
-  const { UpdateProgress, isLoading, isSuccess } = useUpdateProgress()
+  const { UpdateProgress, exercises, isLoading } = useUpdateProgress()
 
   const closeModalFn = () => {
-    setTimeout(() => {
-      setShowModal(false)
-    }, 200);
+    setShowModal(false)
   }
 
   const progressModalContent = showModal ? (
@@ -44,7 +43,8 @@ const Workout = () => {
         isLoading={isLoading}
         workouts={chosenWorkout}
         course={currentCourse}
-        isSuccess={isSuccess}
+        exercises={exercises}
+        modalClose={closeModalFn}
       />
     </UiModal>
   ) : null
@@ -77,7 +77,7 @@ const Workout = () => {
           </S.ProgressBlock>
         </>
       ) : null}
-       {progressModalContent ? progressModalContent : null}
+      {progressModalContent ? progressModalContent : null}
     </S.PageWrapper>
   )
 }

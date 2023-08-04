@@ -79,22 +79,18 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
     if (formType === InputType.Password) {
       if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
-        // alert('Недопустимый пароль')
       } else {
         setError(null)
         changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
     } else if (newLogin.length > 64) {
       setError(InputErrorText.LongLogin)
-      // alert('Недопустимый логин')
     } else if (newLogin.length < 3) {
       setError(InputErrorText.ShortLogin)
     } else {
       changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
   }
-
-  //TODO допилисть логику отправки данных на сервер
 
   const title =
     formType === InputType.Password ? 'Новый пароль:' : 'Новый логин:'
