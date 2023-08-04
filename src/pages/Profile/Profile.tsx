@@ -40,10 +40,11 @@ const Profile = () => {
   const userCourses = coursesAll?.filter(({ _id }) => coursesIDs?.includes(_id))
 
   const [workoutModal, setWorkoutModal] = React.useState<Workout[] | null>(null)
+  const [chosenCourse, setChosenCourse] = React.useState<string>('')
 
   const workoutModalContent = workoutModal ? (
     <UiModal modalClose={() => setWorkoutModal(null)}>
-      <WorkoutSelect workouts={workoutModal} />
+      <WorkoutSelect workouts={workoutModal} courseId={chosenCourse} />
     </UiModal>
   ) : null
 
@@ -57,6 +58,7 @@ const Profile = () => {
       ? workoutsAll?.filter((workout) => workoutsIDs.includes(workout._id))
       : null
     setWorkoutModal(workouts || null)
+    setChosenCourse(chosenID || '')
   }
 
   return (
