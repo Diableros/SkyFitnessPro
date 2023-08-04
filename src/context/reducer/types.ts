@@ -1,16 +1,14 @@
-import { User } from 'firebase/auth'
-
 import { UserState } from '../types'
 import { Action } from './enums'
 
 export type UserAction =
   | {
       type: Action.Login
-      payload: User
+      payload: UserState
     }
   | {
       type: Action.Logout
-      payload?: object
+      payload: UserState
     }
   | {
       type: Action.UpdateEmail

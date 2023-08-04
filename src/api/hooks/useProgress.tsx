@@ -7,7 +7,7 @@ import { useUserContext } from '@/context'
 import { UserAccount } from '../types'
 
 export const useProgress = () => {
-  const { user } = useUserContext()
+  const [user] = useUserContext()
 
   const {
     data: courses,

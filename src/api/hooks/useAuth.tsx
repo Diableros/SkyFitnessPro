@@ -4,11 +4,12 @@ import { User } from 'firebase/auth'
 
 import api from '@/api/ApiService'
 import { Action, useUserContext } from '@/context'
+import { UserState } from '@/context/types'
 
 import { UseAuth } from '../types'
 
 export const useAuth = () => {
-  const { dispatch } = useUserContext()
+  const [, dispatch] = useUserContext()
 
   const {
     mutate: auth,
@@ -23,9 +24,14 @@ export const useAuth = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
+      const userState: UserState = {
+        uid: api.user?.uid || 'empty',
+        email: api.user?.email || 'empty',
+      }
+
       dispatch({
         type: Action.Login,
-        payload: data,
+        payload: userState,
       })
     }
   }, [isSuccess])

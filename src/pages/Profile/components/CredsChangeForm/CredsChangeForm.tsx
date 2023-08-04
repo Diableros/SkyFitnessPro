@@ -17,7 +17,7 @@ type PropsType = {
 }
 
 const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
-  const { dispatch } = useUserContext()
+  const [, dispatch] = useUserContext()
   const [newLogin, setNewLogin] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
   const [password, setPassword] = useState<string>('')
@@ -32,6 +32,7 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   React.useEffect(() => {
     if (data) {
       dispatch({ type: Action.UpdateEmail, payload: newLogin })
+      
       const timer = setTimeout(() => {
         modalClose()
       }, 2000)
