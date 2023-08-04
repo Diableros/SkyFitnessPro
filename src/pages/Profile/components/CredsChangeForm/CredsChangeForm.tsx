@@ -72,8 +72,6 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   }
 
   const handleDataSend = (e: React.FormEvent) => {
-    // отправка данных на сервер
-    //if 200 => замена компонента на сообщение "Новый парооль сохранен"
 
     e.stopPropagation()
 

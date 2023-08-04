@@ -1,68 +1,87 @@
-import { useState } from 'react'
+import * as React from 'react'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
+import { Course, Workout } from '@/api/types'
+import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
+
 import * as S from './ProgressForm.style'
 
-import { mockData } from './mockData'
+type PropsType = {
+  updateProgressFn: (options: UpdateProgressOptions) => void
+  isLoading: boolean
+  workouts?: Workout
+  course?: Course[]
+  isSuccess: boolean
+}
 
-const UiProgressForm = () => {
-  const [filled, setIsFilled] = useState<boolean>(false)
-
-  const example = mockData[2].workoutTWO
-
-  const [inputValues, setInputValues] = useState({})
-
-  const handleSendSuccess = () => {
-    setIsFilled(true)
-  }
+const ProgressForm = ({
+  updateProgressFn,
+  isLoading,
+  workouts,
+  course,
+  isSuccess,
+}: PropsType) => {
+  const [filled, setIsFilled] = React.useState<boolean>(false)
+  const [inputValues, setInputValues] = React.useState(Array(0))
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setInputValues((prevState) => ({
       ...prevState,
-      [name]: Math.max(0, parseInt(value.slice(0, 2)) || 0),
+      [name]: Math.max(0, parseInt(value.slice(0, 2))),
     }))
   }
 
-  //TODO:
-  //      закончить логику с картинкой;
-  //      правильно типизировать.
+  const handleSendSuccess = () => {
+    if (!isSuccess) {
+      console.log('Error')
+    } else {
+      setIsFilled(true)
+    }
+  }
 
   return (
     <S.ProgressWrapper>
       {!filled ? (
         <>
           <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-          {example.map((item, index: number) => {
-            return (
-              <S.ProgressInputsBox key={index}>
-                <S.ProgressLabelText key={index + 1}>
-                  Сколько повторений вы сделали из упражнения: {item}?
-                </S.ProgressLabelText>
-                <ProgressInput
-                  name={`${index}`}
-                  type="number"
-                  key={index + 2}
-                  placeholder={'Введите значение'}
-                  value={inputValues[`${index}`] || ''}
-                  onChange={inputHandler}
-                />
-              </S.ProgressInputsBox>
-            )
-          })}
+          {workouts?.exercises &&
+            workouts.exercises.map(({ name }, index) => {
+              return (
+                <S.ProgressInputsBox key={index}>
+                  <S.ProgressLabelText key={index + 1}>
+                    Сколько повторений вы сделали из упражнения: {name}?
+                  </S.ProgressLabelText>
+                  <ProgressInput
+                    name={`${index}`}
+                    type="number"
+                    key={index + 2}
+                    placeholder={'Введите значение'}
+                    value={inputValues[index] || ''}
+                    onChange={inputHandler}
+                  />
+                </S.ProgressInputsBox>
+              )
+            })}
           <UiButton
             buttonType="submit"
             size={ButtonSize.L}
-            title="Отправить"
+            title={isLoading ? 'Отправляем данные' : 'Отправить'}
             buttonTheme={ButtonTheme.PurpleBright}
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation
               handleSendSuccess()
-              // console.log(inputValues)
+              const newValues = Object.values(inputValues)
+              console.log(newValues)
+              updateProgressFn({
+                courseId: course ? course[0]._id : '',
+                workoutId: workouts?._id || '',
+                exerciseProgressArray: newValues,
+              })
             }}
           />
         </>
@@ -75,4 +94,4 @@ const UiProgressForm = () => {
     </S.ProgressWrapper>
   )
 }
-export default UiProgressForm
+export default ProgressForm
