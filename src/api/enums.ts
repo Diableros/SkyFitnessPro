@@ -3,12 +3,20 @@ export const enum EndpointPath {
   Workouts = '/workouts',
   Users = '/users',
 
-  Login = '/accounts:signInWithPassword?key=',
-  SignUp = '/accounts:signUp?key=',
+  Login = '/accounts:signInWithPassword',
+  SignUp = '/accounts:signUp',
 
   User = '/users/:id.json',
 }
 
 export const enum QueryKey {
+  Auth = 'auth',
+  Logout = 'logout',
+  UserProgress = 'userProgress',
+}
+
+export const enum ChildKey {
   Courses = 'courses',
+  Users = 'users',
+  Workouts = 'workouts',
 }

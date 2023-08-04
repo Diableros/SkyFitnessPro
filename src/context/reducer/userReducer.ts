@@ -5,8 +5,16 @@ export const userReducer: UserReducer = (state, action) => {
   switch (action.type) {
     case Action.Login:
       return {
+        ...action.payload,
+      }
+
+    case Action.Logout:
+      return action.payload
+
+    case Action.UpdateEmail:
+      return {
         ...state,
-        logged: action.payload,
+        email: action.payload,
       }
 
     default:

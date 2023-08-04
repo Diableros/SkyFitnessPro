@@ -1,100 +1,120 @@
-import { useReducer, useState } from 'react'
+import * as React from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
+import { QueryKey } from '@/api/enums'
+import { Course, Workout } from '@/api/types'
+import { useUpdateProgress } from '@/api/hooks/useUpdateProgress'
+
 import * as S from './ProgressForm.style'
 
-import { mockData } from './mockData'
+type PropsType = {
+  modalClose: () => void
+  workouts?: Workout
+  course?: Course[]
+}
 
-const UiProgressForm = () => {
-  const [filled, setIsFilled] = useState(false)
+const ProgressForm = ({ workouts, course, modalClose }: PropsType) => {
+  const [inputValues, setInputValues] = React.useState(Array(0))
 
-  const example = mockData[2].workoutTWO
+  const {
+    mutate: updateProgress,
+    data,
+    isLoading,
+    error,
+    isSuccess,
+  } = useUpdateProgress()
 
-  // const [inputValues, setInputValues] = useState({})
+  const queryClient = useQueryClient()
 
-  const handleSendSuccess = () => {
-    setIsFilled(true)
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setInputValues((prevState) => ({
+      ...prevState,
+      [name]: Math.max(0, parseInt(value.slice(0, 2))),
+    }))
   }
 
-  // const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target
-  //   setInputValues((prevState) => ({
-  //     ...prevState,
-  //     [name]: value,
-  //   }))
-  // }
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.stopPropagation
 
-  //TODO закончить логику с картинкой; правильно типизировать value в инпуте/в случае с useReduser - стейт и экшн
+    const newValues = Object.values(inputValues)
 
-  const initialValue = {
-    value: '',
+    updateProgress({
+      courseId: course ? course[0]._id : '',
+      workoutId: workouts?._id || '',
+      exerciseProgressArray: newValues,
+    })
   }
 
-  const arr: string[] = []
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout
+
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: [QueryKey.UserProgress] })
+
+      timer = setTimeout(() => {
+        modalClose()
+      }, 2000)
+    }
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [data])
+
+  const resultContent = (
+    <>
+      <S.ImageHeader>
+        {isSuccess
+          ? `Ваш прогресс засчитан!`
+          : `Не удалось заситать прогресс: ${error?.message}`}
+      </S.ImageHeader>
+      {isSuccess ? (
+        <UiImage width="444px" height="360px" name="okHand" />
+      ) : null}
+    </>
+  )
+
+  const formСontent = (
+    <>
+      <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
+      {workouts?.exercises &&
+        workouts.exercises.map(({ name }, index) => {
+          return (
+            <S.ProgressInputsBox key={index}>
+              <S.ProgressLabelText key={index + 1}>
+                {name} выполнено повторений:
+              </S.ProgressLabelText>
+              <ProgressInput
+                name={`${index}`}
+                type="number"
+                key={index + 2}
+                placeholder={'Введите значение'}
+                value={inputValues[index] || ''}
+                onChange={inputHandler}
+              />
+            </S.ProgressInputsBox>
+          )
+        })}
+      <UiButton
+        buttonType="submit"
+        size={ButtonSize.L}
+        title={isLoading ? 'Отправляем данные' : 'Отправить'}
+        buttonTheme={ButtonTheme.PurpleBright}
+        onClick={handleSubmit}
+      />
+    </>
+  )
 
   return (
     <S.ProgressWrapper>
-      {!filled ? (
-        <>
-          <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-          {example.map((item, index) => {
-            const reducer = (
-              state: any,
-              action: { type: any; payload: any }
-            ) => {
-              switch (action.type) {
-                case `${index}`:
-                  return { ...state, value: action.payload }
-                default:
-                  throw new Error(`Unknown action type: ${action.type}`)
-              }
-            }
-
-            const [state, dispatch] = useReducer(reducer, initialValue)
-            arr.push(state)
-
-            return (
-              <>
-                <S.ProgressLabelText key={index - 1}>
-                  Сколько повторений вы сделали из упражнения: {item}?
-                </S.ProgressLabelText>
-                <ProgressInput
-                  name={`${index}`}
-                  type="number"
-                  key={index + 1}
-                  placeholder={'Введите значение'}
-                  value={state.index}
-                  onChange={(event) =>
-                    dispatch({ type: `${index}`, payload: event.target.value })
-                  }
-                  max="3"
-                />
-              </>
-            )
-          })}
-          <UiButton
-            buttonType="submit"
-            size={ButtonSize.L}
-            title="Отправить"
-            buttonTheme={ButtonTheme.PurpleBright}
-            onClick={(e: React.MouseEvent) => {
-              e.stopPropagation
-              handleSendSuccess()
-              console.log(arr)
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <S.ImageHeader>Ваш прогресс засчитан!</S.ImageHeader>
-          <UiImage width="444px" height="360px" name="okHand" />
-        </>
-      )}
+      {data || error ? resultContent : formСontent}
     </S.ProgressWrapper>
   )
 }
-export default UiProgressForm
+export default ProgressForm

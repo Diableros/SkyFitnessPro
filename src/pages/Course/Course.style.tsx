@@ -75,3 +75,22 @@ export const RequestBannerText = styled.span`
   top: 46px;
   left: 52px;
 `
+
+export const ImageHeader = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.l};
+  position: absolute;
+  padding: 25px 88px 223px;
+`
+export const CurseModalWrapper = styled.div`
+  border-radius: 12px;
+  background: ${({ theme }) => theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  padding: 36px 42px 44px;
+  position: relative;
+
+`
+
+

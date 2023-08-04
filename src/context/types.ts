@@ -1,9 +1,8 @@
 import { UserAction } from './reducer/types'
 
 export type UserState = {
-  logged: boolean
+  uid: string
+  email: string
 }
 
-export type UserContext = UserState & {
-  dispatch: React.Dispatch<UserAction>
-}
+export type UserContext = [UserState, React.Dispatch<UserAction>]

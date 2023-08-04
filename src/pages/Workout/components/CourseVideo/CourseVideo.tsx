@@ -3,13 +3,9 @@ import * as S from './CourseVideo.style'
 type PropsType = {
   title: string
   src: string
-
 }
 
-const CourseVideo = ({
-  title,
-  src
-}: PropsType) => {
+const CourseVideo = ({ title, src }: PropsType) => {
   return (
     <S.VideoBlock>
       <S.VideoTitle>{title}</S.VideoTitle>

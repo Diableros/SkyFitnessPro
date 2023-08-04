@@ -4,38 +4,22 @@ import UiImage from '../UiImage'
 
 import * as S from './UiModal.style'
 
-type ChildProps = {
-  onClose: () => void
-}
-
 type PropsType = {
-  children: React.ReactElement<ChildProps>
-  isShow?: boolean
+  children: React.ReactNode
+  modalClose: () => void
 }
 
-const UiModal = ({ children, isShow = true }: PropsType) => {
-  const [isShowModal, toggleIsShowModal] = React.useReducer(
-    (state: boolean) => !state,
-    isShow
-  )
-
-  const Content = children.type
-
-  const handleCloseModal = () => {
-    console.log('Call onClose func')
-    toggleIsShowModal()
-  }
-
-  return isShowModal ? (
+const UiModal = ({ children, modalClose }: PropsType) => {
+  return (
     <S.ModalScreen>
       <S.ModalContentBox>
-        <S.ImageWrapper onClick={handleCloseModal}>
-        <UiImage name="cross" width='20px' height='20px'/>
+        <S.ImageWrapper onClick={modalClose}>
+          <UiImage name="cross" width="20px" height="20px" />
         </S.ImageWrapper>
-        <Content onClose={handleCloseModal} />
+        {children}
       </S.ModalContentBox>
     </S.ModalScreen>
-  ) : null
+  )
 }
 
 export default UiModal

@@ -1,3 +1,5 @@
 export const enum Action {
-  Login = 'Login',
+  Login = 'login',
+  Logout = 'logout',
+  UpdateEmail = 'updateEmail',
 }

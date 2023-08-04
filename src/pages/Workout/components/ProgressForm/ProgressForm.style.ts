@@ -5,7 +5,6 @@ export const ProgressWrapper = styled.div`
   background: ${({ theme }) => theme.colors.white};
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 30px;
   padding: 36px 42px 44px;
@@ -24,4 +23,10 @@ export const ImageHeader = styled.span`
   font-size: ${({ theme }) => theme.fontSize.l};
   position: absolute;
   padding: 41px 88px 223px;
+`
+export const ProgressInputsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 12px;
 `
