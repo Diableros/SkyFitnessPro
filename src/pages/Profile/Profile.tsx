@@ -17,7 +17,7 @@ import { useProgress } from '@/api/hooks/useProgress'
 import * as S from './Profile.style'
 
 const Profile = () => {
-  const { user } = useUserContext()
+  const [user] = useUserContext()
 
   const [showModalType, setShowModalType] = React.useState<InputType | null>(
     null

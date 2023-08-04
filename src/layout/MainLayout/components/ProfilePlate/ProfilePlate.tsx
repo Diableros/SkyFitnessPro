@@ -9,6 +9,7 @@ import api from '@/api/ApiService'
 import { Action } from '@/context'
 import { useUserContext } from '@/context'
 
+import { INIT_USER_STATE } from '@/context/constants'
 import { RouterPath } from '@/router/enums'
 
 import * as S from './ProfilePlate.style'
@@ -21,9 +22,9 @@ const ProfilePlate = ({ visible }: PropsType) => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
-  const { user, dispatch } = useUserContext()
+  const [user, dispatch] = useUserContext()
 
-  const [isMenuShow, setIsMenuShow] = React.useState<boolean>(!!user)
+  const [isMenuShow, setIsMenuShow] = React.useState<boolean>(!!user?.uid)
 
   const isHomePage = pathname === RouterPath.Home
 
@@ -35,6 +36,7 @@ const ProfilePlate = ({ visible }: PropsType) => {
     api.logoutUser().then(() => {
       dispatch({
         type: Action.Logout,
+        payload: INIT_USER_STATE,
       })
       navigate(RouterPath.Home)
     })
@@ -44,13 +46,11 @@ const ProfilePlate = ({ visible }: PropsType) => {
     <>
       {visible ? (
         <S.Plate onMouseLeave={() => setIsMenuShow(false)}>
-          {user ? (
+          {user?.uid ? (
             <S.UserPlateBox>
               <S.UserPlate onClick={() => setIsMenuShow(!isMenuShow)}>
                 <S.Avatar />
-                <S.UserName $page={isHomePage}>
-                  {user.displayName || user.email}
-                </S.UserName>
+                <S.UserName $page={isHomePage}>{user?.email}</S.UserName>
                 <S.DropDownButoon>
                   <UiImage
                     name="dropdown_button"

@@ -1,11 +1,8 @@
-import { User } from 'firebase/auth'
-
 import { UserAction } from './reducer/types'
 
 export type UserState = {
-  user: User | undefined
+  uid: string
+  email: string
 }
 
-export type UserContext = UserState & {
-  dispatch: React.Dispatch<UserAction>
-}
+export type UserContext = [UserState, React.Dispatch<UserAction>]
