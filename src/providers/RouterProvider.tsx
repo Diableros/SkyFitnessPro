@@ -8,7 +8,7 @@ import { routes } from '@/router/appRoutes'
 const AppRouterProvider = ({ children }: { children: React.ReactNode }) => {
   const [user] = useUserContext()
   return (
-    <RouterProvider router={createBrowserRouter(routes(children, !!user))} />
+    <RouterProvider router={createBrowserRouter(routes(children, !!user.uid))} />
   )
 }
 
