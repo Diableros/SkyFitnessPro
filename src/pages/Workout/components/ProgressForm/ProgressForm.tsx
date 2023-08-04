@@ -1,10 +1,12 @@
 import * as React from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
 import { ButtonSize, ButtonTheme } from '@/components/UiButton/enums'
 import UiImage from '@/components/UiImage'
 
+import { QueryKey } from '@/api/enums'
 import { Course, Workout } from '@/api/types'
 import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
 
@@ -27,6 +29,7 @@ const ProgressForm = ({
 }: PropsType) => {
   const [filled, setIsFilled] = React.useState<boolean>(false)
   const [inputValues, setInputValues] = React.useState(Array(0))
+  const queryClient = useQueryClient()
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -41,6 +44,7 @@ const ProgressForm = ({
       console.log('Error')
     } else {
       setIsFilled(true)
+      queryClient.invalidateQueries({ queryKey: [QueryKey.UserProgress] })
     }
   }
 
