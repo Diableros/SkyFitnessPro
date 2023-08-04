@@ -10,7 +10,6 @@ import UiModal from '@/components/UiModal'
 
 import { useCourses, useWorkouts } from '@/api/hooks'
 import { useProgress } from '@/api/hooks/useProgress'
-import { useUpdateProgress } from '@/api/hooks/useUpdateProgress'
 
 import * as S from './Workout.styles'
 
@@ -23,31 +22,27 @@ const Workout = () => {
 
   const chosenWorkout = data?.find(({ _id }) => _id === id)
   const { courses } = useProgress()
- 
+
   const coursesIDs = courses ? Object.keys(courses) : null
-  const currentCourse = coursesData?.filter(({ _id }) => coursesIDs?.includes(_id))
+  const currentCourse = coursesData?.filter(({ _id }) =>
+    coursesIDs?.includes(_id)
+  )
 
-  
   const [showModal, setShowModal] = React.useState<boolean>(false)
-  const { UpdateProgress, isLoading, isSuccess } = useUpdateProgress()
 
-  const closeModalFn = () => {
-    setTimeout(() => {
-      setShowModal(false)
-    }, 200);
+  const modalClose = () => {
+    setShowModal(false)
   }
 
-  const progressModalContent = showModal ? (
-    <UiModal modalClose={closeModalFn}>
+  const sendProgressForm = (
+    <UiModal modalClose={modalClose}>
       <ProgressForm
-        updateProgressFn={UpdateProgress}
-        isLoading={isLoading}
         workouts={chosenWorkout}
         course={currentCourse}
-        isSuccess={isSuccess}
+        modalClose={modalClose}
       />
     </UiModal>
-  ) : null
+  )
 
   return (
     <S.PageWrapper>
@@ -77,7 +72,7 @@ const Workout = () => {
           </S.ProgressBlock>
         </>
       ) : null}
-       {progressModalContent ? progressModalContent : null}
+      {showModal ? sendProgressForm : null}
     </S.PageWrapper>
   )
 }

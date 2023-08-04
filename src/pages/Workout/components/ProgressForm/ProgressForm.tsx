@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import ProgressInput from './components/ProgressInput'
 import UiButton from '@/components/UiButton'
@@ -8,27 +9,31 @@ import UiImage from '@/components/UiImage'
 
 import { QueryKey } from '@/api/enums'
 import { Course, Workout } from '@/api/types'
-import { UpdateProgressOptions } from '@/api/hooks/useUpdateProgress'
+import { useUpdateProgress } from '@/api/hooks/useUpdateProgress'
+
+import { RouterPath } from '@/router/enums'
 
 import * as S from './ProgressForm.style'
 
 type PropsType = {
-  updateProgressFn: (options: UpdateProgressOptions) => void
-  isLoading: boolean
+  modalClose: () => void
   workouts?: Workout
   course?: Course[]
-  isSuccess: boolean
 }
 
-const ProgressForm = ({
-  updateProgressFn,
-  isLoading,
-  workouts,
-  course,
-  isSuccess,
-}: PropsType) => {
-  const [filled, setIsFilled] = React.useState<boolean>(false)
+const ProgressForm = ({ workouts, course, modalClose }: PropsType) => {
   const [inputValues, setInputValues] = React.useState(Array(0))
+
+  const navigate = useNavigate()
+
+  const {
+    mutate: updateProgress,
+    data,
+    isLoading,
+    error,
+    isSuccess,
+  } = useUpdateProgress()
+
   const queryClient = useQueryClient()
 
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,62 +44,80 @@ const ProgressForm = ({
     }))
   }
 
-  const handleSendSuccess = () => {
-    if (!isSuccess) {
-      console.log('Error')
-    } else {
-      setIsFilled(true)
-      queryClient.invalidateQueries({ queryKey: [QueryKey.UserProgress] })
-    }
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.stopPropagation
+
+    const newValues = Object.values(inputValues)
+
+    updateProgress({
+      courseId: course ? course[0]._id : '',
+      workoutId: workouts?._id || '',
+      exerciseProgressArray: newValues,
+    })
   }
+
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout
+
+    if (data) {
+      queryClient.invalidateQueries({ queryKey: [QueryKey.UserProgress] })
+
+      timer = setTimeout(() => {
+        modalClose()
+        navigate(RouterPath.Profile)
+      }, 2000)
+    }
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [data])
+
+  const resultContent = (
+    <>
+      <S.ImageHeader>
+        {isSuccess
+          ? `Ваш прогресс засчитан!`
+          : `Не удалось заситать прогресс: ${error?.message}`}
+      </S.ImageHeader>
+      <UiImage width="444px" height="360px" name="okHand" />
+    </>
+  )
+
+  const formСontent = (
+    <>
+      <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
+      {workouts?.exercises &&
+        workouts.exercises.map(({ name }, index) => {
+          return (
+            <S.ProgressInputsBox key={index}>
+              <S.ProgressLabelText key={index + 1}>
+                {name} выполнено повторений:
+              </S.ProgressLabelText>
+              <ProgressInput
+                name={`${index}`}
+                type="number"
+                key={index + 2}
+                placeholder={'Введите значение'}
+                value={inputValues[index] || ''}
+                onChange={inputHandler}
+              />
+            </S.ProgressInputsBox>
+          )
+        })}
+      <UiButton
+        buttonType="submit"
+        size={ButtonSize.L}
+        title={isLoading ? 'Отправляем данные' : 'Отправить'}
+        buttonTheme={ButtonTheme.PurpleBright}
+        onClick={handleSubmit}
+      />
+    </>
+  )
 
   return (
     <S.ProgressWrapper>
-      {!filled ? (
-        <>
-          <S.ProgressHeader>Мой прогресс</S.ProgressHeader>
-          {workouts?.exercises &&
-            workouts.exercises.map(({ name }, index) => {
-              return (
-                <S.ProgressInputsBox key={index}>
-                  <S.ProgressLabelText key={index + 1}>
-                    Сколько повторений вы сделали из упражнения: {name}?
-                  </S.ProgressLabelText>
-                  <ProgressInput
-                    name={`${index}`}
-                    type="number"
-                    key={index + 2}
-                    placeholder={'Введите значение'}
-                    value={inputValues[index] || ''}
-                    onChange={inputHandler}
-                  />
-                </S.ProgressInputsBox>
-              )
-            })}
-          <UiButton
-            buttonType="submit"
-            size={ButtonSize.L}
-            title={isLoading ? 'Отправляем данные' : 'Отправить'}
-            buttonTheme={ButtonTheme.PurpleBright}
-            onClick={(e: React.MouseEvent) => {
-              e.stopPropagation
-              handleSendSuccess()
-              const newValues = Object.values(inputValues)
-              console.log(newValues)
-              updateProgressFn({
-                courseId: course ? course[0]._id : '',
-                workoutId: workouts?._id || '',
-                exerciseProgressArray: newValues,
-              })
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <S.ImageHeader>Ваш прогресс засчитан!</S.ImageHeader>
-          <UiImage width="444px" height="360px" name="okHand" />
-        </>
-      )}
+      {data || error ? resultContent : formСontent}
     </S.ProgressWrapper>
   )
 }

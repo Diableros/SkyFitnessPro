@@ -11,7 +11,7 @@ export enum InputErrorText {
   Mismatch = 'Пароли не совпадают. Попробуйте ещё раз.',
 
   ShortLogin = 'Логин должен содержать более 3 знаков',
-  LongLogin = 'Логин должен содержать менее 10 знаков',
+  LongLogin = 'Логин должен содержать менее 64 знаков',
 }
 
 export enum InputType {

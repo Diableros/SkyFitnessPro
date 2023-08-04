@@ -30,18 +30,17 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   } = useChangeCreds()
 
   React.useEffect(() => {
-    if (data) {
-      if (formType === InputType.Login) {
-        dispatch({ type: Action.UpdateEmail, payload: newLogin })
-      }
+    let timer: NodeJS.Timeout
 
-      const timer = setTimeout(() => {
+    if (data) {
+      dispatch({ type: Action.UpdateEmail, payload: newLogin })
+
+      timer = setTimeout(() => {
         modalClose()
       }, 2000)
-
-      return () => {
-        clearTimeout(timer)
-      }
+    }
+    return () => {
+      clearTimeout(timer)
     }
   }, [data])
 
@@ -79,22 +78,18 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
     if (formType === InputType.Password) {
       if (password !== newPassword) {
         setError(InputErrorText.Mismatch)
-        // alert('Недопустимый пароль')
       } else {
         setError(null)
         changeCredsFn({ updateType: InputType.Password, newValue: newPassword })
       }
     } else if (newLogin.length > 64) {
       setError(InputErrorText.LongLogin)
-      // alert('Недопустимый логин')
     } else if (newLogin.length < 3) {
       setError(InputErrorText.ShortLogin)
     } else {
       changeCredsFn({ updateType: InputType.Login, newValue: newLogin })
     }
   }
-
-  //TODO допилисть логику отправки данных на сервер
 
   const title =
     formType === InputType.Password ? 'Новый пароль:' : 'Новый логин:'
