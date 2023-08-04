@@ -31,8 +31,10 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
 
   React.useEffect(() => {
     if (data) {
-      dispatch({ type: Action.UpdateEmail, payload: newLogin })
-      
+      if (formType === InputType.Login) {
+        dispatch({ type: Action.UpdateEmail, payload: newLogin })
+      }
+
       const timer = setTimeout(() => {
         modalClose()
       }, 2000)
@@ -72,7 +74,6 @@ const CredsChangeForm = ({ formType, modalClose }: PropsType) => {
   }
 
   const handleDataSend = (e: React.FormEvent) => {
-
     e.stopPropagation()
 
     if (formType === InputType.Password) {
